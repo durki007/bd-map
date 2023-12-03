@@ -1,9 +1,6 @@
 package pl.pwr.bdmap.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.pwr.bdmap.model.User;
 import pl.pwr.bdmap.repositories.UserRepository;
 
@@ -27,4 +24,8 @@ public class UserController {
         return userRepository.save(newUser);
     }
 
+    @DeleteMapping("/users/{id}")
+    void deleteUser(@PathVariable Long id) {
+        userRepository.deleteById(id);
+    }
 }
