@@ -1,92 +1,93 @@
 package pl.pwr.bdmap.model;
 
+import java.io.Serializable;
+
 import jakarta.persistence.*;
 
-import java.util.Objects;
-
 @Entity
-@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"username", "email"}))
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-//    @Column(name = "username", unique = true)
-    private String username;
-    private String email;
-    private String password;
-    private String role;
-
+@Table(name = "user")
+public class User implements Serializable {
     public User() {
     }
 
-    public User(String username, String email, String password, String role) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.role = role;
+    @Column(name = "id", nullable = false, unique = true, length = 10)
+    @Id
+    @GeneratedValue(generator = "USER_ID_GENERATOR")
+    @org.hibernate.annotations.GenericGenerator(name = "USER_ID_GENERATOR", strategy = "native")
+    private int id;
+
+    @Column(name = "username", nullable = false, unique = true, length = 255)
+    private String username;
+
+    @Column(name = "email", nullable = false, unique = true, length = 255)
+    private String email;
+
+    @Column(name = "password", nullable = false, length = 255)
+    private String password;
+
+    @Column(name = "role", nullable = false, length = 255)
+    private String role;
+
+    @OneToMany(mappedBy = "user", targetEntity = Changeset.class)
+    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
+    @org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
+    private java.util.Set changeset = new java.util.HashSet();
+
+    private void setId(int value) {
+        this.id = value;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public int getORMID() {
+        return getId();
+    }
+
+    public void setUsername(String value) {
+        this.username = value;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String name) {
-        this.username = name;
+    public void setEmail(String value) {
+        this.email = value;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPassword(String value) {
+        this.password = value;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setRole(String value) {
+        this.role = value;
     }
 
     public String getRole() {
         return role;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setChangeset(java.util.Set value) {
+        this.changeset = value;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(role, user.role);
+    public java.util.Set getChangeset() {
+        return changeset;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, username, email, password, role);
-    }
 
-    @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
-                '}';
+        return String.valueOf(getId());
     }
+
 }

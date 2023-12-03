@@ -6,8 +6,11 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=dbpass
       - POSTGRES_USER=admin
       - POSTGRES_DB=dbmap
+
+volumes:
+  postgres_data:
