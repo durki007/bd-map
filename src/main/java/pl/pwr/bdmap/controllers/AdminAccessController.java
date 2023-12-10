@@ -1,42 +1,42 @@
 package pl.pwr.bdmap.controllers;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import pl.pwr.bdmap.model.Node;
-import pl.pwr.bdmap.model.NodeType;
-import pl.pwr.bdmap.dao.NodeRepository;
-import pl.pwr.bdmap.dao.NodeTypeRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import pl.pwr.bdmap.dto.NodeDTO;
+import pl.pwr.bdmap.services.NodeService;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /*
  * This class is responsible for handling requests from the admin panel.
  */
 @RestController
 public class AdminAccessController {
-    private final NodeRepository nodeRepository;
-    private final NodeTypeRepository nodeTypeRepository;
 
-    public AdminAccessController(NodeRepository nodeRepository, NodeTypeRepository nodeTypeRepository) {
-        this.nodeRepository = nodeRepository;
-        this.nodeTypeRepository = nodeTypeRepository;
+    private final NodeService nodeService;
+
+    public AdminAccessController(NodeService nodeService) {
+        this.nodeService = nodeService;
     }
 
     @PostMapping("/admin/node")
-    Node newNode(@RequestBody Node newNode) {
-        NodeType nodeType = newNode.getNodeType();
-        if (nodeType == null) {
-            nodeType = new NodeType();
-            nodeType.setType("default");
-        }
-        nodeType = nodeTypeRepository.save(nodeType);
-        newNode.setNodeType(nodeType);
-        return nodeRepository.save(newNode);
+    NodeDTO newNode(@RequestBody NodeDTO newNode) {
+        return nodeService.save(newNode);
     }
 
     @PostMapping("/admin/nodes")
-    List<Node> newNodes(@RequestBody List<Node> newNodes) {
-        return (List<Node>) nodeRepository.saveAll(newNodes);
+    List<NodeDTO> newNodes(@RequestBody List<NodeDTO> newNodes) {
+        return nodeService.save(newNodes);
+    }
+
+    @DeleteMapping("/admin/node/{id}")
+    NodeDTO deleteNode(@PathVariable int id) {
+        try {
+            return nodeService.delete(id);
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Node not found", e);
+        }
     }
 }
