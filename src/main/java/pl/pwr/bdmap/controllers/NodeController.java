@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.pwr.bdmap.dto.NodeDTO;
 import pl.pwr.bdmap.dto.NodeDTOMapper;
 import pl.pwr.bdmap.model.Node;
-import pl.pwr.bdmap.repositories.NodeRepository;
+import pl.pwr.bdmap.dao.NodeRepository;
 
 import java.util.ArrayList;
 import java.util.List;

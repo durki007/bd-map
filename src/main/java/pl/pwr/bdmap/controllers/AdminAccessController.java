@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.pwr.bdmap.model.Node;
 import pl.pwr.bdmap.model.NodeType;
-import pl.pwr.bdmap.repositories.NodeRepository;
-import pl.pwr.bdmap.repositories.NodeTypeRepository;
+import pl.pwr.bdmap.dao.NodeRepository;
+import pl.pwr.bdmap.dao.NodeTypeRepository;
 
 import java.util.List;
 
