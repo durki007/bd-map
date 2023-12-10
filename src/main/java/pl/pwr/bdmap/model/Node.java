@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "node", indexes = {@Index(columnList = "pos_x"), @Index(columnList = "pos_y")})
@@ -26,6 +27,7 @@ public class Node implements Serializable {
     private boolean isBlocked;
 
     @Column(name = "timestamp", nullable = false)
+    @CreationTimestamp
     private java.sql.Timestamp timestamp;
 
     @ManyToOne(targetEntity = NodeType.class, fetch = FetchType.LAZY)
@@ -33,24 +35,16 @@ public class Node implements Serializable {
     @JoinColumns(value = {@JoinColumn(name = "NodeType_id", referencedColumnName = "id", nullable = false)}, foreignKey = @ForeignKey(name = "FKNode325335"))
     private NodeType nodeType;
 
-    @OneToMany(mappedBy = "node", targetEntity = HistoricNodeData.class)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
-    @org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
+    @OneToMany(mappedBy = "node", targetEntity = HistoricNodeData.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private java.util.Set historicNodeData = new HashSet();
 
-    @OneToMany(mappedBy = "node1", targetEntity = WayNode.class)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
-    @org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
+    @OneToMany(mappedBy = "node1", targetEntity = WayNode.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private java.util.Set wayNode = new HashSet();
 
-    @OneToMany(mappedBy = "node2", targetEntity = WayNode.class)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
-    @org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
+    @OneToMany(mappedBy = "node2", targetEntity = WayNode.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private java.util.Set wayNode1 = new HashSet();
 
-    @OneToMany(mappedBy = "node", targetEntity = NodeTag.class)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
-    @org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
+    @OneToMany(mappedBy = "node", targetEntity = NodeTag.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private java.util.Set nodeTag = new HashSet();
 
     private void setId(int value) {
