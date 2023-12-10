@@ -31,7 +31,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", targetEntity = Changeset.class)
     @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
     @org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
-    private java.util.Set changeset = new java.util.HashSet();
+    private java.util.Set<Changeset> changeset = new java.util.HashSet();
 
     private void setId(int value) {
         this.id = value;
