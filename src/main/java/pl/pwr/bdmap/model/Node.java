@@ -1,32 +1,33 @@
 package pl.pwr.bdmap.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@org.hibernate.annotations.Proxy(lazy = false)
-@Table(name = "Node", indexes = {@Index(columnList = "pos_x"), @Index(columnList = "pos_y")})
+@Table(name = "node", indexes = {@Index(columnList = "pos_x"), @Index(columnList = "pos_y")})
 public class Node implements Serializable {
     public Node() {
     }
 
     @Column(name = "id", nullable = false, length = 10)
     @Id
-    @GeneratedValue(generator = "NODE_ID_GENERATOR")
-    @org.hibernate.annotations.GenericGenerator(name = "NODE_ID_GENERATOR", strategy = "native")
+    @GeneratedValue(generator = "NODE_ID_GENERATOR", strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name = "pos_x", nullable = false, length = 10)
-    private int pos_x;
+    private int posX;
 
     @Column(name = "pos_y", nullable = false, length = 10)
-    private int pos_y;
+    private int posY;
 
     @Column(name = "is_blocked", nullable = false)
-    private boolean is_blocked;
+    private boolean isBlocked;
 
     @Column(name = "timestamp", nullable = false)
+    @CreationTimestamp
     private java.sql.Timestamp timestamp;
 
     @ManyToOne(targetEntity = NodeType.class, fetch = FetchType.LAZY)
@@ -34,25 +35,17 @@ public class Node implements Serializable {
     @JoinColumns(value = {@JoinColumn(name = "NodeType_id", referencedColumnName = "id", nullable = false)}, foreignKey = @ForeignKey(name = "FKNode325335"))
     private NodeType nodeType;
 
-    @OneToMany(mappedBy = "node", targetEntity = HistoricNodeData.class)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
-    @org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
-    private java.util.Set historicNodeData = new java.util.HashSet();
+    @OneToMany(mappedBy = "node", targetEntity = HistoricNodeData.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private java.util.Set historicNodeData = new HashSet();
 
-    @OneToMany(mappedBy = "node1", targetEntity = WayNode.class)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
-    @org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
-    private java.util.Set wayNode = new java.util.HashSet();
+    @OneToMany(mappedBy = "node1", targetEntity = WayNode.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private java.util.Set wayNode = new HashSet();
 
-    @OneToMany(mappedBy = "node2", targetEntity = WayNode.class)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
-    @org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
-    private java.util.Set wayNode1 = new java.util.HashSet();
+    @OneToMany(mappedBy = "node2", targetEntity = WayNode.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private java.util.Set wayNode1 = new HashSet();
 
-    @OneToMany(mappedBy = "node", targetEntity = NodeTag.class)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
-    @org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
-    private java.util.Set nodeTag = new java.util.HashSet();
+    @OneToMany(mappedBy = "node", targetEntity = NodeTag.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private java.util.Set nodeTag = new HashSet();
 
     private void setId(int value) {
         this.id = value;
@@ -66,28 +59,28 @@ public class Node implements Serializable {
         return getId();
     }
 
-    public void setPos_x(int value) {
-        this.pos_x = value;
+    public void setPosX(int value) {
+        this.posX = value;
     }
 
-    public int getPos_x() {
-        return pos_x;
+    public int getPosX() {
+        return posX;
     }
 
-    public void setPos_y(int value) {
-        this.pos_y = value;
+    public void setPosY(int value) {
+        this.posY = value;
     }
 
-    public int getPos_y() {
-        return pos_y;
+    public int getPosY() {
+        return posY;
     }
 
-    public void setIs_blocked(boolean value) {
-        this.is_blocked = value;
+    public void setIsBlocked(boolean value) {
+        this.isBlocked = value;
     }
 
-    public boolean getIs_blocked() {
-        return is_blocked;
+    public boolean getIsBlocked() {
+        return isBlocked;
     }
 
     public void setTimestamp(java.sql.Timestamp value) {

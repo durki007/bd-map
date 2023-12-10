@@ -17,7 +17,7 @@ public class NodeType implements Serializable {
     @org.hibernate.annotations.GenericGenerator(name = "NODETYPE_ID_GENERATOR", strategy = "native")
     private int id;
 
-    @Column(name = "type", nullable = false, length = 255)
+    @Column(name = "type", nullable = false, unique = true, length = 255)
     private String type;
 
     @OneToMany(mappedBy = "nodeType", targetEntity = Node.class)
