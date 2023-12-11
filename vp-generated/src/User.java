@@ -43,7 +43,7 @@ public class User implements Serializable {
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.Set changeset = new java.util.HashSet();
 	
-	private void setId(int value) {
+	void setId(int value) {
 		this.id = value;
 	}
 	
