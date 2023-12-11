@@ -64,4 +64,12 @@ public class NodeService {
         nodeRepository.delete(node);
         return mapper.apply(node);
     }
+
+    public Node getNodeById(int id) throws NoSuchElementException {
+        return nodeRepository.findById(id).orElseThrow();
+    }
+
+    public void save(Node node) {
+        nodeRepository.save(node);
+    }
 }
