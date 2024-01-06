@@ -29,4 +29,9 @@ public class NodeTypeService {
         }
     }
 
+    public String getType(int id) {
+        NodeType nodeType = nodeTypeRepository.findById(id).orElseThrow();
+        return nodeType.getType();
+    }
+
 }
