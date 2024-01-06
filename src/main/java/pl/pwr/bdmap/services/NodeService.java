@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.NodeRepository;
 import pl.pwr.bdmap.dto.NodeDTO;
 import pl.pwr.bdmap.dto.NodeDTOMapper;
+import pl.pwr.bdmap.dto.NodeTypeDTO;
 import pl.pwr.bdmap.model.Node;
+import pl.pwr.bdmap.model.NodeType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,5 +61,12 @@ public class NodeService {
         Node node = nodeRepository.findById(id).orElseThrow();
         nodeRepository.delete(node);
         return mapper.apply(node);
+    }
+
+    // TODO: it should be NodeTypeDTO i guess
+    public NodeType getNodeType(int id) throws NoSuchElementException {
+        Node node = nodeRepository.findById(id).orElseThrow();
+
+        return node.getNodeType();
     }
 }

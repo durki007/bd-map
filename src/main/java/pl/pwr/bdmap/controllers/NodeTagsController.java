@@ -1,11 +1,9 @@
 package pl.pwr.bdmap.controllers;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import pl.pwr.bdmap.model.NodeType;
 import pl.pwr.bdmap.services.*;
 
 import java.util.List;
@@ -18,13 +16,14 @@ public class NodeTagsController {
     private final NodeTypeService nodeTypeService;
     private final NodeTagService nodeTagService;
     private final KeyService keyService;
+    private final KeyNodeTypeService keyNodeTypeService;
 
-    public NodeTagsController(NodeService nodeService, NodeTagService nodeTagService, NodeTypeService nodeTypeService, KeyService keyService) {
+    public NodeTagsController(NodeService nodeService, NodeTagService nodeTagService, NodeTypeService nodeTypeService, KeyService keyService, KeyNodeTypeService keyNodeTypeService) {
         this.nodeService = nodeService;
         this.nodeTagService = nodeTagService;
         this.nodeTypeService = nodeTypeService;
         this.keyService = keyService;
-
+        this.keyNodeTypeService = keyNodeTypeService;
     }
 
     // get tags for {id} node
@@ -47,25 +46,28 @@ public class NodeTagsController {
         }
     }
 
-/*
+
     // get available key for {id} node
     @GetMapping("nodes/{id}/getAvailableKeys")
     List<String> availableKeys(@PathVariable int id) {
+
+        // getting the node type of {id} node
+        NodeType nodeType = nodeService.getNodeType(id);
+
         try{
-            return KeyNodeTypeService.getAvailableKeys(id);              // TODO: implement
+            return keyNodeTypeService.getAvailableKeys(nodeType);
         } catch (NoSuchElementException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Way not found", e);
         }
     }
 
-
+/*
     // add possible key for specific type of nodes
 
     @PutMapping("nodes/types/key/type=?key=?")                                  // TODO: check it
-    List<String> keysForType(@RequestBody List<String> keysForType) {
-        return KeyNodeTypeService.save(keysForType);
+    List<String> keysForType(@RequestParam ) {
+        return keyNodeTypeService.save(keysForType);
     }
 
 */
-
 }

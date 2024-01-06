@@ -16,7 +16,7 @@ public class NodeTagService {
 
     public List<String> getTags(int id) {
 
-        List<NodeTag> nodeTags = nodeTagRepository.findAllByNodeId(id);
+        List<NodeTag> nodeTags = nodeTagRepository.findAllByNodeId(id);             // TODO: there should be try catch cuz .orElseThrow() is not working
 
         // extracting string name from key associated with tag
         List<String> tags = nodeTags.stream()
@@ -25,4 +25,8 @@ public class NodeTagService {
 
         return tags;
     }
+
+
+
+
 }
