@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.NodeTypeRepository;
 import pl.pwr.bdmap.model.NodeType;
 
+import java.util.NoSuchElementException;
+
 @Service
 public class NodeTypeService {
     private final NodeTypeRepository nodeTypeRepository;
@@ -27,6 +29,11 @@ public class NodeTypeService {
         } else {
             return nodeTypeRepository.findByType(type);
         }
+    }
+
+    public String getType(int id) throws NoSuchElementException {
+        NodeType nodeType = nodeTypeRepository.findById(id).orElseThrow();
+        return nodeType.getType();
     }
 
 }
