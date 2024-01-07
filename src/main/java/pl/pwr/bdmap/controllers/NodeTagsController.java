@@ -77,11 +77,11 @@ public class NodeTagsController {
 
 
     // add possible key for specific type of nodes
-
     @PutMapping("nodes/type")
     String keysForType(@RequestParam("nodeType") String nodeTypeStr,
                              @RequestParam("keyName") String keyNameStr) {
 
+        // check if node type is already in db
         NodeType nodeType = nodeTypeRepository.findByType(nodeTypeStr);
 
         if (nodeType == null) {
@@ -90,6 +90,7 @@ public class NodeTagsController {
             nodeType = nodeTypeRepository.save(newNodeType);
         }
 
+        // check if key is already in db
         Key key = keyRepository.findByValue(keyNameStr);
 
         if (key == null) {
@@ -98,6 +99,7 @@ public class NodeTagsController {
             key = keyRepository.save(newKey);
         }
 
+        // check if their relation via KeyNodeType is already in db
         KeyNodeType existingKeyNodeType = keyNodeTypeRepository.findByKeyAndNodeType(key, nodeType);
 
         if (existingKeyNodeType == null) {
@@ -109,12 +111,7 @@ public class NodeTagsController {
             return keyNodeTypeService.save(newKeyNodeType);
         }
 
-
-
         return keyNodeTypeService.save(existingKeyNodeType);
     }
-
-
-
 
 }

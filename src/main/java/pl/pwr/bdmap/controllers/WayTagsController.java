@@ -38,6 +38,7 @@ public class WayTagsController {
         this.keyWayTypeRepository = keyWayTypeRepository;
     }
 
+    /// get tags of selected way of {id}
     @GetMapping("ways/{id}/getTags")
     List<String> wayTags(@PathVariable int id) {
         try{
@@ -47,6 +48,7 @@ public class WayTagsController {
         }
     }
 
+    /// get type of selected way of {id}
     @GetMapping("ways/{id}/getType")
     String wayTypes(@PathVariable int id) {
         try{
@@ -56,7 +58,7 @@ public class WayTagsController {
         }
     }
 
-
+    /// get possible Keys for selected way of {id}
     @GetMapping("ways/{id}/getAvailableKeys")
     List<String> getAvailableKeys(@PathVariable int id) {
         WayType wayType = wayService.getWayType(id);
@@ -68,11 +70,13 @@ public class WayTagsController {
         }
     }
 
+    /// add new possible Key for Type
     @PutMapping("ways/type")
     String keysForType(@RequestParam("wayType") String wayTypeStr,
                        @RequestParam("keyName") String keyNameStr) {
         WayType wayType = wayTypeRepository.findByType(wayTypeStr);
 
+        //check if this way type exists in db
         if(wayType == null){
             WayType newWayType = new WayType();
             newWayType.setType(wayTypeStr);
@@ -81,14 +85,17 @@ public class WayTagsController {
 
         Key key = keyRepository.findByValue(keyNameStr);
 
+        // check if this key exists in db
         if (key == null) {
             Key newKey = new Key();
             newKey.setValue(keyNameStr);
             key = keyRepository.save(newKey);
         }
 
+        // check if they already have a relation via KeyWayType
         KeyWayType existingKeyWayType = keyWayTypeRepository.findByKeyAndWayType(key, wayType);
 
+        // if not create new relation
         if(existingKeyWayType == null) {
             KeyWayType newKeyWayType = new KeyWayType();
             newKeyWayType.setKey(key);
