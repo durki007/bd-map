@@ -5,46 +5,39 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 
 @Entity
-@org.hibernate.annotations.Proxy(lazy = false)
 @Table(name = "Way")
 public class Way implements Serializable {
     public Way() {
+        // Spring requires empty constructor
     }
 
     @Column(name = "id", nullable = false, unique = true, length = 10)
     @Id
-    @GeneratedValue(generator = "WAY_ID_GENERATOR")
-    @org.hibernate.annotations.GenericGenerator(name = "WAY_ID_GENERATOR", strategy = "native")
+    @GeneratedValue(generator = "WAY_ID_GENERATOR", strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name = "name", nullable = false, length = 255)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "timestamp", nullable = false)
     private java.sql.Timestamp timestamp;
 
     @Column(name = "is_blocked", nullable = false)
-    private boolean is_blocked;
+    private boolean isBlocked;
 
     @ManyToOne(targetEntity = WayType.class, fetch = FetchType.LAZY)
     @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})
     @JoinColumns(value = {@JoinColumn(name = "WayType_id", referencedColumnName = "id", nullable = false)}, foreignKey = @ForeignKey(name = "FKWay914835"))
     private WayType wayType;
 
-    @OneToMany(mappedBy = "way", targetEntity = HistoricWayData.class)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
-    @org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
-    private java.util.Set historicWayData = new java.util.HashSet();
+    @OneToMany(mappedBy = "way", targetEntity = HistoricWayData.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private java.util.Set<HistoricWayData> historicWayData = new java.util.HashSet<>();
 
-    @OneToMany(mappedBy = "way", targetEntity = WayNode.class)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
-    @org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
-    private java.util.Set wayNode = new java.util.HashSet();
+    @OneToMany(mappedBy = "way", targetEntity = WayNode.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private java.util.Set<WayNode> wayNode = new java.util.HashSet<>();
 
-    @OneToMany(mappedBy = "way", targetEntity = WayTag.class)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
-    @org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
-    private java.util.Set wayTag = new java.util.HashSet();
+    @OneToMany(mappedBy = "way", targetEntity = WayTag.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private java.util.Set<WayTag> wayTag = new java.util.HashSet<>();
 
     private void setId(int value) {
         this.id = value;
@@ -74,12 +67,12 @@ public class Way implements Serializable {
         return timestamp;
     }
 
-    public void setIs_blocked(boolean value) {
-        this.is_blocked = value;
+    public void setIsBlocked(boolean value) {
+        this.isBlocked = value;
     }
 
-    public boolean getIs_blocked() {
-        return is_blocked;
+    public boolean getIsBlocked() {
+        return isBlocked;
     }
 
     public void setWayType(WayType value) {
@@ -90,29 +83,29 @@ public class Way implements Serializable {
         return wayType;
     }
 
-    public void setHistoricWayData(java.util.Set value) {
+    public void setHistoricWayData(java.util.Set<HistoricWayData> value) {
         this.historicWayData = value;
     }
 
-    public java.util.Set getHistoricWayData() {
+    public java.util.Set<HistoricWayData> getHistoricWayData() {
         return historicWayData;
     }
 
 
-    public void setWayNode(java.util.Set value) {
+    public void setWayNode(java.util.Set<WayNode> value) {
         this.wayNode = value;
     }
 
-    public java.util.Set getWayNode() {
+    public java.util.Set<WayNode> getWayNode() {
         return wayNode;
     }
 
 
-    public void setWayTag(java.util.Set value) {
+    public void setWayTag(java.util.Set<WayTag> value) {
         this.wayTag = value;
     }
 
-    public java.util.Set getWayTag() {
+    public java.util.Set<WayTag> getWayTag() {
         return wayTag;
     }
 
