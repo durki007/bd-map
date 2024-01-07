@@ -1,11 +1,13 @@
 package pl.pwr.bdmap.services;
 
+import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.NodeTagRepository;
 import pl.pwr.bdmap.model.NodeTag;
 
 import java.util.Collections;
 import java.util.List;
 
+@Service
 public class NodeTagService {
 
     private final NodeTagRepository nodeTagRepository;
