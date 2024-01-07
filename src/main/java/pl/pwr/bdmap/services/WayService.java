@@ -3,13 +3,11 @@ package pl.pwr.bdmap.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.WayRepository;
-import pl.pwr.bdmap.dto.NodeDTO;
 import pl.pwr.bdmap.dto.WayDTO;
 import pl.pwr.bdmap.dto.WayDTOMapper;
 import pl.pwr.bdmap.model.Way;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -38,7 +36,7 @@ public class WayService {
         Way way = new Way();
 
         // TODO: Check if its correct
-        way.setIs_blocked(false);
+        way.setIsBlocked(false);
         way.setName(wayDTO.name());
 
         if(wayDTO.wayType() == null) {
