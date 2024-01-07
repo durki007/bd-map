@@ -8,6 +8,10 @@ import java.util.List;
 public interface WayNodeRepository extends CrudRepository<WayNode, Integer> {
 
     List<WayNode> findAllByWay_Id(int id);
+
     List<WayNode> findAllByNode1_Id(int id);
+
     List<WayNode> findAllByNode2_Id(int id);
+
+    List<WayNode> findAllByNode1_IdOrNode2_Id(int id1, int id2);
 }

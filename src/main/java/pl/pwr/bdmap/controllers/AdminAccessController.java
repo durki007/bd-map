@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.pwr.bdmap.dto.NodeDTO;
 import pl.pwr.bdmap.dto.WayDTO;
+import pl.pwr.bdmap.dto.WayNodeDTO;
 import pl.pwr.bdmap.services.NodeService;
+import pl.pwr.bdmap.services.WayNodeService;
 import pl.pwr.bdmap.services.WayService;
 
 import java.util.List;
@@ -20,9 +22,12 @@ public class AdminAccessController {
     private final NodeService nodeService;
     private final WayService wayService;
 
-    public AdminAccessController(NodeService nodeService, WayService wayService) {
+    private final WayNodeService wayNodeService;
+
+    public AdminAccessController(NodeService nodeService, WayService wayService, WayNodeService wayNodeService) {
         this.nodeService = nodeService;
         this.wayService = wayService;
+        this.wayNodeService = wayNodeService;
     }
 
     @PostMapping("/admin/node")
@@ -52,13 +57,33 @@ public class AdminAccessController {
     @DeleteMapping("/admin/way/{id}")
     WayDTO deleteWay(@PathVariable int id) {
         try {
-            return  wayService.delete(id);
+            return wayService.delete(id);
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Way not found", e);
         }
     }
 
-    // TODO: edit  (check if object is blocked)
+    @PostMapping("/admin/wayNode")
+    WayNodeDTO newWayNode(@RequestBody WayNodeDTO newWay) {
+        // Check required fields
+        if (newWay.wayId() == 0 || newWay.node1Id() == 0 || newWay.node2Id() == 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing required fields");
+        }
+        try {
+            return wayNodeService.save(newWay);
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified nodes not found", e);
+        }
+    }
+
+    @DeleteMapping("/admin/wayNode/{id}")
+    WayNodeDTO deleteWayNode(@PathVariable int id) {
+        try {
+            return wayNodeService.removeById(id);
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "WayNode not found", e);
+        }
+    }
 
 
 }

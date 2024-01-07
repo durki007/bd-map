@@ -13,7 +13,8 @@ public class WayNodeDTOMapper implements Function<WayNode, WayNodeDTO> {
                 wayNode.getId(),
                 wayNode.getWay().getId(),
                 wayNode.getNode1().getId(),
-                wayNode.getNode2().getId()
+                wayNode.getNode2().getId(),
+                wayNode.isBlocked()
         );
     }
 }
