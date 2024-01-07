@@ -47,7 +47,7 @@ public class NodeTagsController {
         try{
             return nodeTagService.getTags(id);
         } catch (NoSuchElementException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Way not found", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Node not found", e);
         }
     }
 
@@ -57,7 +57,7 @@ public class NodeTagsController {
         try{
             return nodeService.getNodeType(id).getType();
         } catch (NoSuchElementException e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Way not found", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Node not found", e);
         }
     }
 
@@ -71,7 +71,7 @@ public class NodeTagsController {
         try{
             return keyNodeTypeService.getAvailableKeys(nodeType);
         } catch (NoSuchElementException e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Way not found", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Node not found", e);
         }
     }
 

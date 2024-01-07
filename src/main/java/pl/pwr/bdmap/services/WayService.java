@@ -6,7 +6,10 @@ import pl.pwr.bdmap.dao.WayRepository;
 import pl.pwr.bdmap.dto.NodeDTO;
 import pl.pwr.bdmap.dto.WayDTO;
 import pl.pwr.bdmap.dto.WayDTOMapper;
+import pl.pwr.bdmap.model.Node;
+import pl.pwr.bdmap.model.NodeType;
 import pl.pwr.bdmap.model.Way;
+import pl.pwr.bdmap.model.WayType;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -71,6 +74,11 @@ public class WayService {
         Way way = wayRepository.findById(id).orElseThrow();
         wayRepository.delete(way);
         return mapper.apply(way);
+    }
+
+    public WayType getWayType(int id) throws NoSuchElementException {
+        Way way = wayRepository.findById(id).orElseThrow();
+        return way.getWayType();
     }
 
 }
