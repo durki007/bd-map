@@ -17,10 +17,12 @@ import java.util.stream.Collectors;
 public class WayService {
     private final WayRepository wayRepository;
     private final WayTypeService wayTypeService;
+    private final HistoricWayDataService historicWayDataService;
     private final WayDTOMapper mapper;
 
     @Autowired
-    public WayService(WayRepository repository, WayTypeService wayTypeService, WayDTOMapper mapper) {
+    public WayService(WayRepository repository, WayTypeService wayTypeService, HistoricWayDataService historicWayDataService, WayDTOMapper mapper) {
+        this.historicWayDataService = historicWayDataService;
         this.mapper = mapper;
         this.wayRepository = repository;
         this.wayTypeService = wayTypeService;
@@ -35,7 +37,7 @@ public class WayService {
     public WayDTO save(WayDTO wayDTO) {
         Way way = new Way();
 
-        // TODO: Check if its correct
+        // Map known fields
         way.setIsBlocked(false);
         way.setName(wayDTO.name());
 
@@ -45,14 +47,10 @@ public class WayService {
             way.setWayType(wayTypeService.save(wayDTO.wayType()));
         }
 
-        if(wayDTO.timestamp() == null) {
-            way.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        } else {
-            way.setTimestamp(wayDTO.timestamp());
-        }
-
         // Save way
         way = wayRepository.save(way);
+        // Save initial version
+        historicWayDataService.saveInitialVersion(way);
         return mapper.apply(way);
 
     }
@@ -71,4 +69,11 @@ public class WayService {
         return mapper.apply(way);
     }
 
+    public Way getWayById(int wayId) throws NoSuchElementException {
+        return wayRepository.findById(wayId).orElseThrow();
+    }
+
+    public void save(Way way) {
+        wayRepository.save(way);
+    }
 }
