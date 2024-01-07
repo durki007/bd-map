@@ -4,6 +4,7 @@ public record WayNodeDTO(
         int id,
         int wayId,
         int node1Id,
-        int node2Id
+        int node2Id,
+        boolean isBlocked
 ) {
 }

@@ -29,6 +29,19 @@ public class WayNode implements Serializable {
     @JoinColumns(value = {@JoinColumn(name = "node2_id", referencedColumnName = "id", nullable = false)}, foreignKey = @ForeignKey(name = "FKWayNode870335"))
     private Node node2;
 
+
+    @Column(name = "is_blocked", nullable = false)
+    private boolean isBlocked;
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
+
+
     private void setId(int value) {
         this.id = value;
     }
