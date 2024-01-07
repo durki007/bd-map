@@ -54,7 +54,7 @@ public class NodeTagsController {
     @GetMapping("nodes/{id}/getType")
     String nodeTypes(@PathVariable int id) {
         try{
-            return nodeTypeService.getType(id);
+            return nodeService.getNodeType(id).getType();
         } catch (NoSuchElementException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Way not found", e);
         }

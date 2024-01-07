@@ -32,7 +32,6 @@ public class NodeTypeService {
     }
 
     public String getType(int id) throws NoSuchElementException {
-        System.out.println("TEEST");
         NodeType nodeType = nodeTypeRepository.findById(id).orElseThrow();
         return nodeType.getType();
     }

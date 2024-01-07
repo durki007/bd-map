@@ -21,7 +21,6 @@ public class KeyNodeTypeService {
 
     public List<String> getAvailableKeys(NodeType nodeType) throws NoSuchElementException {
         List<KeyNodeType> keyNodeTypes = keyNodeTypeRepository.findAllByNodeTypeId(nodeType.getId());
-        // TODO: sth is wrong, .findAllById(nodeType.getId() is not working. Also there should be .orElseThrow()
 
         List<String> keys = keyNodeTypes.stream()
                 .map(KeyNodeType::getKey)
