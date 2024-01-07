@@ -31,4 +31,12 @@ public class KeyNodeTypeService {
         return keys;
 
     }
+
+    public String save(KeyNodeType newKeyNodeType) {
+        keyNodeTypeRepository.save(newKeyNodeType);
+        return newKeyNodeType.toString();
+    }
+
+
+
 }

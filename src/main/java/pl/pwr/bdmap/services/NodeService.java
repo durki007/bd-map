@@ -69,4 +69,8 @@ public class NodeService {
 
         return node.getNodeType();
     }
+
+    boolean isTypePresent(String typeName) {
+        return nodeRepository.findByNodeType(typeName);
+    }
 }

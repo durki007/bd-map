@@ -3,9 +3,15 @@ package pl.pwr.bdmap.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import pl.pwr.bdmap.dao.KeyNodeTypeRepository;
+import pl.pwr.bdmap.dao.KeyRepository;
+import pl.pwr.bdmap.dao.NodeTypeRepository;
+import pl.pwr.bdmap.model.Key;
+import pl.pwr.bdmap.model.KeyNodeType;
 import pl.pwr.bdmap.model.NodeType;
 import pl.pwr.bdmap.services.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -17,13 +23,19 @@ public class NodeTagsController {
     private final NodeTagService nodeTagService;
     private final KeyService keyService;
     private final KeyNodeTypeService keyNodeTypeService;
+    private final NodeTypeRepository nodeTypeRepository;
+    private final KeyRepository keyRepository;
+    private final KeyNodeTypeRepository keyNodeTypeRepository;
 
-    public NodeTagsController(NodeService nodeService, NodeTagService nodeTagService, NodeTypeService nodeTypeService, KeyService keyService, KeyNodeTypeService keyNodeTypeService) {
+    public NodeTagsController(NodeService nodeService, NodeTagService nodeTagService, NodeTypeService nodeTypeService, KeyService keyService, KeyNodeTypeService keyNodeTypeService, NodeTypeRepository nodeTypeRepostiory, NodeTypeRepository nodeTypeRepository, KeyRepository keyRepository, KeyNodeTypeRepository keyNodeTypeRepository) {
         this.nodeService = nodeService;
         this.nodeTagService = nodeTagService;
         this.nodeTypeService = nodeTypeService;
         this.keyService = keyService;
         this.keyNodeTypeService = keyNodeTypeService;
+        this.nodeTypeRepository = nodeTypeRepository;
+        this.keyRepository = keyRepository;
+        this.keyNodeTypeRepository = keyNodeTypeRepository;
     }
 
     // get tags for {id} node
@@ -61,13 +73,46 @@ public class NodeTagsController {
         }
     }
 
-/*
+
     // add possible key for specific type of nodes
 
-    @PutMapping("nodes/types/key/type=?key=?")                                  // TODO: check it
-    List<String> keysForType(@RequestParam ) {
-        return keyNodeTypeService.save(keysForType);
+    @PutMapping("nodes/{nodeType}/key/{keyName}")
+    String keysForType(@PathVariable("nodeType") String nodeTypeStr,
+                             @PathVariable("keyName") String keyNameStr) {
+
+        NodeType nodeType = nodeTypeRepository.findByType(nodeTypeStr);
+
+        if (nodeType == null) {
+            NodeType newNodeType = new NodeType();              // Utworzenie nowego obiektu NodeType
+            newNodeType.setType(nodeTypeStr);                   // Ustawienie typu dla nowego obiektu
+            nodeType = nodeTypeRepository.save(newNodeType);    // Zapisanie nowego obiektu NodeType
+        }
+
+        Key key = keyRepository.findByValue(keyNameStr);
+
+        if (key == null) {
+            Key newKey = new Key();
+            newKey.setValue(keyNameStr);
+            key = keyRepository.save(newKey);
+        }
+
+        KeyNodeType existingKeyNodeType = keyNodeTypeRepository.findByKeyAndNodeType(key, nodeType);
+
+        if (existingKeyNodeType == null) {
+
+            KeyNodeType newKeyNodeType = new KeyNodeType();
+            newKeyNodeType.setKey(key);
+            newKeyNodeType.setNodeType(nodeType);
+            keyNodeTypeRepository.save(newKeyNodeType);
+            return keyNodeTypeService.save(newKeyNodeType);
+        }
+
+
+
+        return keyNodeTypeService.save(existingKeyNodeType);
     }
 
-*/
+
+
+
 }
