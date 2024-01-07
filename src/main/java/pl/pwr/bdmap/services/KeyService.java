@@ -1,7 +1,9 @@
 package pl.pwr.bdmap.services;
 
+import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.KeyRepository;
 
+@Service
 public class KeyService {
 
     public final KeyRepository keyRepository;

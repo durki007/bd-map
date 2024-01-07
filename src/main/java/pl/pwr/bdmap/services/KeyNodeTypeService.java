@@ -1,5 +1,6 @@
 package pl.pwr.bdmap.services;
 
+import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.KeyNodeTypeRepository;
 import pl.pwr.bdmap.dao.NodeTypeRepository;
 import pl.pwr.bdmap.model.Key;
@@ -9,6 +10,7 @@ import pl.pwr.bdmap.model.NodeType;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@Service
 public class KeyNodeTypeService {
 
     private final NodeTypeRepository nodeTypeRepository;

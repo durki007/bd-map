@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+@RestController
 public class NodeTagsController {
 
 
@@ -77,9 +78,9 @@ public class NodeTagsController {
 
     // add possible key for specific type of nodes
 
-    @PutMapping("nodes/{nodeType}/key/{keyName}")
-    String keysForType(@PathVariable("nodeType") String nodeTypeStr,
-                             @PathVariable("keyName") String keyNameStr) {
+    @PutMapping("nodes/type")
+    String keysForType(@RequestParam("nodeType") String nodeTypeStr,
+                             @RequestParam("keyName") String keyNameStr) {
 
         NodeType nodeType = nodeTypeRepository.findByType(nodeTypeStr);
 
