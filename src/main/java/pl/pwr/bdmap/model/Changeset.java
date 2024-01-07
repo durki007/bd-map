@@ -1,37 +1,35 @@
 package pl.pwr.bdmap.model;
 
 import java.io.Serializable;
+import java.util.Set;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
-@org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Changeset")
 public class Changeset implements Serializable {
-	public Changeset() {
+	public Changeset() { // empty constructor for Hibernate
 	}
 	
 	@Column(name="id", nullable=false, unique=true, length=10)	
 	@Id	
-	@GeneratedValue(generator="CHANGESET_ID_GENERATOR")	
-	@org.hibernate.annotations.GenericGenerator(name="CHANGESET_ID_GENERATOR", strategy="native")	
+	@GeneratedValue(generator="CHANGESET_ID_GENERATOR", strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column(name="creation_date", nullable=false)	
-	private java.sql.Timestamp creation_date;
+	@Column(name="creation_date", nullable=false)
+	@CreationTimestamp
+	private java.sql.Timestamp creationDate;
 	
 	@ManyToOne(targetEntity= User.class, fetch=FetchType.LAZY)
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns(value={ @JoinColumn(name="user_id", referencedColumnName="id", nullable=false) }, foreignKey=@ForeignKey(name="FKChangeset205101"))	
 	private User user;
 	
-	@OneToMany(mappedBy="changeset", targetEntity=HistoricNodeData.class)	
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
-	private java.util.Set historicNodeData = new java.util.HashSet();
+	@OneToMany(mappedBy="changeset", targetEntity=HistoricNodeData.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<HistoricNodeData> historicNodeData = new java.util.HashSet<>();
 	
-	@OneToMany(mappedBy="changeset", targetEntity=HistoricWayData.class)	
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
-	private java.util.Set historicWayData = new java.util.HashSet();
+	@OneToMany(mappedBy="changeset", targetEntity=HistoricWayData.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<HistoricWayData> historicWayData = new java.util.HashSet<>();
 	
 	private void setId(int value) {
 		this.id = value;
@@ -45,12 +43,12 @@ public class Changeset implements Serializable {
 		return getId();
 	}
 	
-	public void setCreation_date(java.sql.Timestamp value) {
-		this.creation_date = value;
+	public void setCreationDate(java.sql.Timestamp value) {
+		this.creationDate = value;
 	}
 	
-	public java.sql.Timestamp getCreation_date() {
-		return creation_date;
+	public java.sql.Timestamp getCreationDate() {
+		return creationDate;
 	}
 	
 	public void setUser(User value) {
@@ -61,20 +59,20 @@ public class Changeset implements Serializable {
 		return user;
 	}
 	
-	public void setHistoricNodeData(java.util.Set value) {
+	public void setHistoricNodeData(Set<HistoricNodeData> value) {
 		this.historicNodeData = value;
 	}
 	
-	public java.util.Set getHistoricNodeData() {
+	public Set<HistoricNodeData> getHistoricNodeData() {
 		return historicNodeData;
 	}
 	
 	
-	public void setHistoricWayData(java.util.Set value) {
+	public void setHistoricWayData(Set<HistoricWayData> value) {
 		this.historicWayData = value;
 	}
 	
-	public java.util.Set getHistoricWayData() {
+	public Set<HistoricWayData> getHistoricWayData() {
 		return historicWayData;
 	}
 	

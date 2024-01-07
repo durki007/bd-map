@@ -17,12 +17,14 @@ import java.util.stream.Collectors;
 @Service
 public class NodeService {
     private final NodeRepository nodeRepository;
+    private final HistoricNodeDataService historicNodeDataService;
     private final NodeTypeService nodeTypeService;
     private final NodeDTOMapper mapper;
 
     @Autowired
-    public NodeService(NodeRepository repository, NodeTypeService nodeTypeService, NodeDTOMapper mapper) {
+    public NodeService(NodeRepository repository, HistoricNodeDataService historicNodeDataService, NodeTypeService nodeTypeService, NodeDTOMapper mapper) {
         this.nodeRepository = repository;
+        this.historicNodeDataService = historicNodeDataService;
         this.nodeTypeService = nodeTypeService;
         this.mapper = mapper;
     }
@@ -46,6 +48,8 @@ public class NodeService {
         }
         // Save node
         node = nodeRepository.save(node);
+        // Save initial version
+        historicNodeDataService.saveInitialVersion(node);
         return mapper.apply(node);
     }
 
@@ -61,6 +65,14 @@ public class NodeService {
         Node node = nodeRepository.findById(id).orElseThrow();
         nodeRepository.delete(node);
         return mapper.apply(node);
+    }
+
+    public Node getNodeById(int id) throws NoSuchElementException {
+        return nodeRepository.findById(id).orElseThrow();
+    }
+
+    public void save(Node node) {
+        nodeRepository.save(node);
     }
 
     // TODO: it should be NodeTypeDTO i guess
