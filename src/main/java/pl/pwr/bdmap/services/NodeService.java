@@ -12,6 +12,7 @@ import pl.pwr.bdmap.model.NodeType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -63,14 +64,9 @@ public class NodeService {
         return mapper.apply(node);
     }
 
-    // TODO: it should be NodeTypeDTO i guess
     public NodeType getNodeType(int id) throws NoSuchElementException {
         Node node = nodeRepository.findById(id).orElseThrow();
-
         return node.getNodeType();
     }
 
-    boolean isTypePresent(String typeName) {
-        return nodeRepository.findByNodeType(typeName);
-    }
 }

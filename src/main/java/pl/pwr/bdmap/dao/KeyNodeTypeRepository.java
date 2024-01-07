@@ -11,9 +11,6 @@ import java.util.List;
 public interface KeyNodeTypeRepository extends CrudRepository<KeyNodeType, Integer> {
     List<KeyNodeType> findAllByNodeTypeId(int id);
 
-    boolean findByNodeValue(String keyName);
-
-    List<KeyNodeType> findAllByKeyIdAndNodeTypeId(int id, int id1);
-
     KeyNodeType findByKeyAndNodeType(Key key, NodeType nodeType);
+
 }

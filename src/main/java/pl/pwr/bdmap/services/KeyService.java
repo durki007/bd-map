@@ -17,7 +17,9 @@ public class KeyService {
      * @return
      */
     public boolean isKeyPresent(String keyName) {
-        return (keyRepository.findByNodeValue(keyName));
+
+        return keyRepository.findByValue(keyName) != null;
+
     }
 
 }

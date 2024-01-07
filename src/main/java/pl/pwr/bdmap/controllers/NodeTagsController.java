@@ -1,6 +1,7 @@
 package pl.pwr.bdmap.controllers;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.pwr.bdmap.dao.KeyNodeTypeRepository;
@@ -8,12 +9,13 @@ import pl.pwr.bdmap.dao.KeyRepository;
 import pl.pwr.bdmap.dao.NodeTypeRepository;
 import pl.pwr.bdmap.model.Key;
 import pl.pwr.bdmap.model.KeyNodeType;
+import pl.pwr.bdmap.model.Node;
 import pl.pwr.bdmap.model.NodeType;
 import pl.pwr.bdmap.services.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public class NodeTagsController {
 
@@ -52,12 +54,11 @@ public class NodeTagsController {
     @GetMapping("nodes/{id}/getType")
     String nodeTypes(@PathVariable int id) {
         try{
-            return nodeTypeService.getType(id);                             // TODO: implement
+            return nodeTypeService.getType(id);
         } catch (NoSuchElementException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Way not found", e);
         }
     }
-
 
     // get available key for {id} node
     @GetMapping("nodes/{id}/getAvailableKeys")
@@ -83,9 +84,9 @@ public class NodeTagsController {
         NodeType nodeType = nodeTypeRepository.findByType(nodeTypeStr);
 
         if (nodeType == null) {
-            NodeType newNodeType = new NodeType();              // Utworzenie nowego obiektu NodeType
-            newNodeType.setType(nodeTypeStr);                   // Ustawienie typu dla nowego obiektu
-            nodeType = nodeTypeRepository.save(newNodeType);    // Zapisanie nowego obiektu NodeType
+            NodeType newNodeType = new NodeType();
+            newNodeType.setType(nodeTypeStr);
+            nodeType = nodeTypeRepository.save(newNodeType);
         }
 
         Key key = keyRepository.findByValue(keyNameStr);

@@ -5,8 +5,5 @@ import pl.pwr.bdmap.model.Key;
 
 public interface KeyRepository extends CrudRepository<Key, Integer> {
 
-
-    boolean findByNodeValue(String keyName);
-
     Key findByValue(String keyNameStr);
 }
