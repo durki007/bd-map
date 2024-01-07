@@ -13,7 +13,7 @@ public class WayDTOMapper implements  Function<Way, WayDTO>{
         return new WayDTO(
                 way.getId(),
                 way.getName(),
-                way.getIs_blocked(),
+                way.getIsBlocked(),
                 way.getTimestamp(),
                 way.getWayType().getType()
         );

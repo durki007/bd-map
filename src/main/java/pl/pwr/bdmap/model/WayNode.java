@@ -9,28 +9,38 @@ import jakarta.persistence.*;
 @Table(name = "WayNode")
 public class WayNode implements Serializable {
     public WayNode() {
+        // Empty constructor required by Hibernate
     }
 
     @Column(name = "id", nullable = false, unique = true, length = 10)
     @Id
-    @GeneratedValue(generator = "WAYNODE_ID_GENERATOR")
-    @org.hibernate.annotations.GenericGenerator(name = "WAYNODE_ID_GENERATOR", strategy = "native")
+    @GeneratedValue(generator = "WAYNODE_ID_GENERATOR", strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToOne(targetEntity = Way.class, fetch = FetchType.LAZY)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})
+    @ManyToOne(targetEntity = Way.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumns(value = {@JoinColumn(name = "way_id", referencedColumnName = "id", nullable = false)}, foreignKey = @ForeignKey(name = "FKWayNode890837"))
     private Way way;
 
-    @ManyToOne(targetEntity = Node.class, fetch = FetchType.LAZY)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})
+    @ManyToOne(targetEntity = Node.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumns(value = {@JoinColumn(name = "node1_id", referencedColumnName = "id", nullable = false)}, foreignKey = @ForeignKey(name = "FKWayNode900126"))
     private Node node1;
 
-    @ManyToOne(targetEntity = Node.class, fetch = FetchType.LAZY)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})
+    @ManyToOne(targetEntity = Node.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumns(value = {@JoinColumn(name = "node2_id", referencedColumnName = "id", nullable = false)}, foreignKey = @ForeignKey(name = "FKWayNode870335"))
     private Node node2;
+
+
+    @Column(name = "is_blocked", nullable = false)
+    private boolean isBlocked;
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
+
 
     private void setId(int value) {
         this.id = value;
