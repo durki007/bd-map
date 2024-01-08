@@ -43,7 +43,7 @@ public class WayNode implements Serializable {
         this.historicWayNode = historicNodeData;
     }
 
-    @OneToMany(mappedBy = "node", targetEntity = HistoricWayNode.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "wayNode", targetEntity = HistoricWayNode.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private java.util.Set<HistoricWayNode> historicWayNode = new HashSet<>();
 
     public boolean isBlocked() {

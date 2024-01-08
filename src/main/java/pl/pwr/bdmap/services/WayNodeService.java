@@ -19,12 +19,16 @@ public class WayNodeService {
     private final NodeRepository nodeRepository;
     private final WayNodeRepository wayNodeRepository;
 
+    private final HistoricWayNodeService historicWayNodeService;
+
+
     private final WayNodeDTOMapper mapper;
 
-    public WayNodeService(WayRepository wayRepository, NodeRepository nodeRepository, WayNodeRepository wayNodeRepository, WayNodeDTOMapper mapper) {
+    public WayNodeService(WayRepository wayRepository, NodeRepository nodeRepository, WayNodeRepository wayNodeRepository, HistoricNodeDataService historicNodeDataService, HistoricWayNodeService historicNodeDataService1, HistoricWayNodeService historicWayNodeService, WayNodeDTOMapper mapper) {
         this.wayRepository = wayRepository;
         this.nodeRepository = nodeRepository;
         this.wayNodeRepository = wayNodeRepository;
+        this.historicWayNodeService = historicWayNodeService;
         this.mapper = mapper;
     }
 
@@ -44,6 +48,8 @@ public class WayNodeService {
         wayNode.setNode2(node2);
         // Save wayNode
         wayNodeRepository.save(wayNode);
+        historicWayNodeService.saveInitialVersion(wayNode);
+        // Save initial version
         return mapper.apply(wayNode);
     }
 

@@ -41,4 +41,8 @@ public class HistoricNodeDataService {
         // Save
         return historicNodeDataRepository.save(historicNodeData);
     }
+
+    public HistoricNodeData findInitialVersionByNodeId(int nodeId) {
+        return historicNodeDataRepository.findByChangeset_IdAndNode_Id(changesetService.getSystemChangeset().getId(), nodeId);
+    }
 }

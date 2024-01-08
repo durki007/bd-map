@@ -23,4 +23,8 @@ public class HistoricWayDataService {
         historicWayData.setChangeset(changesetService.getSystemChangeset());
         return historicWayDataRepository.save(historicWayData);
     }
+
+    public HistoricWayData findInitialVersionByWayId(int wayId) {
+        return historicWayDataRepository.findByChangeset_IdAndWay_Id(changesetService.getSystemChangeset().getId(), wayId);
+    }
 }
