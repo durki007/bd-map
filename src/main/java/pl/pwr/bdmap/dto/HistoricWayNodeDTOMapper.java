@@ -12,7 +12,7 @@ public class HistoricWayNodeDTOMapper implements Function<HistoricWayNode, Histo
         return new HistoricWayNodeDTO(
                 historicWayNode.getId(),
                 historicWayNode.getTimestamp(),
-                historicWayNode.getWay().getId(),
+                historicWayNode.getHistoricWayData().getId(),
                 historicWayNode.getNode1().getId(),
                 historicWayNode.getNode2().getId()
         );

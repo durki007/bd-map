@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Table(name = "HistoricWayNode")
 public class HistoricWayNode implements Serializable {
     public HistoricWayNode() {
+        // Empty constructor required by JPA
     }
 
     @Column(name = "id", nullable = false, unique = true, length = 10)
@@ -21,18 +22,6 @@ public class HistoricWayNode implements Serializable {
     @Column(name = "timestamp", nullable = false)
     @CreationTimestamp
     private java.sql.Timestamp timestamp;
-
-    public HistoricWayData getWay() {
-        return way;
-    }
-
-    public void setWay(HistoricWayData way) {
-        this.way = way;
-    }
-
-    @ManyToOne(targetEntity = HistoricWayData.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumns(value = {@JoinColumn(name = "way_id", referencedColumnName = "id", nullable = false)}, foreignKey = @ForeignKey(name = "FKWayNode890837"))
-    private HistoricWayData way;
 
     @ManyToOne(targetEntity = HistoricNodeData.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumns(value = {@JoinColumn(name = "node1_id", referencedColumnName = "id", nullable = false)}, foreignKey = @ForeignKey(name = "FKHistoricWa603500"))

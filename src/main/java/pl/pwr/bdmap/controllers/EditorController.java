@@ -56,4 +56,13 @@ public class EditorController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Way or changeset not found", e);
         }
     }
+
+    @PutMapping("/editor/wayNode")
+    public HistoricWayNodeDTO updateWayNodeData(@RequestParam int wayNodeId, @RequestParam int changesetId, @RequestBody WayNodeDTO wayNodeDTO) {
+        try {
+            return editorService.updateWayNode(wayNodeId, changesetId, wayNodeDTO);
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "WayNode or changeset not found", e);
+        }
+    }
 }
