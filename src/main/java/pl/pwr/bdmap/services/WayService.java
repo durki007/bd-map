@@ -8,6 +8,7 @@ import pl.pwr.bdmap.dto.WayDTOMapper;
 import pl.pwr.bdmap.model.Node;
 import pl.pwr.bdmap.model.NodeType;
 import pl.pwr.bdmap.model.Way;
+import pl.pwr.bdmap.model.WayType;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
