@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Table(name = "node", indexes = {@Index(columnList = "pos_x"), @Index(columnList = "pos_y")})
 public class Node implements Serializable {
     public Node() {
+        // Hibernate empty constructor
     }
 
     @Column(name = "id", nullable = false, length = 10)
@@ -36,16 +37,16 @@ public class Node implements Serializable {
     private NodeType nodeType;
 
     @OneToMany(mappedBy = "node", targetEntity = HistoricNodeData.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private java.util.Set historicNodeData = new HashSet();
+    private java.util.Set<HistoricNodeData> historicNodeData = new HashSet<>();
 
     @OneToMany(mappedBy = "node1", targetEntity = WayNode.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private java.util.Set wayNode = new HashSet();
+    private java.util.Set<WayNode> wayNode = new HashSet<>();
 
     @OneToMany(mappedBy = "node2", targetEntity = WayNode.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private java.util.Set wayNode1 = new HashSet();
+    private java.util.Set<WayNode> wayNode1 = new HashSet<>();
 
     @OneToMany(mappedBy = "node", targetEntity = NodeTag.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private java.util.Set nodeTag = new HashSet();
+    private java.util.Set<NodeTag> nodeTag = new HashSet<>();
 
     private void setId(int value) {
         this.id = value;
@@ -103,7 +104,7 @@ public class Node implements Serializable {
         this.historicNodeData = value;
     }
 
-    public java.util.Set getHistoricNodeData() {
+    public java.util.Set<HistoricNodeData> getHistoricNodeData() {
         return historicNodeData;
     }
 

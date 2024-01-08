@@ -8,6 +8,7 @@ import pl.pwr.bdmap.dto.ChangesetDTOMapper;
 import pl.pwr.bdmap.model.Changeset;
 import pl.pwr.bdmap.model.User;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -37,5 +38,10 @@ public class ChangesetService {
         User user = userService.getUserById(userId); // Throws NoSuchElementException
         changesetModel.setUser(user);
         return changesetDTOMapper.apply(changesetRepository.save(changesetModel));
+    }
+
+    public List<ChangesetDTO> listByUserId(long userId) throws NoSuchElementException {
+        User user = userService.getUserById(userId); // Throws NoSuchElementException
+        return changesetRepository.findByUser(user).stream().map(changesetDTOMapper).toList();
     }
 }

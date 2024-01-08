@@ -3,6 +3,7 @@ package pl.pwr.bdmap.model;
 import java.io.Serializable;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "Way")
@@ -20,6 +21,7 @@ public class Way implements Serializable {
     private String name;
 
     @Column(name = "timestamp", nullable = false)
+    @CreationTimestamp
     private java.sql.Timestamp timestamp;
 
     @Column(name = "is_blocked", nullable = false)

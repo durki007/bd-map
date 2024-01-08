@@ -1,6 +1,8 @@
 package pl.pwr.bdmap.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.*;
 
@@ -32,6 +34,17 @@ public class WayNode implements Serializable {
 
     @Column(name = "is_blocked", nullable = false)
     private boolean isBlocked;
+
+    public Set<HistoricWayNode> getHistoricWayNode() {
+        return historicWayNode;
+    }
+
+    public void setHistoricWayNode(Set<HistoricWayNode> historicNodeData) {
+        this.historicWayNode = historicNodeData;
+    }
+
+    @OneToMany(mappedBy = "wayNode", targetEntity = HistoricWayNode.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private java.util.Set<HistoricWayNode> historicWayNode = new HashSet<>();
 
     public boolean isBlocked() {
         return isBlocked;
