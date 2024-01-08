@@ -15,7 +15,7 @@ public class Key implements Serializable {
 	@org.hibernate.annotations.GenericGenerator(name="KEY_ID_GENERATOR", strategy="native")	
 	private int id;
 	
-	@Column(name="value", nullable=false, length=255)	
+	@Column(name="value", nullable=false, length=255, unique = true)
 	private String value;
 	
 	@OneToMany(mappedBy="key", targetEntity= KeyNodeType.class)
