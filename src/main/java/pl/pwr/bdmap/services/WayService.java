@@ -6,6 +6,7 @@ import pl.pwr.bdmap.dao.WayRepository;
 import pl.pwr.bdmap.dto.WayDTO;
 import pl.pwr.bdmap.dto.WayDTOMapper;
 import pl.pwr.bdmap.model.Way;
+import pl.pwr.bdmap.model.WayNode;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

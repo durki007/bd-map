@@ -64,4 +64,8 @@ public class WayNodeService {
     public List<Way> getWaysByNodeId(int nodeId) {
         return wayNodeRepository.findAllByNode1_IdOrNode2_Id(nodeId, nodeId).stream().map(WayNode::getWay).toList();
     }
+
+    public WayNode getWayNodeById(int id) throws NoSuchElementException {
+        return wayNodeRepository.findById(id).orElseThrow();
+    }
 }

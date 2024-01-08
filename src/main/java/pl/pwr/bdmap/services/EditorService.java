@@ -13,18 +13,23 @@ public class EditorService {
     private final NodeService nodeService;
     private final WayService wayService;
     private final ChangesetService changesetService;
+
+    private final WayNodeService wayNodeService;
     private final HistoricNodeDataService historicNodeDataService;
 
     private final HistoricNodeDataDTOMapper historicNodeDataDTOMapper;
     private final HistoricWayDataDTOMapper historicWayDataDTOMapper;
+    private final HistoricWayNodeDTOMapper historicWayNodeDTOMapper;
 
-    public EditorService(NodeService nodeService, WayService wayService, ChangesetService changesetService, HistoricNodeDataService historicNodeDataService, HistoricNodeDataDTOMapper historicNodeDataDTOMapper, HistoricWayDataDTOMapper historicWayDataDTOMapper) {
+    public EditorService(NodeService nodeService, WayService wayService, ChangesetService changesetService, WayNodeService wayNodeService, HistoricNodeDataService historicNodeDataService, HistoricNodeDataDTOMapper historicNodeDataDTOMapper, HistoricWayDataDTOMapper historicWayDataDTOMapper, HistoricWayNodeDTOMapper historicWayNodeDTOMapper) {
         this.nodeService = nodeService;
         this.wayService = wayService;
         this.changesetService = changesetService;
+        this.wayNodeService = wayNodeService;
         this.historicNodeDataService = historicNodeDataService;
         this.historicNodeDataDTOMapper = historicNodeDataDTOMapper;
         this.historicWayDataDTOMapper = historicWayDataDTOMapper;
+        this.historicWayNodeDTOMapper = historicWayNodeDTOMapper;
     }
 
     public HistoricNodeDataDTO updateNode(int nodeId, int changesetId, NodeDTO newNode) throws NoSuchElementException {
@@ -68,4 +73,23 @@ public class EditorService {
         // Return HistoricWay DTO
         return historicWayDataDTOMapper.apply(historicWayDataEntry);
     }
+
+    public HistoricWayNodeDTO updateWayNode(int id, int changsetId, WayNodeDTO newWayNode ) throws NoSuchElementException {
+        WayNode wayNode = wayNodeService.getWayNodeById(id); // Throws NoSuchElementException
+        Changeset changeset = changesetService.getChangeSetById(changsetId); // Throws NoSuchElementException
+        Set<HistoricWayNode> historicWayNode = wayNode.getHistoricWayNode();
+        HistoricWayNode historicWayNodeEntry = new HistoricWayNode();
+        // Apply changes to the way node
+        wayNode.setBlocked(newWayNode.isBlocked());
+        // Create new historic way node entry
+        historicWayNodeEntry.setWayNode(wayNode);
+        historicWayNodeEntry.setChangeset(changeset);
+        historicWayNodeEntry.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        // Save
+        historicWayNode.add(historicWayNodeEntry);
+        wayNodeService.save(wayNode);
+        // Return HistoricWayNode DT
+        return historicWayNodeDTOMapper.apply(historicWayNodeEntry);
+    }
+
 }
