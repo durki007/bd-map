@@ -1,19 +1,16 @@
-# Bazy Danych II - Projekt - Mapa cyfrowa
+# About
 
----
+Projekt mapy cyfrowej stworzony w ramach kursu *Bazy Danych II* na Politechnice Wrocławskiej.
 
-## Uruchomienie:
+## Użyte technologie
 
-1. Zainstaluj [Docker](https://docs.docker.com/get-docker/)
-2. Uruchom bazę danych:
-    ```bash
-    cd postgresql
-    docker compose up -d
-    ```
-    Baza działa na adresie: `localhost:5433`
-    Dane logowania do bazy w pliku `docker-compose.yml`
-4. Uruchom aplikację:
-    ```bash
-   ./gradlew bootRun
-   ```
-5. Otwórz [http://localhost:8080/](http://localhost:8080/)
+- React.js
+- Spring Boot
+- Postgresql
+
+## Uruchamianie aplikacji
+
+Docker:
+
+1. Ustawienie zmiennych środowiskowych w pliku `.env` (na wzór `.env.template`)
+2. `docker compose up`

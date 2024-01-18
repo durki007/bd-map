@@ -1,0 +1,64 @@
+version: '3.9'
+
+x-common-variables: &common-variables
+  POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+  POSTGRES_USER: $POSTGRES_USER
+  POSTGRES_DB: $POSTGRES_DB
+  POSTGRES_PORT: $POSTGRES_PORT
+  API_PORT: $API_PORT
+  FRONTEND_PORT: $FRONTEND_PORT
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: always
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      <<: *common-variables
+      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+
+  map-backend:
+    restart: always
+    build:
+      context: ./map-backend
+      target: runner
+    depends_on:
+      - postgres
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "${API_PORT}:8080"
+    environment:
+      <<: *common-variables
+      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_PORT: $POSTGRES_PORT
+      POSTGRES_HOST: host.docker.internal
+    command: java -jar /app.jar
+
+  map-frontend:
+    restart: always
+    build:
+      context: ./map-frontend
+      target: runner
+    depends_on:
+      - map-backend
+      - postgres
+    ports:
+      - "${FRONTEND_PORT}:3000"
+    environment:
+      <<: *common-variables
+      API_PORT: $API_PORT
+      FRONTEND_PORT: $FRONTEND_PORT
+      POSTGRES_PORT: $POSTGRES_PORT
+      POSTGRES_HOST: host.docker.internal
+    command: npm run dev
+
+volumes:
+  postgres_data:
