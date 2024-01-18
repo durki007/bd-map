@@ -19,9 +19,7 @@ public class WayTagService {
 
     public List<String> getTags(int id) {
         List<WayTag> wayTags = wayTagRepository.findAllByWayId(id);
-
-        List<String> tags = wayTags.stream().map(wayTag -> wayTag.getKey().getValue()).toList();
-        return tags;
+        return wayTags.stream().map(wayTag -> wayTag.getKey().getValue()).toList();
     }
 
 }

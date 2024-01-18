@@ -1,11 +1,8 @@
 package pl.pwr.bdmap.services;
 
 import org.springframework.stereotype.Service;
-import pl.pwr.bdmap.dao.KeyNodeTypeRepository;
 import pl.pwr.bdmap.dao.KeyWayTypeRepository;
-import pl.pwr.bdmap.dao.WayTypeRepository;
 import pl.pwr.bdmap.model.Key;
-import pl.pwr.bdmap.model.KeyNodeType;
 import pl.pwr.bdmap.model.KeyWayType;
 import pl.pwr.bdmap.model.WayType;
 
@@ -14,12 +11,10 @@ import java.util.NoSuchElementException;
 
 @Service
 public class KeyWayTypeService {
-    private final WayTypeRepository wayTypeRepository;
     private final KeyWayTypeRepository keyWayTypeRepository;
 
 
-    public KeyWayTypeService(WayTypeRepository wayTypeRepository, KeyWayTypeRepository keyWayTypeRepository) {
-        this.wayTypeRepository = wayTypeRepository;
+    public KeyWayTypeService(KeyWayTypeRepository keyWayTypeRepository) {
         this.keyWayTypeRepository = keyWayTypeRepository;
     }
 
@@ -27,12 +22,10 @@ public class KeyWayTypeService {
 
         List<KeyWayType> keyWayTypes = keyWayTypeRepository.findAllByWayTypeId(wayType.getId());
 
-        List<String> keys = keyWayTypes.stream()
+        return keyWayTypes.stream()
                 .map(KeyWayType::getKey)
                 .map(Key::getValue)
                 .toList();
-
-        return keys;
     }
 
     public String save(KeyWayType newKeyWayType) {

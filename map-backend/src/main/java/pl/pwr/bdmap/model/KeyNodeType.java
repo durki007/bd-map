@@ -4,16 +4,15 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 
 @Entity
-@org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="KeyNodeType")
 public class KeyNodeType implements Serializable {
 	public KeyNodeType() {
+		// Empty constructor
 	}
 
 	@Column(name="id", nullable=false, unique=true, length=10)
 	@Id
-	@GeneratedValue(generator="KEYNODETYPE_ID_GENERATOR")	
-	@org.hibernate.annotations.GenericGenerator(name="KEYNODETYPE_ID_GENERATOR", strategy="native")	
+	@GeneratedValue(generator="KEYNODETYPE_ID_GENERATOR", strategy = GenerationType.AUTO)
 	private int id;
 	
 	@ManyToOne(targetEntity= NodeType.class, fetch=FetchType.LAZY)

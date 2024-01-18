@@ -5,7 +5,6 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 
 @Entity
-@org.hibernate.annotations.Proxy(lazy = false)
 @Table(name = "NodeType")
 public class NodeType implements Serializable {
     public NodeType() {
@@ -13,22 +12,17 @@ public class NodeType implements Serializable {
 
     @Column(name = "id", nullable = false, unique = true, length = 10)
     @Id
-    @GeneratedValue(generator = "NODETYPE_ID_GENERATOR")
-    @org.hibernate.annotations.GenericGenerator(name = "NODETYPE_ID_GENERATOR", strategy = "native")
+    @GeneratedValue(generator = "NODETYPE_ID_GENERATOR", strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name = "type", nullable = false, unique = true, length = 255)
     private String type;
 
-    @OneToMany(mappedBy = "nodeType", targetEntity = Node.class)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
-    @org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
-    private java.util.Set node = new java.util.HashSet();
+    @OneToMany(mappedBy = "nodeType", targetEntity = Node.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private java.util.Set<Node> node = new java.util.HashSet<>();
 
-    @OneToMany(mappedBy = "nodeType", targetEntity = KeyNodeType.class)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
-    @org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
-    private java.util.Set keyNodeType = new java.util.HashSet();
+    @OneToMany(mappedBy = "nodeType", targetEntity = KeyNodeType.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private java.util.Set<KeyNodeType> keyNodeType = new java.util.HashSet<>();
 
     private void setId(int value) {
         this.id = value;
@@ -50,23 +44,21 @@ public class NodeType implements Serializable {
         return type;
     }
 
-    public void setNode(java.util.Set value) {
+    public void setNode(java.util.Set<Node> value) {
         this.node = value;
     }
 
-    public java.util.Set getNode() {
+    public java.util.Set<Node> getNode() {
         return node;
     }
 
-
-    public void setKeyNodeType(java.util.Set value) {
+    public void setKeyNodeType(java.util.Set<KeyNodeType> value) {
         this.keyNodeType = value;
     }
 
-    public java.util.Set getKeyNodeType() {
+    public java.util.Set<KeyNodeType> getKeyNodeType() {
         return keyNodeType;
     }
-
 
     public String toString() {
         return String.valueOf(getId());

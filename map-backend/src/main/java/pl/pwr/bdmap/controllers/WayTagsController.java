@@ -1,6 +1,5 @@
 package pl.pwr.bdmap.controllers;
 
-import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,54 +17,47 @@ import java.util.NoSuchElementException;
 @RestController
 public class WayTagsController {
     private final WayService wayService;
-    private final WayTypeService wayTypeService;
     private final WayTagService wayTagService;
-    private final KeyService keyService;
     private final KeyWayTypeService keyWayTypeService;
     private final WayTypeRepository wayTypeRepository;
     private final KeyRepository keyRepository;
     private final KeyWayTypeRepository keyWayTypeRepository;
 
 
-    public WayTagsController(WayService wayService, WayTypeService wayTypeService, WayTagService wayTagService, KeyService keyService, KeyWayTypeService keyWayTypeService, WayTypeRepository wayTypeRepository, KeyRepository keyRepository, KeyWayTypeRepository keyWayTypeRepository) {
+    public WayTagsController(WayService wayService, WayTagService wayTagService, KeyWayTypeService keyWayTypeService, WayTypeRepository wayTypeRepository, KeyRepository keyRepository, KeyWayTypeRepository keyWayTypeRepository) {
         this.wayService = wayService;
-        this.wayTypeService = wayTypeService;
         this.wayTagService = wayTagService;
-        this.keyService = keyService;
         this.keyWayTypeService = keyWayTypeService;
         this.wayTypeRepository = wayTypeRepository;
         this.keyRepository = keyRepository;
         this.keyWayTypeRepository = keyWayTypeRepository;
     }
 
-    /// get tags of selected way of {id}
     @GetMapping("ways/{id}/getTags")
     List<String> wayTags(@PathVariable int id) {
-        try{
+        try {
             return wayTagService.getTags(id);
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Way not found", e);
         }
     }
 
-    /// get type of selected way of {id}
     @GetMapping("ways/{id}/getType")
     String wayTypes(@PathVariable int id) {
-        try{
+        try {
             return wayService.getWayType(id).getType();
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Way not found", e);
         }
     }
 
-    /// get possible Keys for selected way of {id}
     @GetMapping("ways/{id}/getAvailableKeys")
     List<String> getAvailableKeys(@PathVariable int id) {
         WayType wayType = wayService.getWayType(id);
 
-        try{
-            return  keyWayTypeService.getAvailableKeys(wayType);
-        } catch (NoSuchElementException e){
+        try {
+            return keyWayTypeService.getAvailableKeys(wayType);
+        } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Way not found", e);
         }
     }
@@ -77,7 +69,7 @@ public class WayTagsController {
         WayType wayType = wayTypeRepository.findByType(wayTypeStr);
 
         //check if this way type exists in db
-        if(wayType == null){
+        if (wayType == null) {
             WayType newWayType = new WayType();
             newWayType.setType(wayTypeStr);
             wayType = wayTypeRepository.save(newWayType);
@@ -96,7 +88,7 @@ public class WayTagsController {
         KeyWayType existingKeyWayType = keyWayTypeRepository.findByKeyAndWayType(key, wayType);
 
         // if not create new relation
-        if(existingKeyWayType == null) {
+        if (existingKeyWayType == null) {
             KeyWayType newKeyWayType = new KeyWayType();
             newKeyWayType.setKey(key);
             newKeyWayType.setWayType(wayType);
@@ -104,7 +96,7 @@ public class WayTagsController {
             return keyWayTypeService.save(newKeyWayType);
         }
 
-        return  keyWayTypeService.save(existingKeyWayType);
+        return keyWayTypeService.save(existingKeyWayType);
     }
 
 

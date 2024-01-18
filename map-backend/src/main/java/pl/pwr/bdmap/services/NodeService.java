@@ -5,12 +5,10 @@ import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.NodeRepository;
 import pl.pwr.bdmap.dto.NodeDTO;
 import pl.pwr.bdmap.dto.NodeDTOMapper;
-import pl.pwr.bdmap.dto.NodeTypeDTO;
 import pl.pwr.bdmap.model.Node;
 import pl.pwr.bdmap.model.NodeType;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class NodeService {
@@ -28,9 +26,9 @@ public class NodeService {
     }
 
     public List<NodeDTO> list() {
-        List<Node> list = new ArrayList<Node>();
+        List<Node> list = new ArrayList<>();
         nodeRepository.findAll().forEach(list::add);
-        return list.stream().map(mapper).collect(Collectors.toList());
+        return list.stream().map(mapper).toList();
     }
     public NodeDTO save(NodeDTO nodeDTO) throws RuntimeException {
         try {

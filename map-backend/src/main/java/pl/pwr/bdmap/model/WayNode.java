@@ -7,7 +7,6 @@ import java.util.Set;
 import jakarta.persistence.*;
 
 @Entity
-@org.hibernate.annotations.Proxy(lazy = false)
 @Table(name = "WayNode")
 public class WayNode implements Serializable {
     public WayNode() {

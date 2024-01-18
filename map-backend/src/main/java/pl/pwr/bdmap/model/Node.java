@@ -100,7 +100,7 @@ public class Node implements Serializable {
         return nodeType;
     }
 
-    public void setHistoricNodeData(java.util.Set value) {
+    public void setHistoricNodeData(java.util.Set<HistoricNodeData> value) {
         this.historicNodeData = value;
     }
 
@@ -109,29 +109,29 @@ public class Node implements Serializable {
     }
 
 
-    public void setWayNode(java.util.Set value) {
+    public void setWayNode(java.util.Set<WayNode> value) {
         this.wayNode = value;
     }
 
-    public java.util.Set getWayNode() {
+    public java.util.Set<WayNode> getWayNode() {
         return wayNode;
     }
 
 
-    public void setWayNode1(java.util.Set value) {
+    public void setWayNode1(java.util.Set<WayNode> value) {
         this.wayNode1 = value;
     }
 
-    public java.util.Set getWayNode1() {
+    public java.util.Set<WayNode> getWayNode1() {
         return wayNode1;
     }
 
 
-    public void setNodeTag(java.util.Set value) {
+    public void setNodeTag(java.util.Set<NodeTag> value) {
         this.nodeTag = value;
     }
 
-    public java.util.Set getNodeTag() {
+    public java.util.Set<NodeTag> getNodeTag() {
         return nodeTag;
     }
 
