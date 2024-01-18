@@ -9,9 +9,7 @@ import pl.pwr.bdmap.dto.NodeTypeDTO;
 import pl.pwr.bdmap.model.Node;
 import pl.pwr.bdmap.model.NodeType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,30 +32,48 @@ public class NodeService {
         nodeRepository.findAll().forEach(list::add);
         return list.stream().map(mapper).collect(Collectors.toList());
     }
-    public NodeDTO save(NodeDTO nodeDTO) {
-        Node node = new Node();
-        // Map known fields
-        node.setPosX(nodeDTO.posX());
-        node.setPosY(nodeDTO.posY());
-        node.setIsBlocked(false);
-        // Default node type
-        if (nodeDTO.nodeType() == null) {
-            node.setNodeType(nodeTypeService.save("default"));
-        } else {
-            node.setNodeType(nodeTypeService.save(nodeDTO.nodeType()));
+    public NodeDTO save(NodeDTO nodeDTO) throws RuntimeException {
+        try {
+            Node node = new Node();
+
+            node.setPosX(nodeDTO.posX());
+            node.setPosY(nodeDTO.posY());
+            node.setIsBlocked(false);
+
+            if (nodeDTO.nodeType() == null) {
+                node.setNodeType(nodeTypeService.save("default"));
+            } else {
+                node.setNodeType(nodeTypeService.save(nodeDTO.nodeType()));
+            }
+
+            node = nodeRepository.save(node);
+
+            historicNodeDataService.saveInitialVersion(node);
+            return mapper.apply(node);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to save node: " + e.getMessage(), e);
         }
-        // Save node
-        node = nodeRepository.save(node);
-        // Save initial version
-        historicNodeDataService.saveInitialVersion(node);
-        return mapper.apply(node);
     }
 
     public List<NodeDTO> save(List<NodeDTO> nodeDTOs) {
         List<NodeDTO> savedNodes = new ArrayList<>();
+        Map<NodeDTO, Exception> failedNodes = new HashMap<>();
+
         for (NodeDTO nodeDTO : nodeDTOs) {
-            savedNodes.add(save(nodeDTO));
+            try {
+                savedNodes.add(save(nodeDTO));
+            }
+            catch (Exception e) {
+                failedNodes.put(nodeDTO, e);
+            }
         }
+
+        for (Map.Entry<NodeDTO, Exception> entry : failedNodes.entrySet()) {
+            NodeDTO failedNode = entry.getKey();
+            Exception exception = entry.getValue();
+            System.out.println("Failed to save node: " + failedNode + ". Exception: " + exception.getMessage());
+        }
+
         return savedNodes;
     }
 
