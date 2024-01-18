@@ -1,10 +1,10 @@
 # Jar builder
-FROM gradle:jdk21 as builder
+FROM gradle:jdk21 AS builder
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN gradle build --no-daemon
 
-FROM eclipse-temurin:21-jre as runner
+FROM eclipse-temurin:21-jre AS runner
 ARG POSTGRES_DB
 ARG POSTGRES_USER
 ARG POSTGRES_PASSWORD

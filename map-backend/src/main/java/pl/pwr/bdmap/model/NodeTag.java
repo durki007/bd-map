@@ -5,28 +5,25 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 
 @Entity
-@org.hibernate.annotations.Proxy(lazy = false)
 @Table(name = "NodeTag")
 public class NodeTag implements Serializable {
     public NodeTag() {
+        // Empty constructor
     }
 
     @Column(name = "id", nullable = false, unique = true, length = 10)
     @Id
-    @GeneratedValue(generator = "NODETAG_ID_GENERATOR")
-    @org.hibernate.annotations.GenericGenerator(name = "NODETAG_ID_GENERATOR", strategy = "native")
+    @GeneratedValue(generator = "NODETAG_ID_GENERATOR", strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name = "version", nullable = false, length = 10)
     private int version;
 
-    @ManyToOne(targetEntity = Node.class, fetch = FetchType.LAZY)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})
+    @ManyToOne(targetEntity = Node.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumns(value = {@JoinColumn(name = "Node_id", referencedColumnName = "id", nullable = false)}, foreignKey = @ForeignKey(name = "FKNodeTag305944"))
     private Node node;
 
-    @ManyToOne(targetEntity = Key.class, fetch = FetchType.LAZY)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})
+    @ManyToOne(targetEntity = Key.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumns(value = {@JoinColumn(name = "Key_id", referencedColumnName = "id", nullable = false)}, foreignKey = @ForeignKey(name = "FKNodeTag365389"))
     private Key key;
 

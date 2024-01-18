@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.WayRepository;
 import pl.pwr.bdmap.dto.WayDTO;
 import pl.pwr.bdmap.dto.WayDTOMapper;
-import pl.pwr.bdmap.model.Node;
-import pl.pwr.bdmap.model.NodeType;
 import pl.pwr.bdmap.model.Way;
 import pl.pwr.bdmap.model.WayType;
 
@@ -34,7 +32,7 @@ public class WayService {
     public List<WayDTO> list() {
         List<Way> list = new ArrayList<>();
         wayRepository.findAll().forEach(list::add);
-        return  list.stream().map(mapper).collect(Collectors.toList());
+        return  list.stream().map(mapper).toList();
     }
 
     public WayDTO save(WayDTO wayDTO) {

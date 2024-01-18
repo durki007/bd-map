@@ -15,6 +15,7 @@ public class SystemUserInit implements InitializingBean {
 
     private final UserRepository userRepository;
     private final ChangesetRepository changesetRepository;
+    private static final String SYSTEM_ROLE = "SYSTEM";
 
     @Autowired
     public SystemUserInit(UserRepository userRepository, ChangesetRepository changesetRepository) {
@@ -29,13 +30,13 @@ public class SystemUserInit implements InitializingBean {
     }
 
     private void initSystemUser() {
-        List<User> list = userRepository.findByRole("SYSTEM");
+        List<User> list = userRepository.findByRole(SYSTEM_ROLE);
         if (list.isEmpty()) {
             User user = new User();
-            user.setRole("SYSTEM");
-            user.setUsername("SYSTEM");
-            user.setEmail("SYSTEM");
-            user.setPassword("SYSTEM");
+            user.setRole(SYSTEM_ROLE);
+            user.setUsername(SYSTEM_ROLE);
+            user.setEmail(SYSTEM_ROLE);
+            user.setPassword(SYSTEM_ROLE);
             userRepository.save(user);
             return;
         }
@@ -44,10 +45,10 @@ public class SystemUserInit implements InitializingBean {
     }
 
     private void initSystemChangeset() {
-        List<Changeset> list = changesetRepository.findByUser(userRepository.findByRole("SYSTEM").get(0));
+        List<Changeset> list = changesetRepository.findByUser(userRepository.findByRole(SYSTEM_ROLE).getFirst());
         if (list.isEmpty()) {
             Changeset changeset = new Changeset();
-            changeset.setUser(userRepository.findByRole("SYSTEM").get(0));
+            changeset.setUser(userRepository.findByRole(SYSTEM_ROLE).getFirst());
             changesetRepository.save(changeset);
             return;
         }

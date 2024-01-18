@@ -24,7 +24,7 @@ public class WayNodeService {
 
     private final WayNodeDTOMapper mapper;
 
-    public WayNodeService(WayRepository wayRepository, NodeRepository nodeRepository, WayNodeRepository wayNodeRepository, HistoricNodeDataService historicNodeDataService, HistoricWayNodeService historicNodeDataService1, HistoricWayNodeService historicWayNodeService, WayNodeDTOMapper mapper) {
+    public WayNodeService(WayRepository wayRepository, NodeRepository nodeRepository, WayNodeRepository wayNodeRepository, HistoricWayNodeService historicWayNodeService, WayNodeDTOMapper mapper) {
         this.wayRepository = wayRepository;
         this.nodeRepository = nodeRepository;
         this.wayNodeRepository = wayNodeRepository;

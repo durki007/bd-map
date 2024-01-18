@@ -5,30 +5,25 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 
 @Entity
-@org.hibernate.annotations.Proxy(lazy = false)
 @Table(name = "WayType")
 public class WayType implements Serializable {
     public WayType() {
+        // empty
     }
 
     @Column(name = "id", nullable = false, unique = true, length = 10)
     @Id
-    @GeneratedValue(generator = "WAYTYPE_ID_GENERATOR")
-    @org.hibernate.annotations.GenericGenerator(name = "WAYTYPE_ID_GENERATOR", strategy = "native")
+    @GeneratedValue(generator = "WAYTYPE_ID_GENERATOR", strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name = "type", nullable = false, length = 255)
     private String type;
 
-    @OneToMany(mappedBy = "wayType", targetEntity = Way.class)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
-    @org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
-    private java.util.Set way = new java.util.HashSet();
+    @OneToMany(mappedBy = "wayType", targetEntity = Way.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private java.util.Set<Way> way = new java.util.HashSet<>();
 
-    @OneToMany(mappedBy = "wayType", targetEntity = KeyWayType.class)
-    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})
-    @org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
-    private java.util.Set keyWayType = new java.util.HashSet();
+    @OneToMany(mappedBy = "wayType", targetEntity = KeyWayType.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private java.util.Set<KeyWayType> keyWayType = new java.util.HashSet<>();
 
     private void setId(int value) {
         this.id = value;
@@ -50,23 +45,22 @@ public class WayType implements Serializable {
         return type;
     }
 
-    public void setWay(java.util.Set value) {
+    public void setWay(java.util.Set<Way> value) {
         this.way = value;
     }
 
-    public java.util.Set getWay() {
+    public java.util.Set<Way> getWay() {
         return way;
     }
 
 
-    public void setKeyWayType(java.util.Set value) {
+    public void setKeyWayType(java.util.Set<KeyWayType> value) {
         this.keyWayType = value;
     }
 
-    public java.util.Set getKeyWayType() {
+    public java.util.Set<KeyWayType> getKeyWayType() {
         return keyWayType;
     }
-
 
     public String toString() {
         return String.valueOf(getId());

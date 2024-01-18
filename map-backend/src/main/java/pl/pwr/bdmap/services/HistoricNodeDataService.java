@@ -10,7 +10,6 @@ import pl.pwr.bdmap.model.Node;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class HistoricNodeDataService {
@@ -29,17 +28,17 @@ public class HistoricNodeDataService {
     public List<HistoricNodeDataDTO> list() {
         List<HistoricNodeData> list = new ArrayList<>();
         historicNodeDataRepository.findAll().forEach(list::add);
-        return list.stream().map(historicNodeDataDTOMapper).collect(Collectors.toList());
+        return list.stream().map(historicNodeDataDTOMapper).toList();
     }
 
-    public HistoricNodeData saveInitialVersion(Node node) {
+    public void saveInitialVersion(Node node) {
         HistoricNodeData historicNodeData = new HistoricNodeData();
         historicNodeData.setNode(node);
         historicNodeData.setPosX(node.getPosX());
         historicNodeData.setPosY(node.getPosY());
         historicNodeData.setChangeset(changesetService.getSystemChangeset());
         // Save
-        return historicNodeDataRepository.save(historicNodeData);
+        historicNodeDataRepository.save(historicNodeData);
     }
 
     public HistoricNodeData findInitialVersionByNodeId(int nodeId) {
