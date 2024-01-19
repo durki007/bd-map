@@ -26,7 +26,7 @@ export default function Home() {
           <Card.Title className={css({ fontSize: '2xl' })}>
             Witaj w OSMClone
           </Card.Title>
-          <Card.Description>Prosty w obsłudze System CRM</Card.Description>
+          <Card.Description>Prosty w obsłudze edytor map</Card.Description>
         </Card.Header>
         <Card.Body className={css({ mt: '2' })}>
           OSMClone to intuicyjny mapa z edytorem, stworzona z myślą o łatwości

@@ -23,16 +23,20 @@
     "@ark-ui/react": "^1.3.0",
     "@tanstack/react-query": "^5.17.15",
     "axios": "^1.6.5",
+    "leaflet": "^1.9.4",
+    "leaflet-defaulticon-compatibility": "^0.1.2",
     "lucide-react": "^0.312.0",
     "next": "14.1.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-leaflet": "^4.2.1"
   },
   "devDependencies": {
     "@omikorin/prettier-config": "^1.0.0",
     "@pandacss/dev": "^0.27.2",
     "@park-ui/panda-preset": "^0.28.0",
     "@tanstack/eslint-plugin-query": "^5.17.7",
+    "@types/leaflet": "^1.9.8",
     "@types/node": "^20.11.5",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
