@@ -8,6 +8,7 @@ import pl.pwr.bdmap.dao.WayRepository;
 import pl.pwr.bdmap.dto.WayNodeDTO;
 import pl.pwr.bdmap.dto.WayNodeDTOMapper;
 import pl.pwr.bdmap.exceptions.NotFoundException;
+import pl.pwr.bdmap.model.Node;
 import pl.pwr.bdmap.model.Way;
 import pl.pwr.bdmap.model.WayNode;
 
@@ -15,6 +16,7 @@ import javax.naming.directory.InvalidAttributesException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+
 
 @Service
 public class WayNodeService {
@@ -42,18 +44,18 @@ public class WayNodeService {
     public WayNodeDTO save(WayNodeDTO wayNodeDTO) throws NotFoundException, InvalidAttributesException {
         // checking if enough data passed
         if (wayNodeDTO.wayId() == 0 || wayNodeDTO.node1Id() == 0 || wayNodeDTO.node2Id() == 0) {
-            throw new InvalidAttributesException("Missing required fields in way_node " + wayNodeDTO.toString());
+            throw new InvalidAttributesException("Missing required fields in way_node " + wayNodeDTO);
         }
 
         if(wayNodeDTO.node1Id() == wayNodeDTO.node2Id()){
-            throw new InvalidAttributesException("Invalid (the same) nodeId fields in way_node " + wayNodeDTO.toString());
+            throw new InvalidAttributesException("Invalid (the same) nodeId fields in way_node " + wayNodeDTO);
         }
 
         if (!wayNodeRepository.findAllByNode1_IdAndNode2_IdAndWay_IdOrNode1_IdAndNode2_IdAndWay_Id(
                 wayNodeDTO.node1Id(), wayNodeDTO.node2Id(), wayNodeDTO.wayId(),
                 wayNodeDTO.node2Id(), wayNodeDTO.node1Id(), wayNodeDTO.wayId()
         ).isEmpty()) {
-            throw new InvalidAttributesException("There is already such WayNode in the database " + wayNodeDTO.toString());
+            throw new InvalidAttributesException("There is already such WayNode in the database " + wayNodeDTO);
         }
 
 
@@ -62,11 +64,11 @@ public class WayNodeService {
         wayNode.setBlocked(false);
         // Check if nodes and way exist
         var way = wayRepository.findById(wayNodeDTO.wayId())
-                .orElseThrow(() -> new NotFoundException("Way_node:" + wayNodeDTO.toString() + " has reference to not existing Way with id: " + wayNodeDTO.wayId()));
+                .orElseThrow(() -> new NotFoundException("Way_node:" + wayNodeDTO + " has reference to not existing Way with id: " + wayNodeDTO.wayId()));
         var node1 = nodeRepository.findById(wayNodeDTO.node1Id())
-                .orElseThrow(() -> new NotFoundException("Way_node: " + wayNodeDTO.toString() + " has reference to not existing Node1 with id: " + wayNodeDTO.node1Id()));
+                .orElseThrow(() -> new NotFoundException("Way_node: " + wayNodeDTO + " has reference to not existing Node1 with id: " + wayNodeDTO.node1Id()));
         var node2 = nodeRepository.findById(wayNodeDTO.node2Id())
-                .orElseThrow(() -> new NotFoundException("Way_node: " + wayNodeDTO.toString() + " has reference to not existing Node2 with id: " + wayNodeDTO.node2Id()));
+                .orElseThrow(() -> new NotFoundException("Way_node: " + wayNodeDTO + " has reference to not existing Node2 with id: " + wayNodeDTO.node2Id()));
 
         wayNode.setWay(way);
         wayNode.setNode1(node1);
@@ -95,6 +97,39 @@ public class WayNodeService {
             }
         }
         return savedWayNodes;
+    }
+
+    public WayNode update(WayNode wayNode, WayNodeDTO dtoNew) throws NotFoundException, InvalidAttributesException {
+        // checking if there is some data in dtoNew and if it's correct
+        if ((dtoNew.wayId() == 0 && dtoNew.node1Id() == 0 && dtoNew.node2Id() == 0) || ((dtoNew.node1Id() == dtoNew.node2Id()) && dtoNew.node1Id() != 0 )) {
+            throw new InvalidAttributesException("Invalid attributes for updating: " + dtoNew);
+        }
+
+        if (dtoNew.wayId() != 0) {
+            Way newWay = wayRepository.findById(dtoNew.wayId()).orElseThrow(() -> new NotFoundException("Couldn't find way with id: " + dtoNew.wayId()));
+            wayNode.setWay(newWay);
+        }
+
+        if (dtoNew.node1Id() != 0) {
+            Node newNode1 = nodeRepository.findById(dtoNew.node1Id()).orElseThrow(() -> new NotFoundException("Couldn't find node with id: " + dtoNew.node1Id()));
+            wayNode.setNode1(newNode1);
+        }
+
+        if (dtoNew.node2Id() != 0) {
+            Node newNode2 = nodeRepository.findById(dtoNew.node2Id()).orElseThrow(() -> new NotFoundException("Couldn't find node with id: " + dtoNew.node2Id()));
+            wayNode.setNode2(newNode2);
+        }
+
+        // Validate if the updated data already exists in the database
+        if (wayNodeRepository.findAllByNode1_IdAndNode2_IdAndWay_IdOrNode1_IdAndNode2_IdAndWay_Id(
+                wayNode.getNode1().getId(), wayNode.getNode2().getId(), wayNode.getWay().getId(),
+                wayNode.getNode2().getId(), wayNode.getNode1().getId(), wayNode.getWay().getId()
+        ).isEmpty()) {
+            // No conflicting data, update the wayNode
+            return wayNodeRepository.save(wayNode);
+        } else {
+            throw new InvalidAttributesException("Node with selected data already exists");
+        }
     }
 
     public List<WayNode> getAll() {
