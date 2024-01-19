@@ -33,8 +33,8 @@
   },
   "devDependencies": {
     "@omikorin/prettier-config": "^1.0.0",
-    "@pandacss/dev": "^0.27.2",
-    "@park-ui/panda-preset": "^0.28.0",
+    "@pandacss/dev": "^0.27.3",
+    "@park-ui/panda-preset": "^0.29.0",
     "@tanstack/eslint-plugin-query": "^5.17.7",
     "@types/leaflet": "^1.9.8",
     "@types/node": "^20.11.5",

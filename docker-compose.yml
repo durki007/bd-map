@@ -13,7 +13,7 @@ services:
     image: postgres:16-alpine
     restart: always
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - '${POSTGRES_PORT}:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
@@ -30,9 +30,9 @@ services:
     depends_on:
       - postgres
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - 'host.docker.internal:host-gateway'
     ports:
-      - "${API_PORT}:8080"
+      - '${API_PORT}:8080'
     environment:
       <<: *common-variables
       POSTGRES_DB: $POSTGRES_DB
@@ -51,14 +51,14 @@ services:
       - map-backend
       - postgres
     ports:
-      - "${FRONTEND_PORT}:3000"
+      - '${FRONTEND_PORT}:3000'
     environment:
       <<: *common-variables
       API_PORT: $API_PORT
       FRONTEND_PORT: $FRONTEND_PORT
       POSTGRES_PORT: $POSTGRES_PORT
       POSTGRES_HOST: host.docker.internal
-    command: npm run dev
+    command: pnpm start
 
 volumes:
   postgres_data:
