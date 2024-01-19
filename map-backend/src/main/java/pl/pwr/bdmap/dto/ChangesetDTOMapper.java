@@ -13,6 +13,7 @@ public class ChangesetDTOMapper implements Function<Changeset, ChangesetDTO> {
         return new ChangesetDTO(
                 changeset.getId(),
                 changeset.getCreationDate(),
+                changeset.getCloseDate(),
                 userInfoDTOMapper.apply(changeset.getUser())
         );
     }
