@@ -59,6 +59,15 @@ public class EditorController {
         }
     }
 
+    /**
+     * The wayNodeDTO must contain at least one filled field (wayId, node1Id, or node2Id).
+     * Only the field with data will be updated in the object under update.
+     *
+     * @param wayNodeId
+     * @param changesetId
+     * @param wayNodeDTO
+     * @return
+     */
     @PutMapping("/editor/wayNode")
     public HistoricWayNodeDTO updateWayNodeData(@RequestParam int wayNodeId, @RequestParam int changesetId, @RequestBody WayNodeDTO wayNodeDTO) {
         try {
