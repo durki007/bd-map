@@ -3,6 +3,7 @@ import { createPreset } from '@park-ui/panda-preset';
 
 export default defineConfig({
   preflight: true,
+  lightningcss: true,
   presets: [
     '@pandacss/preset-base',
     createPreset({
