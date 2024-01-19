@@ -57,6 +57,11 @@ public class AdminAccessController {
         return wayService.save(newWay);
     }
 
+    @PostMapping("/admin/ways")
+    List<WayDTO> newWays(@RequestBody List<WayDTO> newWays) {
+        return wayService.save(newWays);
+    }
+
     @DeleteMapping("/admin/way/{id}")
     WayDTO deleteWay(@PathVariable int id) {
         try {
