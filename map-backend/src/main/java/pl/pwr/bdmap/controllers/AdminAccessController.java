@@ -6,10 +6,13 @@ import org.springframework.web.server.ResponseStatusException;
 import pl.pwr.bdmap.dto.NodeDTO;
 import pl.pwr.bdmap.dto.WayDTO;
 import pl.pwr.bdmap.dto.WayNodeDTO;
+import pl.pwr.bdmap.exceptions.NotFoundException;
 import pl.pwr.bdmap.services.NodeService;
 import pl.pwr.bdmap.services.WayNodeService;
 import pl.pwr.bdmap.services.WayService;
 
+import javax.naming.directory.InvalidAttributesException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -65,15 +68,28 @@ public class AdminAccessController {
 
     @PostMapping("/admin/wayNode")
     WayNodeDTO newWayNode(@RequestBody WayNodeDTO newWay) {
-        // Check required fields
-        if (newWay.wayId() == 0 || newWay.node1Id() == 0 || newWay.node2Id() == 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing required fields");
-        }
+
         try {
             return wayNodeService.save(newWay);
-        } catch (NoSuchElementException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified nodes not found", e);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        } catch (InvalidAttributesException e) {
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         }
+    }
+
+    @PostMapping("/admin/wayNodes")
+    List<WayNodeDTO> newWayNodes(@RequestBody List<WayNodeDTO> newWays) {
+        List<WayNodeDTO> addedNodes = new ArrayList<>();
+        try{
+            addedNodes = wayNodeService.save(newWays);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        } catch (InvalidAttributesException e) {
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        }
+
+        return addedNodes;
     }
 
     @DeleteMapping("/admin/wayNode/{id}")
