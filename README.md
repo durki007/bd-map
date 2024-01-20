@@ -17,4 +17,4 @@ Docker:
 
 ## Wczytywanie danych tekstowych
 
-``spring.datasource.initialize=true w application.properties``
+``spring.datasource.initialize=true`` w application.properties
