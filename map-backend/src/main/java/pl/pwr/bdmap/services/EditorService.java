@@ -72,9 +72,9 @@ public class EditorService {
         return historicWayDataDTOMapper.apply(historicWayDataEntry);
     }
 
-    public HistoricWayNodeDTO updateWayNode(int id, int changsetId, WayNodeDTO newWayNode) throws NoSuchElementException, InvalidAttributesException {
+    public HistoricWayNodeDTO updateWayNode(int id, int changesetId, WayNodeDTO newWayNode) throws NoSuchElementException, InvalidAttributesException {
         WayNode wayNode = wayNodeService.getWayNodeById(id); // Throws NoSuchElementException
-        Changeset changeset = changesetService.getChangeSetById(changsetId); // Throws NoSuchElementException
+        Changeset changeset = changesetService.getChangeSetById(changesetId); // Throws NoSuchElementException
         Set<HistoricWayNode> historicWayNode = wayNode.getHistoricWayNode();
         HistoricWayNode historicWayNodeEntry = new HistoricWayNode();
         // Apply changes to the way node
