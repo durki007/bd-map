@@ -44,6 +44,17 @@ public class Changeset implements Serializable {
     @OneToMany(mappedBy = "changeset", targetEntity = HistoricWayData.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<HistoricWayData> historicWayData = new java.util.HashSet<>();
 
+    public Set<Way> getBlockedWays() {
+        return blockedWays;
+    }
+
+    public void setBlockedWays(Set<Way> blockedWays) {
+        this.blockedWays = blockedWays;
+    }
+
+    @OneToMany(mappedBy = "blockedBy", targetEntity = Way.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Way> blockedWays = new java.util.HashSet<>();
+
     private void setId(int value) {
         this.id = value;
     }
