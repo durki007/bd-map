@@ -35,24 +35,21 @@ public class EditorService {
         this.historicWayNodeDTOMapper = historicWayNodeDTOMapper;
     }
 
-    public HistoricNodeDataDTO updateNode(int nodeId, int changesetId, NodeDTO newNode) throws NoSuchElementException {
+    public HistoricNodeDataDTO updateNode(int nodeId, int changesetId, NodeDTO newNode) throws NoSuchElementException, InvalidAttributesException {
         Node node = nodeService.getNodeById(nodeId); // Throws NoSuchElementException
         Changeset changeset = changesetService.getChangeSetById(changesetId); // Throws NoSuchElementException
         Set<HistoricNodeData> historicNodeData = node.getHistoricNodeData();
         HistoricNodeData historicNodeDataEntry = new HistoricNodeData();
-        // Apply changes to the node
-        node.setPosX(newNode.posX());
-        node.setPosY(newNode.posY());
-        // TODO: Change NodeType
+
         // Create new historic node data entry
         historicNodeDataEntry.setNode(node);
-        historicNodeDataEntry.setPosX(newNode.posX());
-        historicNodeDataEntry.setPosY(newNode.posY());
+        historicNodeDataEntry.setPosX(node.getPosX());
+        historicNodeDataEntry.setPosY(node.getPosY());
         historicNodeDataEntry.setChangeset(changeset);
         historicNodeDataEntry.setTimestamp(new Timestamp(System.currentTimeMillis()));
         // Save
         historicNodeData.add(historicNodeDataEntry);
-        nodeService.save(node);
+        nodeService.update(node, newNode);
         // Return Changeset DTO
         return historicNodeDataDTOMapper.apply(historicNodeDataEntry);
     }
@@ -69,8 +66,8 @@ public class EditorService {
         historicWayDataEntry.setChangeset(changeset);
         historicWayDataEntry.setTimestamp(new Timestamp(System.currentTimeMillis()));
         // Save
-        wayService.update(way, newWay); // throws InvalidAttributesException
         historicWayData.add(historicWayDataEntry);
+        wayService.update(way, newWay); // throws InvalidAttributesException
         // Return HistoricWay DTO
         return historicWayDataDTOMapper.apply(historicWayDataEntry);
     }
@@ -90,8 +87,8 @@ public class EditorService {
         historicWayNodeEntry.setChangeset(changeset);
         historicWayNodeEntry.setTimestamp(new Timestamp(System.currentTimeMillis()));
         // Save
-        wayNodeService.update(wayNode, newWayNode);
         historicWayNode.add(historicWayNodeEntry);
+        wayNodeService.update(wayNode, newWayNode);
 
 
         // Return HistoricWayNode DTO
