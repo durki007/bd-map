@@ -1,6 +1,7 @@
 package pl.pwr.bdmap.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.WayRepository;
 import pl.pwr.bdmap.dao.WayTypeRepository;
@@ -25,7 +26,7 @@ public class WayService {
     private final WayDTOMapper mapper;
 
     @Autowired
-    public WayService(WayRepository repository, WayTypeService wayTypeService, WayTypeRepository wayTypeRepository, HistoricWayDataService historicWayDataService, WayDTOMapper mapper) {
+    public WayService(WayRepository repository, WayTypeService wayTypeService, WayTypeRepository wayTypeRepository, @Lazy HistoricWayDataService historicWayDataService, WayDTOMapper mapper) {
         this.wayTypeRepository = wayTypeRepository;
         this.historicWayDataService = historicWayDataService;
         this.mapper = mapper;

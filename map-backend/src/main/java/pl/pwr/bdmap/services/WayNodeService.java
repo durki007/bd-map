@@ -1,6 +1,7 @@
 package pl.pwr.bdmap.services;
 
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.NodeRepository;
 import pl.pwr.bdmap.dao.WayNodeRepository;
@@ -29,7 +30,7 @@ public class WayNodeService {
 
     private final WayNodeDTOMapper mapper;
 
-    public WayNodeService(WayRepository wayRepository, NodeRepository nodeRepository, WayNodeRepository wayNodeRepository, HistoricWayNodeService historicWayNodeService, WayNodeDTOMapper mapper) {
+    public WayNodeService(WayRepository wayRepository, NodeRepository nodeRepository, WayNodeRepository wayNodeRepository, @Lazy HistoricWayNodeService historicWayNodeService, WayNodeDTOMapper mapper) {
         this.wayRepository = wayRepository;
         this.nodeRepository = nodeRepository;
         this.wayNodeRepository = wayNodeRepository;
