@@ -24,8 +24,17 @@ public class Way implements Serializable {
     @CreationTimestamp
     private java.sql.Timestamp timestamp;
 
-    @Column(name = "is_blocked", nullable = false)
-    private boolean isBlocked;
+    public Changeset getBlockedBy() {
+        return blockedBy;
+    }
+
+    public void setBlockedBy(Changeset blockedBy) {
+        this.blockedBy = blockedBy;
+    }
+
+    @ManyToOne(targetEntity = Changeset.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumns(value = {@JoinColumn(name = "blockedBy_id", referencedColumnName = "id")})
+    private Changeset blockedBy;
 
     @ManyToOne(targetEntity = WayType.class, fetch = FetchType.LAZY)
     @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})
@@ -67,14 +76,6 @@ public class Way implements Serializable {
 
     public java.sql.Timestamp getTimestamp() {
         return timestamp;
-    }
-
-    public void setIsBlocked(boolean value) {
-        this.isBlocked = value;
-    }
-
-    public boolean getIsBlocked() {
-        return isBlocked;
     }
 
     public void setWayType(WayType value) {

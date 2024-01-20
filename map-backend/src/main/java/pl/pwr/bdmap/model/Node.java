@@ -24,8 +24,17 @@ public class Node implements Serializable {
     @Column(name = "pos_y", nullable = false, length = 10)
     private double posY;
 
-    @Column(name = "is_blocked", nullable = false)
-    private boolean isBlocked;
+    public Changeset getBlockedBy() {
+        return blockedBy;
+    }
+
+    public void setBlockedBy(Changeset blockedBy) {
+        this.blockedBy = blockedBy;
+    }
+
+    @ManyToOne(targetEntity = Changeset.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumns(value = {@JoinColumn(name = "blockedBy_id", referencedColumnName = "id")})
+    private Changeset blockedBy;
 
     @Column(name = "timestamp", nullable = false)
     @CreationTimestamp
@@ -74,14 +83,6 @@ public class Node implements Serializable {
 
     public double getPosY() {
         return posY;
-    }
-
-    public void setIsBlocked(boolean value) {
-        this.isBlocked = value;
-    }
-
-    public boolean getIsBlocked() {
-        return isBlocked;
     }
 
     public void setTimestamp(java.sql.Timestamp value) {

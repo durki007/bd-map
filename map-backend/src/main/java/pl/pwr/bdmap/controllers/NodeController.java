@@ -43,7 +43,7 @@ public class NodeController {
 
     @PutMapping("/nodes/key")
     String addKeyToNode(@RequestParam("nodeId") Integer nodeId,
-                        @RequestParam("keyName") String keyName ) {
+                        @RequestParam("keyName") String keyName) {
 
         Node node;
 
@@ -60,7 +60,7 @@ public class NodeController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Key not found", e);
         }
 
-        NodeTag existingNodeTag = nodeTagRepository.findByNodeAndKey(node,key);
+        NodeTag existingNodeTag = nodeTagRepository.findByNodeAndKey(node, key);
 
         if(existingNodeTag == null) {
             NodeTag newNodeTag = new NodeTag();

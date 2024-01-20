@@ -12,7 +12,7 @@ import javax.naming.directory.InvalidAttributesException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@RestController
+@RestController()
 public class EditorController {
     private final EditorService editorService;
     private final ChangesetService changesetService;
@@ -23,23 +23,6 @@ public class EditorController {
     }
 
 
-    @GetMapping("/editor/changeset")
-    public List<ChangesetDTO> listChangesetsByUser(@RequestParam long userId) {
-        try {
-            return changesetService.listByUserId(userId);
-        } catch (NoSuchElementException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found", e);
-        }
-    }
-
-    @PostMapping("/editor/changeset")
-    public ChangesetDTO createChangeset(@RequestParam long userId) {
-        try {
-            return changesetService.create(userId);
-        } catch (NoSuchElementException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found", e);
-        }
-    }
 
     @PutMapping("/editor/node")
     public HistoricNodeDataDTO updateNodeData(@RequestParam int nodeId, @RequestParam int changesetId, @RequestBody NodeDTO nodeDTO) {
