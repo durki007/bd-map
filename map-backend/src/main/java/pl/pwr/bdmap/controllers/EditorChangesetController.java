@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.pwr.bdmap.dto.*;
+import pl.pwr.bdmap.exceptions.ChangesetClosedException;
 import pl.pwr.bdmap.services.ChangesetService;
 
 import java.util.List;
@@ -41,6 +42,8 @@ public class EditorChangesetController {
             return changesetService.close(id);
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Changeset not found", e);
+        } catch (ChangesetClosedException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Changeset is closed", e);
         }
     }
 
@@ -59,6 +62,8 @@ public class EditorChangesetController {
             return changesetService.blockNodes(id, nodeIds);
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Changeset not found", e);
+        } catch (ChangesetClosedException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Changeset is closed", e);
         }
     }
 
@@ -77,6 +82,8 @@ public class EditorChangesetController {
             return changesetService.blockWays(id, wayIds);
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Changeset not found", e);
+        } catch (ChangesetClosedException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Changeset is closed", e);
         }
     }
 
@@ -95,6 +102,8 @@ public class EditorChangesetController {
             return changesetService.blockWayNodes(id, wayNodeIds);
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Changeset not found", e);
+        } catch (ChangesetClosedException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Changeset is closed", e);
         }
     }
 

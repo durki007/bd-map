@@ -5,11 +5,10 @@ import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.ChangesetRepository;
 import pl.pwr.bdmap.dto.ChangesetDTO;
 import pl.pwr.bdmap.dto.ChangesetDTOMapper;
-import pl.pwr.bdmap.dto.WayNodeDTO;
+import pl.pwr.bdmap.exceptions.ChangesetClosedException;
 import pl.pwr.bdmap.model.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -34,7 +33,7 @@ public class ChangesetService {
 
     public Changeset getSystemChangeset() {
         User systemUser = userService.getSystemUser();
-        return changesetRepository.findByUser(systemUser).get(0);
+        return changesetRepository.findByUser(systemUser).getFirst();
     }
 
     public Changeset getChangeSetById(long id) throws NoSuchElementException {
@@ -53,17 +52,20 @@ public class ChangesetService {
         return changesetRepository.findByUser(user).stream().map(changesetDTOMapper).toList();
     }
 
-    public ChangesetDTO close(int id) throws NoSuchElementException {
+    public ChangesetDTO close(int id) throws NoSuchElementException, ChangesetClosedException {
         Changeset changeset = getChangeSetById(id);
+        if (changeset.getCloseDate() != null) {
+            throw new ChangesetClosedException("Changeset with id " + id + " is already closed");
+        }
         return changesetDTOMapper.apply(closeChangeset(changeset));
     }
 
     public Changeset closeChangeset(Changeset changeset) {
         changeset.setCloseDate(new java.sql.Timestamp(System.currentTimeMillis()));
-        // Unblock ways
-        changeset.setBlockedWays(null); // TODO: Check if this works
-        changeset.setBlockedNodes(null);
-        changeset.setBlockedWayNodes(null);
+        // Unblock
+        changeset.getBlockedWayNodes().forEach(wayNode -> wayNode.setBlockedBy(null));
+        changeset.getBlockedNodes().forEach(node -> node.setBlockedBy(null));
+        changeset.getBlockedWays().forEach(way -> way.setBlockedBy(null));
         return changesetRepository.save(changeset);
     }
 
@@ -83,13 +85,15 @@ public class ChangesetService {
         return changeset.getBlockedWayNodes().stream().toList();
     }
 
-    public List<Integer> blockNodes(int id, List<Integer> nodeIds) throws NoSuchElementException {
+    public List<Integer> blockNodes(int id, List<Integer> nodeIds) throws NoSuchElementException, ChangesetClosedException {
         Changeset changeset = getChangeSetById(id);
+        if (changeset.getCloseDate() == null) {
+            throw new ChangesetClosedException("Changeset with id " + id + " is closed");
+        }
         List<Integer> successfullyBlockedNodes = new ArrayList<>();
         for (Integer nodeId : nodeIds) {
             try {
-                Node node = nodeService.getNodeById(nodeId);
-                changeset.getBlockedNodes().add(node);
+                nodeService.blockNode(nodeId, changeset);
                 successfullyBlockedNodes.add(nodeId);
             } catch (NoSuchElementException e) {
                 System.out.println("Failed to block node with id " + nodeId + ": " + e.getMessage());
@@ -99,13 +103,15 @@ public class ChangesetService {
         return successfullyBlockedNodes;
     }
 
-    public List<Integer> blockWays(int id, List<Integer> wayIds) throws NoSuchElementException {
+    public List<Integer> blockWays(int id, List<Integer> wayIds) throws NoSuchElementException, ChangesetClosedException {
         Changeset changeset = getChangeSetById(id);
+        if (changeset.getCloseDate() == null) {
+            throw new ChangesetClosedException("Changeset with id " + id + " is closed");
+        }
         List<Integer> successfullyBlockedWays = new ArrayList<>();
         for (Integer wayId : wayIds) {
             try {
-                Way way = wayService.getWayById(wayId);
-                changeset.getBlockedWays().add(way);
+                wayService.blockWay(wayId, changeset);
                 successfullyBlockedWays.add(wayId);
             } catch (NoSuchElementException e) {
                 System.out.println("Failed to block way with id " + wayId + ": " + e.getMessage());
@@ -115,13 +121,15 @@ public class ChangesetService {
         return successfullyBlockedWays;
     }
 
-    public List<Integer> blockWayNodes(int id, List<Integer> wayNodeIds) throws NoSuchElementException {
+    public List<Integer> blockWayNodes(int id, List<Integer> wayNodeIds) throws NoSuchElementException, ChangesetClosedException {
         Changeset changeset = getChangeSetById(id);
+        if (changeset.getCloseDate() == null) {
+            throw new ChangesetClosedException("Changeset with id " + id + " is closed");
+        }
         List<Integer> successfullyBlockedWayNodes = new ArrayList<>();
         for (Integer wayNodeId : wayNodeIds) {
             try {
-                WayNode wayNode = wayNodeService.getWayNodeById(wayNodeId);
-                changeset.getBlockedWayNodes().add(wayNode);
+                wayNodeService.blockWayNode(wayNodeId, changeset);
                 successfullyBlockedWayNodes.add(wayNodeId);
             } catch (NoSuchElementException e) {
                 System.out.println("Failed to block way node with id " + wayNodeId + ": " + e.getMessage());

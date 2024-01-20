@@ -7,6 +7,7 @@ import pl.pwr.bdmap.dao.NodeRepository;
 import pl.pwr.bdmap.dao.NodeTypeRepository;
 import pl.pwr.bdmap.dto.NodeDTO;
 import pl.pwr.bdmap.dto.NodeDTOMapper;
+import pl.pwr.bdmap.model.Changeset;
 import pl.pwr.bdmap.model.Node;
 import pl.pwr.bdmap.model.NodeType;
 
@@ -20,15 +21,13 @@ public class NodeService {
     private final HistoricNodeDataService historicNodeDataService;
     private final NodeTypeService nodeTypeService;
     private final NodeDTOMapper mapper;
-    private final NodeTypeRepository nodeTypeRepository;
 
     @Autowired
-    public NodeService(NodeRepository repository, @Lazy HistoricNodeDataService historicNodeDataService, NodeTypeService nodeTypeService, NodeDTOMapper mapper, NodeTypeRepository nodeTypeRepository) {
+    public NodeService(NodeRepository repository, @Lazy HistoricNodeDataService historicNodeDataService, NodeTypeService nodeTypeService, NodeDTOMapper mapper) {
         this.nodeRepository = repository;
         this.historicNodeDataService = historicNodeDataService;
         this.nodeTypeService = nodeTypeService;
         this.mapper = mapper;
-        this.nodeTypeRepository = nodeTypeRepository;
     }
 
     public List<NodeDTO> list() {
@@ -119,7 +118,12 @@ public class NodeService {
 
     public NodeType getNodeType(int id) throws NoSuchElementException {
         Node node = nodeRepository.findById(id).orElseThrow();
-
         return node.getNodeType();
+    }
+
+    public void blockNode(Integer nodeId, Changeset changeset) throws NoSuchElementException {
+        Node node = nodeRepository.findById(nodeId).orElseThrow(() -> new NoSuchElementException("Node with id " + nodeId + " not found"));
+        node.setBlockedBy(changeset);
+        nodeRepository.save(node);
     }
 }

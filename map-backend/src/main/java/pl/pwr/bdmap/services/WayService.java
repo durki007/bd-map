@@ -7,7 +7,7 @@ import pl.pwr.bdmap.dao.WayRepository;
 import pl.pwr.bdmap.dao.WayTypeRepository;
 import pl.pwr.bdmap.dto.WayDTO;
 import pl.pwr.bdmap.dto.WayDTOMapper;
-import pl.pwr.bdmap.exceptions.NotFoundException;
+import pl.pwr.bdmap.model.Changeset;
 import pl.pwr.bdmap.model.Way;
 import pl.pwr.bdmap.model.WayType;
 
@@ -21,13 +21,11 @@ import java.util.NoSuchElementException;
 public class WayService {
     private final WayRepository wayRepository;
     private final WayTypeService wayTypeService;
-    private final WayTypeRepository wayTypeRepository;
     private final HistoricWayDataService historicWayDataService;
     private final WayDTOMapper mapper;
 
     @Autowired
-    public WayService(WayRepository repository, WayTypeService wayTypeService, WayTypeRepository wayTypeRepository, @Lazy HistoricWayDataService historicWayDataService, WayDTOMapper mapper) {
-        this.wayTypeRepository = wayTypeRepository;
+    public WayService(WayRepository repository, WayTypeService wayTypeService, @Lazy HistoricWayDataService historicWayDataService, WayDTOMapper mapper) {
         this.historicWayDataService = historicWayDataService;
         this.mapper = mapper;
         this.wayRepository = repository;
@@ -111,4 +109,9 @@ public class WayService {
 
     }
 
+    public void blockWay(Integer wayId, Changeset changeset) throws NoSuchElementException {
+        Way way = wayRepository.findById(wayId).orElseThrow(() -> new NoSuchElementException("Way with id " + wayId + " not found"));
+        way.setBlockedBy(changeset);
+        wayRepository.save(way);
+    }
 }
