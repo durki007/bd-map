@@ -13,6 +13,14 @@ public class Node implements Serializable {
         // Hibernate empty constructor
     }
 
+    public Node(Node node) {
+        this.posX = node.posX;
+        this.posY = node.posY;
+        this.isBlocked = node.isBlocked;
+        this.timestamp = node.timestamp;
+        this.nodeType = node.nodeType;
+    }
+
     @Column(name = "id", nullable = false, length = 10)
     @Id
     @GeneratedValue(generator = "NODE_ID_GENERATOR", strategy = GenerationType.AUTO)
