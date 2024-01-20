@@ -18,15 +18,15 @@ public class WayNode implements Serializable {
     @GeneratedValue(generator = "WAYNODE_ID_GENERATOR", strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToOne(targetEntity = Way.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Way.class, fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumns(value = {@JoinColumn(name = "way_id", referencedColumnName = "id", nullable = false)}, foreignKey = @ForeignKey(name = "FKWayNode890837"))
     private Way way;
 
-    @ManyToOne(targetEntity = Node.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Node.class, fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumns(value = {@JoinColumn(name = "node1_id", referencedColumnName = "id", nullable = false)}, foreignKey = @ForeignKey(name = "FKWayNode900126"))
     private Node node1;
 
-    @ManyToOne(targetEntity = Node.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Node.class, fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumns(value = {@JoinColumn(name = "node2_id", referencedColumnName = "id", nullable = false)}, foreignKey = @ForeignKey(name = "FKWayNode870335"))
     private Node node2;
 
