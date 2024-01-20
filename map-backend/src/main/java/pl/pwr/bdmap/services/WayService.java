@@ -3,26 +3,30 @@ package pl.pwr.bdmap.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.WayRepository;
+import pl.pwr.bdmap.dao.WayTypeRepository;
 import pl.pwr.bdmap.dto.WayDTO;
 import pl.pwr.bdmap.dto.WayDTOMapper;
+import pl.pwr.bdmap.exceptions.NotFoundException;
 import pl.pwr.bdmap.model.Way;
 import pl.pwr.bdmap.model.WayType;
 
+import javax.naming.directory.InvalidAttributesException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
 public class WayService {
     private final WayRepository wayRepository;
     private final WayTypeService wayTypeService;
+    private final WayTypeRepository wayTypeRepository;
     private final HistoricWayDataService historicWayDataService;
     private final WayDTOMapper mapper;
 
     @Autowired
-    public WayService(WayRepository repository, WayTypeService wayTypeService, HistoricWayDataService historicWayDataService, WayDTOMapper mapper) {
+    public WayService(WayRepository repository, WayTypeService wayTypeService, WayTypeRepository wayTypeRepository, HistoricWayDataService historicWayDataService, WayDTOMapper mapper) {
+        this.wayTypeRepository = wayTypeRepository;
         this.historicWayDataService = historicWayDataService;
         this.mapper = mapper;
         this.wayRepository = repository;
@@ -86,6 +90,25 @@ public class WayService {
     public WayType getWayType(int id) throws NoSuchElementException {
         Way way = wayRepository.findById(id).orElseThrow();
         return way.getWayType();
+    }
+
+    public Way update(Way way, WayDTO dtoNew) throws InvalidAttributesException {
+        if (dtoNew.name() == null && dtoNew.wayType() == null) {
+            throw new InvalidAttributesException("Invalid attributes for updating: " + dtoNew);
+        }
+
+
+        if(dtoNew.name() != null) {
+            way.setName(dtoNew.name());
+        }
+
+        if(dtoNew.wayType() != null) {
+            way.setWayType(wayTypeService.save(dtoNew.wayType()));
+        }
+        way.setTimestamp(new Timestamp(System.currentTimeMillis()));
+
+        return wayRepository.save(way);
+
     }
 
 }

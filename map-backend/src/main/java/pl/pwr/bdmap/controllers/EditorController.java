@@ -47,6 +47,8 @@ public class EditorController {
             return editorService.updateNode(nodeId, changesetId, nodeDTO);
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Node or changeset not found", e);
+        } catch (InvalidAttributesException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
@@ -56,6 +58,8 @@ public class EditorController {
             return editorService.updateWay(wayId, changesetId, wayDTO);
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Way or changeset not found", e);
+        } catch (InvalidAttributesException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
