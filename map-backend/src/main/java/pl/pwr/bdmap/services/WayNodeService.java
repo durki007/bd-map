@@ -61,7 +61,7 @@ public class WayNodeService {
 
 
         WayNode wayNode = new WayNode();
-        wayNode.setBlocked(false);
+        wayNode.setBlockedBy(null);
         // Check if nodes and way exist
         var way = wayRepository.findById(wayNodeDTO.wayId())
                 .orElseThrow(() -> new NotFoundException("Way_node:" + wayNodeDTO + " has reference to not existing Way with id: " + wayNodeDTO.wayId()));

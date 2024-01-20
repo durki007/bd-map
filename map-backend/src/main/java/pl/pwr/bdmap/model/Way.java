@@ -32,8 +32,8 @@ public class Way implements Serializable {
         this.blockedBy = blockedBy;
     }
 
-    @Column(name = "blockedBy", nullable = true)
     @ManyToOne(targetEntity = Changeset.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumns(value = {@JoinColumn(name = "blockedBy_id", referencedColumnName = "id")})
     private Changeset blockedBy;
 
     @ManyToOne(targetEntity = WayType.class, fetch = FetchType.LAZY)

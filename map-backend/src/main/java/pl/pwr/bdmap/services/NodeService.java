@@ -41,7 +41,7 @@ public class NodeService {
 
             node.setPosX(nodeDTO.posX());
             node.setPosY(nodeDTO.posY());
-            node.setIsBlocked(false);
+            node.setBlockedBy(null);
 
             if (nodeDTO.nodeType() == null) {
                 node.setNodeType(nodeTypeService.save("default"));

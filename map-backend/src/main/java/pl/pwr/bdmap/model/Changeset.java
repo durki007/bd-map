@@ -44,6 +44,26 @@ public class Changeset implements Serializable {
     @OneToMany(mappedBy = "changeset", targetEntity = HistoricWayData.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<HistoricWayData> historicWayData = new java.util.HashSet<>();
 
+
+    @OneToMany(mappedBy = "blockedBy", targetEntity = Way.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Way> blockedWays = new java.util.HashSet<>();
+
+    @OneToMany(mappedBy = "blockedBy", targetEntity = Node.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Node> blockedNodes = new java.util.HashSet<>();
+
+    public Set<WayNode> getBlockedWayNodes() {
+        return blockedWayNodes;
+    }
+
+    public void setBlockedWayNodes(Set<WayNode> blockedWayNodes) {
+        this.blockedWayNodes = blockedWayNodes;
+    }
+
+    @OneToMany(mappedBy = "blockedBy", targetEntity = WayNode.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<WayNode> blockedWayNodes = new java.util.HashSet<>();
+
+
+
     public Set<Way> getBlockedWays() {
         return blockedWays;
     }
@@ -51,9 +71,13 @@ public class Changeset implements Serializable {
     public void setBlockedWays(Set<Way> blockedWays) {
         this.blockedWays = blockedWays;
     }
+    public Set<Node> getBlockedNodes() {
+        return blockedNodes;
+    }
 
-    @OneToMany(mappedBy = "blockedBy", targetEntity = Way.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Way> blockedWays = new java.util.HashSet<>();
+    public void setBlockedNodes(Set<Node> blockedNodes) {
+        this.blockedNodes = blockedNodes;
+    }
 
     private void setId(int value) {
         this.id = value;

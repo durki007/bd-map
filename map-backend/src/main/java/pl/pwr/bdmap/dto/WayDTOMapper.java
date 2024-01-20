@@ -10,10 +10,16 @@ import java.util.function.Function;
 public class WayDTOMapper implements  Function<Way, WayDTO>{
     @Override
     public WayDTO apply(Way way) {
+        var blockedBy = way.getBlockedBy();
+        int blockedById = 0;
+        if (blockedBy != null) {
+            blockedById = blockedBy.getId();
+        }
+
         return new WayDTO(
                 way.getId(),
                 way.getName(),
-                way.getBlockedBy().getId(),
+                blockedById,
                 way.getTimestamp(),
                 way.getWayType().getType()
         );

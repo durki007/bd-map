@@ -6,7 +6,7 @@ public record NodeDTO(
         int id,
         int posX,
         int posY,
-        boolean isBlocked,
+        int blockedBy,
         Timestamp timestamp,
         String nodeType
 ) {}
