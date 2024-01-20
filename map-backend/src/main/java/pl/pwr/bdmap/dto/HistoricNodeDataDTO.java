@@ -4,8 +4,8 @@ import java.sql.Timestamp;
 
 public record HistoricNodeDataDTO(
         int id,
-        int posX,
-        int posY,
+        double posX,
+        double posY,
         Timestamp timestamp,
         int nodeId
 ) {}
