@@ -4,24 +4,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.pwr.bdmap.dto.*;
+import pl.pwr.bdmap.exceptions.BlockedElementException;
+import pl.pwr.bdmap.exceptions.ChangesetClosedException;
 import pl.pwr.bdmap.exceptions.NotFoundException;
-import pl.pwr.bdmap.services.ChangesetService;
 import pl.pwr.bdmap.services.EditorService;
 
 import javax.naming.directory.InvalidAttributesException;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController()
 public class EditorController {
     private final EditorService editorService;
-    private final ChangesetService changesetService;
 
-    public EditorController(EditorService editorService, ChangesetService changesetService) {
+    public EditorController(EditorService editorService) {
         this.editorService = editorService;
-        this.changesetService = changesetService;
     }
-
 
 
     @PutMapping("/editor/node")
@@ -32,6 +29,8 @@ public class EditorController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Node or changeset not found", e);
         } catch (InvalidAttributesException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (BlockedElementException | ChangesetClosedException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
         }
     }
 
@@ -43,18 +42,11 @@ public class EditorController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Way or changeset not found", e);
         } catch (InvalidAttributesException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (BlockedElementException | ChangesetClosedException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
         }
     }
 
-    /**
-     * The wayNodeDTO must contain at least one filled field (wayId, node1Id, or node2Id).
-     * Only the field with data will be updated in the object under update.
-     *
-     * @param wayNodeId
-     * @param changesetId
-     * @param wayNodeDTO
-     * @return
-     */
     @PutMapping("/editor/wayNode")
     public HistoricWayNodeDTO updateWayNodeData(@RequestParam int wayNodeId, @RequestParam int changesetId, @RequestBody WayNodeDTO wayNodeDTO) {
         try {
@@ -63,6 +55,8 @@ public class EditorController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "WayNode or changeset not found", e);
         } catch (InvalidAttributesException | NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (BlockedElementException | ChangesetClosedException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
         }
     }
 }
