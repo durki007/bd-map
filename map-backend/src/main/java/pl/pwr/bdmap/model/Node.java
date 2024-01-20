@@ -19,10 +19,10 @@ public class Node implements Serializable {
     private int id;
 
     @Column(name = "pos_x", nullable = false, length = 10)
-    private int posX;
+    private double posX;
 
     @Column(name = "pos_y", nullable = false, length = 10)
-    private int posY;
+    private double posY;
 
     public Changeset getBlockedBy() {
         return blockedBy;
@@ -69,19 +69,19 @@ public class Node implements Serializable {
         return getId();
     }
 
-    public void setPosX(int value) {
+    public void setPosX(double value) {
         this.posX = value;
     }
 
-    public int getPosX() {
+    public double getPosX() {
         return posX;
     }
 
-    public void setPosY(int value) {
+    public void setPosY(double value) {
         this.posY = value;
     }
 
-    public int getPosY() {
+    public double getPosY() {
         return posY;
     }
 
