@@ -16,7 +16,6 @@ public class NodeTagService {
     }
 
     public List<String> getTags(int id) {
-        // TODO: there should be try catch cuz .orElseThrow() is not working
         List<NodeTag> nodeTags = nodeTagRepository.findAllByNodeId(id);
 
         // extracting string name from key associated with tag

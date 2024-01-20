@@ -18,6 +18,11 @@ public class WayTypeService {
         return wayTypeRepository.save(wayType);
     }
 
+    /**
+     * Creates new WayType only if there isn't an existing one
+     * @param type
+     * @return
+     */
     WayType save(String type) {
         if (wayTypeRepository.findByType(type) == null){
             WayType wayType = new WayType();

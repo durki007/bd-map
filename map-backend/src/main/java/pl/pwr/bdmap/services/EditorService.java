@@ -57,22 +57,20 @@ public class EditorService {
         return historicNodeDataDTOMapper.apply(historicNodeDataEntry);
     }
 
-    public HistoricWayDataDTO updateWay(int wayId, int changesetId, WayDTO newWay) throws NoSuchElementException {
+    public HistoricWayDataDTO updateWay(int wayId, int changesetId, WayDTO newWay) throws NoSuchElementException, InvalidAttributesException {
         Way way = wayService.getWayById(wayId); // Throws NoSuchElementException
         Changeset changeset = changesetService.getChangeSetById(changesetId); // Throws NoSuchElementException
         Set<HistoricWayData> historicWayData = way.getHistoricWayData();
         HistoricWayData historicWayDataEntry = new HistoricWayData();
-        // Apply changes to the way
-        way.setName(newWay.name());
-        // TODO: Change WayType
+
         // Create new historic way data entry
         historicWayDataEntry.setWay(way);
-        historicWayDataEntry.setName(newWay.name());
+        historicWayDataEntry.setName(way.getName());
         historicWayDataEntry.setChangeset(changeset);
         historicWayDataEntry.setTimestamp(new Timestamp(System.currentTimeMillis()));
         // Save
+        wayService.update(way, newWay); // throws InvalidAttributesException
         historicWayData.add(historicWayDataEntry);
-        wayService.save(way);
         // Return HistoricWay DTO
         return historicWayDataDTOMapper.apply(historicWayDataEntry);
     }
@@ -93,11 +91,10 @@ public class EditorService {
         historicWayNodeEntry.setTimestamp(new Timestamp(System.currentTimeMillis()));
         // Save
         wayNodeService.update(wayNode, newWayNode);
-
         historicWayNode.add(historicWayNodeEntry);
 
 
-        // Return HistoricWayNode DT
+        // Return HistoricWayNode DTO
         return historicWayNodeDTOMapper.apply(historicWayNodeEntry);
     }
 

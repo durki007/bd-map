@@ -89,7 +89,7 @@ public class NodeService {
         nodeRepository.save(node);
     }
 
-    // TODO: it should be NodeTypeDTO i guess
+
     public NodeType getNodeType(int id) throws NoSuchElementException {
         Node node = nodeRepository.findById(id).orElseThrow();
 
