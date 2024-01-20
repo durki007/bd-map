@@ -14,3 +14,7 @@ Docker:
 
 1. Ustawienie zmiennych środowiskowych w pliku `.env` (na wzór `.env.example`)
 2. `docker compose up`
+
+## Wczytywanie danych tekstowych
+
+``spring.datasource.initialize=true w application.properties``
