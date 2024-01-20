@@ -78,7 +78,7 @@ public class EditorService {
         Set<HistoricWayNode> historicWayNode = wayNode.getHistoricWayNode();
         HistoricWayNode historicWayNodeEntry = new HistoricWayNode();
         // Apply changes to the way node
-        wayNode.setBlocked(newWayNode.isBlocked());
+        wayNode.setBlockedBy(changesetService.getChangeSetById(newWayNode.blockedBy()));
         // Create new historic way node entry
         historicWayNodeEntry.setWayNode(wayNode);
         historicWayNodeEntry.setHistoricWayData(historicWayDataService.findInitialVersionByWayId(wayNode.getWay().getId()));

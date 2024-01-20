@@ -9,11 +9,15 @@ import java.util.function.Function;
 public class NodeDTOMapper implements Function<Node, NodeDTO> {
     @Override
     public NodeDTO apply(Node node) {
+        int blockedById = 0;
+        if (node.getBlockedBy() != null) {
+            blockedById = node.getBlockedBy().getId();
+        }
         return new NodeDTO(
                 node.getId(),
                 node.getPosX(),
                 node.getPosY(),
-                node.getIsBlocked(),
+                blockedById,
                 node.getTimestamp(),
                 node.getNodeType().getType()
         );

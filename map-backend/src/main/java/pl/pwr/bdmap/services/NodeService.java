@@ -1,11 +1,13 @@
 package pl.pwr.bdmap.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.NodeRepository;
 import pl.pwr.bdmap.dao.NodeTypeRepository;
 import pl.pwr.bdmap.dto.NodeDTO;
 import pl.pwr.bdmap.dto.NodeDTOMapper;
+import pl.pwr.bdmap.model.Changeset;
 import pl.pwr.bdmap.model.Node;
 import pl.pwr.bdmap.model.NodeType;
 
@@ -19,15 +21,13 @@ public class NodeService {
     private final HistoricNodeDataService historicNodeDataService;
     private final NodeTypeService nodeTypeService;
     private final NodeDTOMapper mapper;
-    private final NodeTypeRepository nodeTypeRepository;
 
     @Autowired
-    public NodeService(NodeRepository repository, HistoricNodeDataService historicNodeDataService, NodeTypeService nodeTypeService, NodeDTOMapper mapper, NodeTypeRepository nodeTypeRepository) {
+    public NodeService(NodeRepository repository, @Lazy HistoricNodeDataService historicNodeDataService, NodeTypeService nodeTypeService, NodeDTOMapper mapper) {
         this.nodeRepository = repository;
         this.historicNodeDataService = historicNodeDataService;
         this.nodeTypeService = nodeTypeService;
         this.mapper = mapper;
-        this.nodeTypeRepository = nodeTypeRepository;
     }
 
     public List<NodeDTO> list() {
@@ -35,13 +35,14 @@ public class NodeService {
         nodeRepository.findAll().forEach(list::add);
         return list.stream().map(mapper).toList();
     }
+
     public NodeDTO save(NodeDTO nodeDTO) throws RuntimeException {
         try {
             Node node = new Node();
 
             node.setPosX(nodeDTO.posX());
             node.setPosY(nodeDTO.posY());
-            node.setIsBlocked(false);
+            node.setBlockedBy(null);
 
             if (nodeDTO.nodeType() == null) {
                 node.setNodeType(nodeTypeService.save("default"));
@@ -65,8 +66,7 @@ public class NodeService {
         for (NodeDTO nodeDTO : nodeDTOs) {
             try {
                 savedNodes.add(save(nodeDTO));
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 failedNodes.put(nodeDTO, e);
             }
         }
@@ -96,17 +96,17 @@ public class NodeService {
 
     public void update(Node node, NodeDTO dtoNew) throws InvalidAttributesException {
 
-        if(dtoNew.nodeType() == null && dtoNew.posX() == 0 && dtoNew.posY() == 0) {
+        if (dtoNew.nodeType() == null && dtoNew.posX() == 0 && dtoNew.posY() == 0) {
             throw new InvalidAttributesException("Invalid attributes for updating: " + dtoNew);
         }
 
-        if(dtoNew.nodeType() != null) {
+        if (dtoNew.nodeType() != null) {
             node.setNodeType(nodeTypeService.save(dtoNew.nodeType()));
         }
-        if(dtoNew.posY() != 0) {
+        if (dtoNew.posY() != 0) {
             node.setPosY(dtoNew.posY());
         }
-        if(dtoNew.posX() != 0) {
+        if (dtoNew.posX() != 0) {
             node.setPosX(dtoNew.posX());
         }
 
@@ -118,7 +118,12 @@ public class NodeService {
 
     public NodeType getNodeType(int id) throws NoSuchElementException {
         Node node = nodeRepository.findById(id).orElseThrow();
-
         return node.getNodeType();
+    }
+
+    public void blockNode(Integer nodeId, Changeset changeset) throws NoSuchElementException {
+        Node node = nodeRepository.findById(nodeId).orElseThrow(() -> new NoSuchElementException("Node with id " + nodeId + " not found"));
+        node.setBlockedBy(changeset);
+        nodeRepository.save(node);
     }
 }

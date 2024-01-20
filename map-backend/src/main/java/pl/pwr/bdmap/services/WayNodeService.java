@@ -1,6 +1,7 @@
 package pl.pwr.bdmap.services;
 
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.NodeRepository;
 import pl.pwr.bdmap.dao.WayNodeRepository;
@@ -8,6 +9,7 @@ import pl.pwr.bdmap.dao.WayRepository;
 import pl.pwr.bdmap.dto.WayNodeDTO;
 import pl.pwr.bdmap.dto.WayNodeDTOMapper;
 import pl.pwr.bdmap.exceptions.NotFoundException;
+import pl.pwr.bdmap.model.Changeset;
 import pl.pwr.bdmap.model.Node;
 import pl.pwr.bdmap.model.Way;
 import pl.pwr.bdmap.model.WayNode;
@@ -29,7 +31,7 @@ public class WayNodeService {
 
     private final WayNodeDTOMapper mapper;
 
-    public WayNodeService(WayRepository wayRepository, NodeRepository nodeRepository, WayNodeRepository wayNodeRepository, HistoricWayNodeService historicWayNodeService, WayNodeDTOMapper mapper) {
+    public WayNodeService(WayRepository wayRepository, NodeRepository nodeRepository, WayNodeRepository wayNodeRepository, @Lazy HistoricWayNodeService historicWayNodeService, WayNodeDTOMapper mapper) {
         this.wayRepository = wayRepository;
         this.nodeRepository = nodeRepository;
         this.wayNodeRepository = wayNodeRepository;
@@ -47,7 +49,7 @@ public class WayNodeService {
             throw new InvalidAttributesException("Missing required fields in way_node " + wayNodeDTO);
         }
 
-        if(wayNodeDTO.node1Id() == wayNodeDTO.node2Id()){
+        if (wayNodeDTO.node1Id() == wayNodeDTO.node2Id()) {
             throw new InvalidAttributesException("Invalid (the same) nodeId fields in way_node " + wayNodeDTO);
         }
 
@@ -59,9 +61,8 @@ public class WayNodeService {
         }
 
 
-
         WayNode wayNode = new WayNode();
-        wayNode.setBlocked(false);
+        wayNode.setBlockedBy(null);
         // Check if nodes and way exist
         var way = wayRepository.findById(wayNodeDTO.wayId())
                 .orElseThrow(() -> new NotFoundException("Way_node:" + wayNodeDTO + " has reference to not existing Way with id: " + wayNodeDTO.wayId()));
@@ -93,7 +94,7 @@ public class WayNodeService {
                 // Modify the message of the NotFoundException and rethrow
                 throw new NotFoundException("WayNodeDTO at index " + i + ": " + e.getMessage());
             } catch (InvalidAttributesException e) {
-                throw  new InvalidAttributesException("WayNodeDTO at index " + i + ": " + e.getMessage());
+                throw new InvalidAttributesException("WayNodeDTO at index " + i + ": " + e.getMessage());
             }
         }
         return savedWayNodes;
@@ -101,7 +102,7 @@ public class WayNodeService {
 
     public WayNode update(WayNode wayNode, WayNodeDTO dtoNew) throws NotFoundException, InvalidAttributesException {
         // checking if there is some data in dtoNew and if it's correct
-        if ((dtoNew.wayId() == 0 && dtoNew.node1Id() == 0 && dtoNew.node2Id() == 0) || ((dtoNew.node1Id() == dtoNew.node2Id()) && dtoNew.node1Id() != 0 )) {
+        if ((dtoNew.wayId() == 0 && dtoNew.node1Id() == 0 && dtoNew.node2Id() == 0) || ((dtoNew.node1Id() == dtoNew.node2Id()) && dtoNew.node1Id() != 0)) {
             throw new InvalidAttributesException("Invalid attributes for updating: " + dtoNew);
         }
 
@@ -152,5 +153,22 @@ public class WayNodeService {
 
     public WayNode getWayNodeById(int id) throws NoSuchElementException {
         return wayNodeRepository.findById(id).orElseThrow();
+    }
+
+    public void blockWayNode(int id, Changeset changeset) throws NoSuchElementException {
+        WayNode wayNode = getWayNodeById(id);
+        wayNode.setBlockedBy(changeset);
+        wayNodeRepository.save(wayNode);
+    }
+
+    public WayNode unlockWayNode(int id) throws NoSuchElementException {
+        WayNode wayNode = getWayNodeById(id);
+        wayNode.setBlockedBy(null);
+        return wayNodeRepository.save(wayNode);
+    }
+
+    public WayNode unlockWayNode(WayNode wayNode) {
+        wayNode.setBlockedBy(null);
+        return wayNodeRepository.save(wayNode);
     }
 }
