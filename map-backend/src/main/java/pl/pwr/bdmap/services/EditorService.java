@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dto.*;
 import pl.pwr.bdmap.model.*;
 
+import javax.naming.directory.InvalidAttributesException;
 import java.sql.Timestamp;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -76,7 +77,7 @@ public class EditorService {
         return historicWayDataDTOMapper.apply(historicWayDataEntry);
     }
 
-    public HistoricWayNodeDTO updateWayNode(int id, int changsetId, WayNodeDTO newWayNode) throws NoSuchElementException {
+    public HistoricWayNodeDTO updateWayNode(int id, int changsetId, WayNodeDTO newWayNode) throws NoSuchElementException, InvalidAttributesException {
         WayNode wayNode = wayNodeService.getWayNodeById(id); // Throws NoSuchElementException
         Changeset changeset = changesetService.getChangeSetById(changsetId); // Throws NoSuchElementException
         Set<HistoricWayNode> historicWayNode = wayNode.getHistoricWayNode();
@@ -91,8 +92,11 @@ public class EditorService {
         historicWayNodeEntry.setChangeset(changeset);
         historicWayNodeEntry.setTimestamp(new Timestamp(System.currentTimeMillis()));
         // Save
+        wayNodeService.update(wayNode, newWayNode);
+
         historicWayNode.add(historicWayNodeEntry);
-        wayNodeService.save(wayNode);
+
+
         // Return HistoricWayNode DT
         return historicWayNodeDTOMapper.apply(historicWayNodeEntry);
     }

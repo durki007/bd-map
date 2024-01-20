@@ -4,9 +4,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.pwr.bdmap.dto.*;
+import pl.pwr.bdmap.exceptions.NotFoundException;
 import pl.pwr.bdmap.services.ChangesetService;
 import pl.pwr.bdmap.services.EditorService;
 
+import javax.naming.directory.InvalidAttributesException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -57,12 +59,23 @@ public class EditorController {
         }
     }
 
+    /**
+     * The wayNodeDTO must contain at least one filled field (wayId, node1Id, or node2Id).
+     * Only the field with data will be updated in the object under update.
+     *
+     * @param wayNodeId
+     * @param changesetId
+     * @param wayNodeDTO
+     * @return
+     */
     @PutMapping("/editor/wayNode")
     public HistoricWayNodeDTO updateWayNodeData(@RequestParam int wayNodeId, @RequestParam int changesetId, @RequestBody WayNodeDTO wayNodeDTO) {
         try {
             return editorService.updateWayNode(wayNodeId, changesetId, wayNodeDTO);
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "WayNode or changeset not found", e);
+        } catch (InvalidAttributesException | NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 }
