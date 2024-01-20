@@ -126,4 +126,9 @@ public class NodeService {
         node.setBlockedBy(changeset);
         nodeRepository.save(node);
     }
+
+    public List<NodeDTO> getNodesOnScreen (double maxX, double minX, double maxY, double minY) {
+        List<Node> nodes = nodeRepository.findNodesInsideSquare(minX, maxX, minY, maxY);
+        return nodes.stream().map(mapper).toList();
+    }
 }

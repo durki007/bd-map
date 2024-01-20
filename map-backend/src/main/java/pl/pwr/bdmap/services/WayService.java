@@ -114,4 +114,9 @@ public class WayService {
         way.setBlockedBy(changeset);
         wayRepository.save(way);
     }
+
+    public List<WayDTO> getWaysOnTheScreen(double maxX, double minX, double maxY, double minY) {
+        List<Way> ways = wayRepository.findWaysWithNodeOnScreen(minX, maxX, minY, maxY);
+        return ways.stream().map(mapper).toList();
+    }
 }
