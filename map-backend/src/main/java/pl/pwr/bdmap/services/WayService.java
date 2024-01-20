@@ -43,7 +43,6 @@ public class WayService {
         Way way = new Way();
 
         // Map known fields
-        way.setIsBlocked(false);
         way.setName(wayDTO.name());
 
         if(wayDTO.wayType() == null) {

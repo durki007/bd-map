@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public record WayDTO(
         int id,
         String name,
-        boolean isBlocked,
+        int blockedBy,
         Timestamp timestamp,
         String wayType
 

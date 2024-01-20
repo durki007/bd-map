@@ -44,4 +44,11 @@ public class ChangesetService {
         User user = userService.getUserById(userId); // Throws NoSuchElementException
         return changesetRepository.findByUser(user).stream().map(changesetDTOMapper).toList();
     }
+
+    public Changeset closeChangeset(Changeset changeset) {
+        changeset.setCloseDate(new java.sql.Timestamp(System.currentTimeMillis()));
+        // Unblock ways
+        changeset.setBlockedWays(null); // TODO: Check if this works
+        return changesetRepository.save(changeset);
+    }
 }
