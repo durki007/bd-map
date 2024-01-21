@@ -1,10 +1,13 @@
 package pl.pwr.bdmap.services;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+
 import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.NodeRepository;
-import pl.pwr.bdmap.dao.NodeTypeRepository;
 import pl.pwr.bdmap.dto.NodeDTO;
 import pl.pwr.bdmap.dto.NodeDTOMapper;
 import pl.pwr.bdmap.model.Changeset;
@@ -22,12 +25,16 @@ public class NodeService {
     private final NodeTypeService nodeTypeService;
     private final NodeDTOMapper mapper;
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Autowired
-    public NodeService(NodeRepository repository, @Lazy HistoricNodeDataService historicNodeDataService, NodeTypeService nodeTypeService, NodeDTOMapper mapper) {
+    public NodeService(NodeRepository repository, @Lazy HistoricNodeDataService historicNodeDataService, NodeTypeService nodeTypeService, NodeDTOMapper mapper, EntityManager entityManager) {
         this.nodeRepository = repository;
         this.historicNodeDataService = historicNodeDataService;
         this.nodeTypeService = nodeTypeService;
         this.mapper = mapper;
+        this.entityManager = entityManager;
     }
 
     public List<NodeDTO> list() {
@@ -125,5 +132,10 @@ public class NodeService {
         Node node = nodeRepository.findById(nodeId).orElseThrow(() -> new NoSuchElementException("Node with id " + nodeId + " not found"));
         node.setBlockedBy(changeset);
         nodeRepository.save(node);
+    }
+
+    public List<NodeDTO> getNodesOnScreen (double maxX, double minX, double maxY, double minY) {
+        List<Node> nodes = nodeRepository.findNodesInsideSquare(minX, maxX, minY, maxY);
+        return nodes.stream().map(mapper).toList();
     }
 }

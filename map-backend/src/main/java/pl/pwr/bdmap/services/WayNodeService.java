@@ -171,4 +171,9 @@ public class WayNodeService {
         wayNode.setBlockedBy(null);
         return wayNodeRepository.save(wayNode);
     }
+
+    public List<WayNodeDTO> getWayNodesOnScreen(double maxX, double minX, double maxY, double minY) {
+        List<WayNode> wayNodes = wayNodeRepository.findWayNodesWithNodeOnScreen(minX, maxX, minY, maxY);
+        return wayNodes.stream().map(mapper).toList();
+    }
 }
