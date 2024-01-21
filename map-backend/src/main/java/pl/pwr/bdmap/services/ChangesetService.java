@@ -36,8 +36,9 @@ public class ChangesetService {
         return changesetRepository.findByUser(systemUser).getFirst();
     }
 
-    public Changeset getChangeSetById(long id) throws NoSuchElementException {
-        return changesetRepository.findById(id).orElseThrow(NoSuchElementException::new);
+    public Changeset getChangeSetById(int id) throws NoSuchElementException {
+        System.out.println("change set idd: " + id);
+        return changesetRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Changeset not found with id: " + id));
     }
 
     public ChangesetDTO create(long userId) throws NoSuchElementException {
