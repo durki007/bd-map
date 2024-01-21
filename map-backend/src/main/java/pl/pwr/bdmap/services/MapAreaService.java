@@ -27,12 +27,15 @@ public class MapAreaService {
     }
 
     public MapAreaDTO getMapAreaData(double maxX, double minX, double maxY, double minY) {
+        System.out.println(maxX + " " + maxY);
 
-        List<NodeDTO> nodeDTOList = nodeService.getNodesOnScreen(minX, maxX, minY, maxY);
+        List<NodeDTO> nodeDTOList = nodeService.getNodesOnScreen(maxX, minX, maxY, minY);
+        System.out.println(maxX + " " + maxY);
+
         System.out.println("NODE DTO LIST" + nodeDTOList);
-        List<WayNodeDTO> wayNodeDTOList = wayNodeService.getWayNodesOnScreen(minX, maxX, minY, maxY);
+        List<WayNodeDTO> wayNodeDTOList = wayNodeService.getWayNodesOnScreen(maxX, minX, maxY, minY);
 
-        List<WayDTO> wayDTOList = wayService.getWaysOnTheScreen(minX, maxX, minY, maxY);
+        List<WayDTO> wayDTOList = wayService.getWaysOnTheScreen(maxX, minX, maxY, minY);
         return new MapAreaDTO(maxX, minX, maxY,minY, nodeDTOList, wayNodeDTOList, wayDTOList);
     }
 

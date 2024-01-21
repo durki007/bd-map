@@ -1,10 +1,15 @@
 package pl.pwr.bdmap.services;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+
 import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.NodeRepository;
-import pl.pwr.bdmap.dao.NodeTypeRepository;
 import pl.pwr.bdmap.dto.NodeDTO;
 import pl.pwr.bdmap.dto.NodeDTOMapper;
 import pl.pwr.bdmap.model.Changeset;
@@ -22,12 +27,16 @@ public class NodeService {
     private final NodeTypeService nodeTypeService;
     private final NodeDTOMapper mapper;
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Autowired
-    public NodeService(NodeRepository repository, @Lazy HistoricNodeDataService historicNodeDataService, NodeTypeService nodeTypeService, NodeDTOMapper mapper) {
+    public NodeService(NodeRepository repository, @Lazy HistoricNodeDataService historicNodeDataService, NodeTypeService nodeTypeService, NodeDTOMapper mapper, EntityManager entityManager) {
         this.nodeRepository = repository;
         this.historicNodeDataService = historicNodeDataService;
         this.nodeTypeService = nodeTypeService;
         this.mapper = mapper;
+        this.entityManager = entityManager;
     }
 
     public List<NodeDTO> list() {
@@ -129,6 +138,7 @@ public class NodeService {
 
     public List<NodeDTO> getNodesOnScreen (double maxX, double minX, double maxY, double minY) {
         List<Node> nodes = nodeRepository.findNodesInsideSquare(minX, maxX, minY, maxY);
+        System.out.println("Node obj list: " + nodes);
         return nodes.stream().map(mapper).toList();
     }
 }

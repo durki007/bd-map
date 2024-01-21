@@ -19,6 +19,7 @@ public class MapAreaController {
                               @RequestParam double minX,
                               @RequestParam double maxY,
                               @RequestParam double minY){
+        System.out.println(maxX + " " + maxY);
         return  mapAreaService.getMapAreaData(maxX, minX, maxY, minY);
     }
 
