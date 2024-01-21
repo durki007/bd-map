@@ -52,7 +52,7 @@ public class EditorController {
         try {
             return editorService.updateWayNode(wayNodeId, changesetId, wayNodeDTO);
         } catch (NoSuchElementException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "WayNode or changeset not found", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (InvalidAttributesException | NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (BlockedElementException | ChangesetClosedException e) {

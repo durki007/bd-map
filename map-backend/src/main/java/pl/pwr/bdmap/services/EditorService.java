@@ -105,14 +105,13 @@ public class EditorService {
         if (changeset.getCloseDate() != null) {
             throw new ChangesetClosedException("Changeset is closed");
         }
-        // Check if way node is blocked
+        // Check if way node is blocked and blocker is not changesetId
         if (wayNode.getBlockedBy() != null && wayNode.getBlockedBy().getId() != changesetId) {
             throw new BlockedElementException("Way node is blocked by changeset " + wayNode.getBlockedBy().getId());
         }
         Set<HistoricWayNode> historicWayNode = wayNode.getHistoricWayNode();
         HistoricWayNode historicWayNodeEntry = new HistoricWayNode();
-        // Apply changes to the way node
-        wayNode.setBlockedBy(changesetService.getChangeSetById(newWayNode.blockedBy()));
+
         // Create new historic way node entry
         historicWayNodeEntry.setWayNode(wayNode);
         historicWayNodeEntry.setHistoricWayData(historicWayDataService.findInitialVersionByWayId(wayNode.getWay().getId()));

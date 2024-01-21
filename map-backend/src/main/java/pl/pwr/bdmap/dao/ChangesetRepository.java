@@ -6,6 +6,6 @@ import pl.pwr.bdmap.model.User;
 
 import java.util.List;
 
-public interface ChangesetRepository extends CrudRepository<Changeset, Long> {
+public interface ChangesetRepository extends CrudRepository<Changeset, Integer> {
     public List<Changeset> findByUser(User user);
 }

@@ -121,6 +121,8 @@ public class WayNodeService {
             wayNode.setNode2(newNode2);
         }
 
+
+
         // Validate if the updated data already exists in the database
         if (wayNodeRepository.findAllByNode1_IdAndNode2_IdAndWay_IdOrNode1_IdAndNode2_IdAndWay_Id(
                 wayNode.getNode1().getId(), wayNode.getNode2().getId(), wayNode.getWay().getId(),
@@ -152,7 +154,7 @@ public class WayNodeService {
     }
 
     public WayNode getWayNodeById(int id) throws NoSuchElementException {
-        return wayNodeRepository.findById(id).orElseThrow();
+        return wayNodeRepository.findById(id).orElseThrow(() -> new NoSuchElementException("WayNode not found"));
     }
 
     public void blockWayNode(int id, Changeset changeset) throws NoSuchElementException {
