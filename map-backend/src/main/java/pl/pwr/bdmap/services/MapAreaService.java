@@ -8,6 +8,7 @@ import pl.pwr.bdmap.dto.NodeDTO;
 import pl.pwr.bdmap.dto.WayDTO;
 import pl.pwr.bdmap.dto.WayNodeDTO;
 
+import javax.naming.directory.InvalidAttributesException;
 import java.util.List;
 
 @Service
@@ -26,16 +27,18 @@ public class MapAreaService {
         this.wayService = wayService;
     }
 
-    public MapAreaDTO getMapAreaData(double maxX, double minX, double maxY, double minY) {
-        System.out.println(maxX + " " + maxY);
+    public MapAreaDTO getMapAreaData(double maxX, double minX, double maxY, double minY) throws InvalidAttributesException {
+
+        if(maxX < minX || maxY < minY) {
+            throw new InvalidAttributesException("Invalid square limits");
+        }
 
         List<NodeDTO> nodeDTOList = nodeService.getNodesOnScreen(maxX, minX, maxY, minY);
-        System.out.println(maxX + " " + maxY);
 
-        System.out.println("NODE DTO LIST" + nodeDTOList);
         List<WayNodeDTO> wayNodeDTOList = wayNodeService.getWayNodesOnScreen(maxX, minX, maxY, minY);
 
         List<WayDTO> wayDTOList = wayService.getWaysOnTheScreen(maxX, minX, maxY, minY);
+
         return new MapAreaDTO(maxX, minX, maxY,minY, nodeDTOList, wayNodeDTOList, wayDTOList);
     }
 

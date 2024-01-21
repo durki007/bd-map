@@ -2,8 +2,6 @@ package pl.pwr.bdmap.services;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -138,7 +136,6 @@ public class NodeService {
 
     public List<NodeDTO> getNodesOnScreen (double maxX, double minX, double maxY, double minY) {
         List<Node> nodes = nodeRepository.findNodesInsideSquare(minX, maxX, minY, maxY);
-        System.out.println("Node obj list: " + nodes);
         return nodes.stream().map(mapper).toList();
     }
 }
