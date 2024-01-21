@@ -111,8 +111,7 @@ public class EditorService {
         }
         Set<HistoricWayNode> historicWayNode = wayNode.getHistoricWayNode();
         HistoricWayNode historicWayNodeEntry = new HistoricWayNode();
-//        // setting way node to be blocked by changeset from passed DTO
-//        wayNode.setBlockedBy(changesetService.getChangeSetById(newWayNode.blockedBy()));
+
         // Create new historic way node entry
         historicWayNodeEntry.setWayNode(wayNode);
         historicWayNodeEntry.setHistoricWayData(historicWayDataService.findInitialVersionByWayId(wayNode.getWay().getId()));
