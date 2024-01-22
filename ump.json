@@ -1,0 +1,1541 @@
+[
+{
+  "lon": 17.055234,
+  "lat": 51.110204,
+  "nodeType": "2F08",
+  "kv": [
+  { "ID": 1},
+  { "label": "most Grunwaldzki"}
+  ]
+},
+{
+  "lon": 17.065957,
+  "lat": 51.109376,
+  "nodeType": "2F08",
+  "kv": [
+  { "ID": 2},
+  { "label": "Kliniki - Politechnika Wrocławska"}
+  ]
+},
+{
+  "lon": 17.065564,
+  "lat": 51.109537,
+  "nodeType": "2F08",
+  "kv": [
+  { "ID": 3},
+  { "label": "Kliniki - Politechnika Wrocławska"}
+  ]
+},
+{
+  "lon": 17.055436,
+  "lat": 51.110163,
+  "nodeType": "2F08",
+  "kv": [
+  { "ID": 4},
+  { "label": "most Grunwaldzki"}
+  ]
+},
+{
+  "lon": 17.0601,
+  "lat": 51.111441,
+  "nodeType": "2F08",
+  "kv": [
+  { "ID": 5},
+  { "label": "PL. GRUNWALDZKI"}
+  ]
+},
+{
+  "lon": 17.060355,
+  "lat": 51.111421,
+  "nodeType": "2F08",
+  "kv": [
+  { "ID": 6},
+  { "label": "PL. GRUNWALDZKI"}
+  ]
+},
+{
+  "lon": 17.065445,
+  "lat": 51.109579,
+  "nodeType": "2F08",
+  "kv": [
+  { "ID": 7},
+  { "label": "Kliniki"}
+  ]
+},
+{
+  "lon": 17.065806,
+  "lat": 51.109422,
+  "nodeType": "2F08",
+  "kv": [
+  { "ID": 8},
+  { "label": "Kliniki"}
+  ]
+},
+{
+  "lon": 17.055071,
+  "lat": 51.110155,
+  "nodeType": "2F08",
+  "kv": [
+  { "ID": 9},
+  { "label": "most Grunwaldzki"}
+  ]
+},
+{
+  "lon": 17.055567,
+  "lat": 51.110206,
+  "nodeType": "2F08",
+  "kv": [
+  { "ID": 10},
+  { "label": "most Grunwaldzki"}
+  ]
+},
+{
+  "lon": 17.060441,
+  "lat": 51.111435,
+  "nodeType": "2F08",
+  "kv": [
+  { "ID": 11},
+  { "label": "PL. GRUNWALDZKI"}
+  ]
+},
+{
+  "lon": 17.061378,
+  "lat": 51.111283,
+  "nodeType": "2F08",
+  "kv": [
+  { "ID": 12},
+  { "label": "PL. GRUNWALDZKI"}
+  ]
+},
+{
+  "lon": 17.061159,
+  "lat": 51.111228,
+  "nodeType": "2F08",
+  "kv": [
+  { "ID": 13},
+  { "label": "PL. GRUNWALDZKI"}
+  ]
+},
+{
+  "lon": 17.060341,
+  "lat": 51.111494,
+  "nodeType": "2F08",
+  "kv": [
+  { "ID": 14},
+  { "label": "PL. GRUNWALDZKI"}
+  ]
+},
+{
+  "lon": 17.060253,
+  "lat": 51.108851,
+  "nodeType": "2C03",
+  "kv": [
+  { "ID": 15},
+  { "label": "PWr Międzywydziałowa Biblioteka WE i WEMiF"}
+  ]
+},
+{
+  "lon": 17.060603,
+  "lat": 51.108411,
+  "nodeType": "2C03",
+  "kv": [
+  { "ID": 16},
+  { "label": "PWr Wydz. Mech.-Energ. Biblioteka"}
+  ]
+},
+{
+  "lon": 17.058123,
+  "lat": 51.108981,
+  "nodeType": "2C03",
+  "kv": [
+  { "ID": 17},
+  { "label": "PWr Wydz. BLiW Biblioteka"}
+  ]
+},
+{
+  "lon": 17.058123,
+  "lat": 51.110341,
+  "nodeType": "2C03",
+  "kv": [
+  { "ID": 18},
+  { "label": "PW Wydz. Elektr. Biblioteka"}
+  ]
+},
+{
+  "lon": 17.053693,
+  "lat": 51.110091,
+  "nodeType": "2C03",
+  "kv": [
+  { "ID": 19},
+  { "label": "UW Wydz. MiII Instytut Matematyczny Biblioteka"}
+  ]
+},
+{
+  "lon": 17.065253,
+  "lat": 51.108061,
+  "nodeType": "2C03",
+  "kv": [
+  { "ID": 20},
+  { "label": "PW Wydział Mechaniczny Biblioteka"}
+  ]
+},
+{
+  "lon": 17.062553,
+  "lat": 51.107761,
+  "nodeType": "2C03",
+  "kv": [
+  { "ID": 21},
+  { "label": "Politechnika Wrocławska Biblioteka Główna"}
+  ]
+},
+{
+  "lon": 17.062812,
+  "lat": 51.110724,
+  "nodeType": "2A02",
+  "kv": [
+  { "ID": 22},
+  { "label": "Panda Ramen"}
+  ]
+},
+{
+  "lon": 17.055861,
+  "lat": 51.109427,
+  "nodeType": "2C0B",
+  "kv": [
+  { "ID": 23},
+  { "label": "Najświętszego Serca Jezusowego"}
+  ]
+},
+{
+  "lon": 17.064924,
+  "lat": 51.108436,
+  "nodeType": "6400",
+  "kv": [
+  { "ID": 24},
+  { "label": "krasnal BEAnka"}
+  ]
+},
+{
+  "lon": 17.061057,
+  "lat": 51.107144,
+  "nodeType": "6400",
+  "kv": [
+  { "ID": 25},
+  { "label": "krasnal Chemik"}
+  ]
+},
+{
+  "lon": 17.067528,
+  "lat": 51.109252,
+  "nodeType": "6400",
+  "kv": [
+  { "ID": 26},
+  { "label": "krasnal Chirurg"}
+  ]
+},
+{
+  "lon": 17.059343,
+  "lat": 51.110627,
+  "nodeType": "6400",
+  "kv": [
+  { "ID": 27},
+  { "label": "krasnal Lappek"}
+  ]
+},
+{
+  "lon": 17.053959,
+  "lat": 51.110248,
+  "nodeType": "6400",
+  "kv": [
+  { "ID": 28},
+  { "label": "krasnal Matematyk"}
+  ]
+},
+{
+  "lon": 17.061964,
+  "lat": 51.111466,
+  "nodeType": "6400",
+  "kv": [
+  { "ID": 29},
+  { "label": "krasnale Parasolniki"}
+  ]
+},
+{
+  "lon": 17.059785,
+  "lat": 51.110673,
+  "nodeType": "6400",
+  "kv": [
+  { "ID": 30},
+  { "label": "krasnal Polidenciak"}
+  ]
+},
+{
+  "lon": 17.054574,
+  "lat": 51.1087,
+  "nodeType": "6400",
+  "kv": [
+  { "ID": 31},
+  { "label": "krasnal Poliglotek"}
+  ]
+},
+{
+  "lon": 17.055899,
+  "lat": 51.110768,
+  "nodeType": "6400",
+  "kv": [
+  { "ID": 32},
+  { "label": "krasnal Silesiusz"}
+  ]
+},
+{
+  "lon": 17.060723,
+  "lat": 51.107306,
+  "nodeType": "6400",
+  "kv": [
+  { "ID": 33},
+  { "label": "krasnal Wykształciuch"}
+  ]
+},
+{
+  "lon": 17.054973,
+  "lat": 51.110261,
+  "nodeType": "2F02",
+  "kv": [
+  { "ID": 34},
+  { "label": "WRM nextbike"}
+  ]
+},
+{
+  "lon": 17.061479,
+  "lat": 51.107229,
+  "nodeType": "2F02",
+  "kv": [
+  { "ID": 35},
+  { "label": "WRM nextbike"}
+  ]
+},
+{
+  "lon": 17.064786,
+  "lat": 51.108081,
+  "nodeType": "2F02",
+  "kv": [
+  { "ID": 36},
+  { "label": "WRM nextbike"}
+  ]
+},
+{
+  "lon": 17.059091,
+  "lat": 51.107413,
+  "nodeType": "2A07",
+  "kv": [
+  { "ID": 37},
+  { "label": "Bazylia"}
+  ]
+},
+{
+  "lon": 17.06221,
+  "lat": 51.11033,
+  "nodeType": "2A0A",
+  "kv": [
+  { "ID": 38},
+  { "label": "TelePizza"}
+  ]
+},
+{
+  "lon": 17.059617,
+  "lat": 51.110265,
+  "nodeType": "2A07",
+  "kv": [
+  { "ID": 39},
+  { "label": "Bazylia"}
+  ]
+},
+{
+  "lon": 17.062173,
+  "lat": 51.107349,
+  "nodeType": "2C05",
+  "kv": [
+  { "ID": 40},
+  { "label": "Politechnika Wrocławska"}
+  ]
+},
+{
+  "lon": 17.062384,
+  "lat": 51.107345,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 41},
+  { "label": "PWr A-1"}
+  ]
+},
+{
+  "lon": 17.063576,
+  "lat": 51.10735,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 42},
+  { "label": "PWr A-2"}
+  ]
+},
+{
+  "lon": 17.063927,
+  "lat": 51.107977,
+  "nodeType": "2C05",
+  "kv": [
+  { "ID": 43},
+  { "label": "PWr A-3"}
+  ]
+},
+{
+  "lon": 17.061984,
+  "lat": 51.108557,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 44},
+  { "label": "PWr A-5"}
+  ]
+},
+{
+  "lon": 17.063674,
+  "lat": 51.107854,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 45},
+  { "label": "PWr A-9"}
+  ]
+},
+{
+  "lon": 17.063078,
+  "lat": 51.107642,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 46},
+  { "label": "PWr A-11"}
+  ]
+},
+{
+  "lon": 17.064947,
+  "lat": 51.107673,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 47},
+  { "label": "PWr B-1"}
+  ]
+},
+{
+  "lon": 17.065147,
+  "lat": 51.108112,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 48},
+  { "label": "PWr B-5"}
+  ]
+},
+{
+  "lon": 17.060365,
+  "lat": 51.109073,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 49},
+  { "label": "PWr C-1..C-4"}
+  ]
+},
+{
+  "lon": 17.058883,
+  "lat": 51.109275,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 50},
+  { "label": "PWr C-5"}
+  ]
+},
+{
+  "lon": 17.060602,
+  "lat": 51.108271,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 51},
+  { "label": "PWr C-6"}
+  ]
+},
+{
+  "lon": 17.057934,
+  "lat": 51.109202,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 52},
+  { "label": "PWr C-7"}
+  ]
+},
+{
+  "lon": 17.058554,
+  "lat": 51.108047,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 53},
+  { "label": "PWr C-8 Radio LUZ"}
+  ]
+},
+{
+  "lon": 17.060953,
+  "lat": 51.109446,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 54},
+  { "label": "PWr C-11"}
+  ]
+},
+{
+  "lon": 17.059487,
+  "lat": 51.107301,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 55},
+  { "label": "PWr C-13"}
+  ]
+},
+{
+  "lon": 17.059624,
+  "lat": 51.10872,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 56},
+  { "label": "PWr C-15"}
+  ]
+},
+{
+  "lon": 17.060006,
+  "lat": 51.109337,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 57},
+  { "label": "PWr C-16 Technopolis"}
+  ]
+},
+{
+  "lon": 17.056651,
+  "lat": 51.108673,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 58},
+  { "label": "PWr C-18 Strefa Kultury Studenckiej"}
+  ]
+},
+{
+  "lon": 17.058144,
+  "lat": 51.110115,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 59},
+  { "label": "PWr D-1"}
+  ]
+},
+{
+  "lon": 17.057483,
+  "lat": 51.109953,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 60},
+  { "label": "PWr D-2"}
+  ]
+},
+{
+  "lon": 17.057115,
+  "lat": 51.109794,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 61},
+  { "label": "PWr D-3"}
+  ]
+},
+{
+  "lon": 17.05944,
+  "lat": 51.110557,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 62},
+  { "label": "PWr D-20"}
+  ]
+},
+{
+  "lon": 17.05817,
+  "lat": 51.109758,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 63},
+  { "label": "PWr D-21 Bibliotech"}
+  ]
+},
+{
+  "lon": 17.05441,
+  "lat": 51.108768,
+  "nodeType": "2C05",
+  "kv": [
+  { "ID": 64},
+  { "label": "PWr H-4"}
+  ]
+},
+{
+  "lon": 17.062122,
+  "lat": 51.107887,
+  "nodeType": "2C03",
+  "kv": [
+  { "ID": 65},
+  { "label": "Biblioteka Beletrystyczna PWr"}
+  ]
+},
+{
+  "lon": 17.055042,
+  "lat": 51.111488,
+  "nodeType": "2E0B",
+  "kv": [
+  { "ID": 66},
+  { "label": "Robotronik"}
+  ]
+},
+{
+  "lon": 17.056776,
+  "lat": 51.110889,
+  "nodeType": "2E03",
+  "kv": [
+  { "ID": 67},
+  { "label": "Biedronka"}
+  ]
+},
+{
+  "lon": 17.053976,
+  "lat": 51.109382,
+  "nodeType": "6509",
+  "kv": [
+  { "ID": 68},
+  { "label": "fontanna przy Moście Grunwaldzkim"}
+  ]
+},
+{
+  "lon": 17.063958,
+  "lat": 51.111417,
+  "nodeType": "2C05",
+  "kv": [
+  { "ID": 69},
+  { "label": "Uniwersytet Przyrodniczy we Wrocławiu"}
+  ]
+},
+{
+  "lon": 17.060499,
+  "lat": 51.109729,
+  "nodeType": "2C05",
+  "kv": [
+  { "ID": 70},
+  { "label": "SP 12"}
+  ]
+},
+{
+  "lon": 17.053863,
+  "lat": 51.110126,
+  "nodeType": "2C05",
+  "kv": [
+  { "ID": 71},
+  { "label": "Inst. matematyki UWr"}
+  ]
+},
+{
+  "lon": 17.057447,
+  "lat": 51.107883,
+  "nodeType": "3002",
+  "kv": [
+  { "ID": 72},
+  { "label": "Szpital Kliniczny 4"}
+  ]
+},
+{
+  "lon": 17.063973,
+  "lat": 51.109807,
+  "nodeType": "3000",
+  "kv": [
+  { "ID": 73},
+  { "label": "Sanepid"}
+  ]
+},
+{
+  "lon": 17.060686,
+  "lat": 51.108341,
+  "nodeType": "2F06",
+  "kv": [
+  { "ID": 74},
+  { "label": "Santander"}
+  ]
+},
+{
+  "lon": 17.061826,
+  "lat": 51.107963,
+  "nodeType": "2F06",
+  "kv": [
+  { "ID": 75},
+  { "label": "PKO BP ATM"}
+  ]
+},
+{
+  "lon": 17.060041,
+  "lat": 51.110881,
+  "nodeType": "2F06",
+  "kv": [
+  { "ID": 76},
+  { "label": "ING ATM"}
+  ]
+},
+{
+  "lon": 17.060479,
+  "lat": 51.11099,
+  "nodeType": "2F06",
+  "kv": [
+  { "ID": 77},
+  { "label": "PKO BP"}
+  ]
+},
+{
+  "lon": 17.05768,
+  "lat": 51.110328,
+  "nodeType": "6400",
+  "kv": [
+  { "ID": 78},
+  { "label": "Pomnik Profesorów Lwowskich"}
+  ]
+},
+{
+  "lon": 17.056533,
+  "lat": 51.11087,
+  "nodeType": "2D02",
+  "kv": [
+  { "ID": 79},
+  { "label": "Fuga Mundi Snooker Club"}
+  ]
+},
+{
+  "lon": 17.063473,
+  "lat": 51.110842,
+  "nodeType": "2F06",
+  "kv": [
+  { "ID": 80},
+  { "label": "PKO BP ATM"}
+  ]
+},
+{
+  "lon": 17.057294,
+  "lat": 51.10749,
+  "nodeType": "2C05",
+  "kv": [
+  { "ID": 81},
+  { "label": "Żłobek 9"}
+  ]
+},
+{
+  "lon": 17.056368,
+  "lat": 51.10747,
+  "nodeType": "2E05",
+  "kv": [
+  { "ID": 82},
+  { "label": "apteka"}
+  ]
+},
+{
+  "lon": 17.061502,
+  "lat": 51.108425,
+  "nodeType": "2F06",
+  "kv": [
+  { "ID": 83},
+  { "label": "Santander"}
+  ]
+},
+{
+  "lon": 17.0618,
+  "lat": 51.111274,
+  "nodeType": "2F06",
+  "kv": [
+  { "ID": 84},
+  { "label": "Alior"}
+  ]
+},
+{
+  "lon": 17.06331,
+  "lat": 51.11113,
+  "nodeType": "3007",
+  "kv": [
+  { "ID": 85},
+  { "label": "Regionalny Zarząd Gospodarki Wodnej"}
+  ]
+},
+{
+  "lon": 17.060062,
+  "lat": 51.110886,
+  "nodeType": "2F06",
+  "kv": [
+  { "ID": 86},
+  { "label": "ING"}
+  ]
+},
+{
+  "lon": 17.058387,
+  "lat": 51.111339,
+  "nodeType": "2A0A",
+  "kv": [
+  { "ID": 87},
+  { "label": "Da Grasso"}
+  ]
+},
+{
+  "lon": 17.062429,
+  "lat": 51.110193,
+  "nodeType": "2A07",
+  "kv": [
+  { "ID": 88},
+  { "label": "Mc Falafel"}
+  ]
+},
+{
+  "lon": 17.06004,
+  "lat": 51.10738,
+  "nodeType": "2C05",
+  "kv": [
+  { "ID": 89},
+  { "label": "Akademickie Liceum Ogólnokształcące Politechniki Wrocławskiej"}
+  ]
+},
+{
+  "lon": 17.061115,
+  "lat": 51.110691,
+  "nodeType": "2A13",
+  "kv": [
+  { "ID": 90},
+  { "label": "Greco"}
+  ]
+},
+{
+  "lon": 17.063226,
+  "lat": 51.110065,
+  "nodeType": "2A0D",
+  "kv": [
+  { "ID": 91},
+  { "label": "Trumienka"}
+  ]
+},
+{
+  "lon": 17.056076,
+  "lat": 51.110765,
+  "nodeType": "2F06",
+  "kv": [
+  { "ID": 92},
+  { "label": "Santander"}
+  ]
+},
+{
+  "lon": 17.060397,
+  "lat": 51.111116,
+  "nodeType": "2F0B",
+  "kv": [
+  { "ID": 93},
+  { "label": "parking rowerowy"}
+  ]
+},
+{
+  "lon": 17.06148,
+  "lat": 51.110594,
+  "nodeType": "2E05",
+  "kv": [
+  { "ID": 94},
+  { "label": "Polon"}
+  ]
+},
+{
+  "lon": 17.062739,
+  "lat": 51.110177,
+  "nodeType": "2E02",
+  "kv": [
+  { "ID": 95},
+  { "label": "spożywczy"}
+  ]
+},
+{
+  "lon": 17.057962,
+  "lat": 51.111267,
+  "nodeType": "2E01",
+  "kv": [
+  { "ID": 96},
+  { "label": "Rossmann"}
+  ]
+},
+{
+  "lon": 17.064003,
+  "lat": 51.11128,
+  "nodeType": "2A00",
+  "kv": [
+  { "ID": 97},
+  { "label": "Wanilia"}
+  ]
+},
+{
+  "lon": 17.066077,
+  "lat": 51.110289,
+  "nodeType": "3002",
+  "kv": [
+  { "ID": 98},
+  { "label": "SPSK 1 Klinika Okulistyki"}
+  ]
+},
+{
+  "lon": 17.067446,
+  "lat": 51.110561,
+  "nodeType": "3002",
+  "kv": [
+  { "ID": 99},
+  { "label": "SPSK 1 Klinika Ginekologii i Położnictwa"}
+  ]
+},
+{
+  "lon": 17.065427,
+  "lat": 51.110474,
+  "nodeType": "3002",
+  "kv": [
+  { "ID": 100},
+  { "label": "Przychodnia FAM"}
+  ]
+},
+{
+  "lon": 17.067458,
+  "lat": 51.10926,
+  "nodeType": "3002",
+  "kv": [
+  { "ID": 101},
+  { "label": "SPSK 1 Klinika Chirurgii Serca"}
+  ]
+},
+{
+  "lon": 17.065055,
+  "lat": 51.110228,
+  "nodeType": "3002",
+  "kv": [
+  { "ID": 102},
+  { "label": "SPSK 1 Klinika Chirurgii i Urologii Dziecięcej"}
+  ]
+},
+{
+  "lon": 17.066211,
+  "lat": 51.109635,
+  "nodeType": "3002",
+  "kv": [
+  { "ID": 103},
+  { "label": "SPSK 1 Dyrekcja"}
+  ]
+},
+{
+  "lon": 17.066623,
+  "lat": 51.110061,
+  "nodeType": "3002",
+  "kv": [
+  { "ID": 104},
+  { "label": "SPSK 1 Klinika Anestezjologii i Intensywnej Terapii"}
+  ]
+},
+{
+  "lon": 17.066451,
+  "lat": 51.109949,
+  "nodeType": "3002",
+  "kv": [
+  { "ID": 105},
+  { "label": "SPSK 1 Klinika Dermatologii, Wenerologii i Alergologii"}
+  ]
+},
+{
+  "lon": 17.053843,
+  "lat": 51.110106,
+  "nodeType": "2F12",
+  "kv": [
+  { "ID": 106},
+  { "label": "WiFi Inst. matematyki UWr"}
+  ]
+},
+{
+  "lon": 17.059701,
+  "lat": 51.107341,
+  "nodeType": "2F12",
+  "kv": [
+  { "ID": 107},
+  { "label": "WiFi PWr C-13"}
+  ]
+},
+{
+  "lon": 17.062781,
+  "lat": 51.107891,
+  "nodeType": "2F12",
+  "kv": [
+  { "ID": 108},
+  { "label": "WiFi PWr A-1"}
+  ]
+},
+{
+  "lon": 17.059611,
+  "lat": 51.109031,
+  "nodeType": "2F12",
+  "kv": [
+  { "ID": 109},
+  { "label": "WiFi PWr C-4"}
+  ]
+},
+{
+  "lon": 17.055497,
+  "lat": 51.110699,
+  "nodeType": "2E00",
+  "kv": [
+  { "ID": 110},
+  { "label": "księgarnia naukowa"}
+  ]
+},
+{
+  "lon": 17.055959,
+  "lat": 51.108527,
+  "nodeType": "2F0B",
+  "kv": [
+  { "ID": 111},
+  { "label": "parking PWr"}
+  ]
+},
+{
+  "lon": 17.054458,
+  "lat": 51.109063,
+  "nodeType": "2F0B",
+  "kv": [
+  { "ID": 112},
+  { "label": "parking PWr H-4"}
+  ]
+},
+{
+  "lon": 17.058351,
+  "lat": 51.107273,
+  "nodeType": "2C00",
+  "kv": [
+  { "ID": 113},
+  { "label": "Polinka (C13)"}
+  ]
+},
+{
+  "lon": 17.056103,
+  "lat": 51.110851,
+  "nodeType": "2F06",
+  "kv": [
+  { "ID": 114},
+  { "label": "Euronet"}
+  ]
+},
+{
+  "lon": 17.057292,
+  "lat": 51.111062,
+  "nodeType": "2A07",
+  "kv": [
+  { "ID": 115},
+  { "label": "Gyros"}
+  ]
+},
+{
+  "lon": 17.061918,
+  "lat": 51.109086,
+  "nodeType": "2E00",
+  "kv": [
+  { "ID": 116},
+  { "label": "antykwariat akademicki"}
+  ]
+},
+{
+  "lon": 17.054852,
+  "lat": 51.109831,
+  "nodeType": "1605",
+  "kv": [
+  { "ID": 117},
+  { "label": "mapa"}
+  ]
+},
+{
+  "lon": 17.060688,
+  "lat": 51.110994,
+  "nodeType": "1605",
+  "kv": [
+  { "ID": 118},
+  { "label": "mapa SIM"}
+  ]
+},
+{
+  "lon": 17.061315,
+  "lat": 51.110652,
+  "nodeType": "2E00",
+  "kv": [
+  { "ID": 119},
+  { "label": "Księgarnia Akademicka"}
+  ]
+},
+{
+  "lon": 17.060635,
+  "lat": 51.111476,
+  "nodeType": "2F18",
+  "kv": [
+  { "ID": 120},
+  { "label": "biletomat"}
+  ]
+},
+{
+  "lon": 17.065294,
+  "lat": 51.109071,
+  "nodeType": "2F08",
+  "kv": [
+  { "ID": 121},
+  { "label": "Taxi"}
+  ]
+},
+{
+  "lon": 17.058261,
+  "lat": 51.107451,
+  "nodeType": "2F0B",
+  "kv": [
+  { "ID": 122},
+  { "label": "parking PWr C-13"}
+  ]
+},
+{
+  "lon": 17.056541,
+  "lat": 51.108134,
+  "nodeType": "2F0B",
+  "kv": [
+  { "ID": 123},
+  { "label": "parking PWr CKS"}
+  ]
+},
+{
+  "lon": 17.059899,
+  "lat": 51.110363,
+  "nodeType": "2F15",
+  "kv": [
+  { "ID": 124},
+  { "label": "Centrum Kongresowe PWr"}
+  ]
+},
+{
+  "lon": 17.064761,
+  "lat": 51.109491,
+  "nodeType": "2A07",
+  "kv": [
+  { "ID": 125},
+  { "label": "Pasibus Przystanek Kliniki"}
+  ]
+},
+{
+  "lon": 17.05993,
+  "lat": 51.10733,
+  "nodeType": "2C05",
+  "kv": [
+  { "ID": 126},
+  { "label": "Akademickie Liceum Ogólnokształcące PWr"}
+  ]
+},
+{
+  "lon": 17.061826,
+  "lat": 51.111246,
+  "nodeType": "2F06",
+  "kv": [
+  { "ID": 127},
+  { "label": "Euronet ATM"}
+  ]
+},
+{
+  "lon": 17.063097,
+  "lat": 51.110092,
+  "nodeType": "2A0D",
+  "kv": [
+  { "ID": 128},
+  { "label": "cukiernia"}
+  ]
+},
+{
+  "lon": 17.063746,
+  "lat": 51.109844,
+  "nodeType": "2A00",
+  "kv": [
+  { "ID": 129},
+  { "label": "Przegryź Bistro"}
+  ]
+},
+{
+  "lon": 17.056917,
+  "lat": 51.10878,
+  "nodeType": "2A00",
+  "kv": [
+  { "ID": 130},
+  { "label": "Strefa Kultury Studenckiej"}
+  ]
+},
+{
+  "lon": 17.060519,
+  "lat": 51.109109,
+  "nodeType": "3002",
+  "kv": [
+  { "ID": 131},
+  { "label": "AED"}
+  ]
+},
+{
+  "lon": 17.064533,
+  "lat": 51.109614,
+  "nodeType": "2A00",
+  "kv": [
+  { "ID": 132},
+  { "label": "Pobite Gary Zupy"}
+  ]
+},
+{
+  "lon": 17.05841,
+  "lat": 51.11003,
+  "nodeType": "2A07",
+  "kv": [
+  { "ID": 133},
+  { "label": "Bistrobot"}
+  ]
+},
+{
+  "lon": 17.054691,
+  "lat": 51.111022,
+  "nodeType": "2A0E",
+  "kv": [
+  { "ID": 134},
+  { "label": "Kawalerka Cafe"}
+  ]
+},
+{
+  "lon": 17.056243,
+  "lat": 51.110866,
+  "nodeType": "2F05",
+  "kv": [
+  { "ID": 135},
+  { "label": "AP"}
+  ]
+},
+{
+  "lon": 17.062631,
+  "lat": 51.107597,
+  "nodeType": "2F05",
+  "kv": [
+  { "ID": 136},
+  { "label": "UP Wrocław 51"}
+  ]
+},
+{
+  "lon": 17.056831,
+  "lat": 51.107955,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 137},
+  { "label": "szlaban {klinika}"}
+  ]
+},
+{
+  "lon": 17.057763,
+  "lat": 51.108365,
+  "nodeType": "1708",
+  "kv": [
+  { "ID": 138},
+  { "label": ""}
+  ]
+},
+{
+  "lon": 17.059779,
+  "lat": 51.110539,
+  "nodeType": "1708",
+  "kv": [
+  { "ID": 139},
+  { "label": ""}
+  ]
+},
+{
+  "lon": 17.059637,
+  "lat": 51.109882,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 140},
+  { "label": "szlaban"}
+  ]
+},
+{
+  "lon": 17.054335,
+  "lat": 51.10895,
+  "nodeType": "1708",
+  "kv": [
+  { "ID": 141},
+  { "label": ""}
+  ]
+},
+{
+  "lon": 17.060705,
+  "lat": 51.111127,
+  "nodeType": "1709",
+  "kv": [
+  { "ID": 142},
+  { "label": "no-XING"}
+  ]
+},
+{
+  "lon": 17.054318,
+  "lat": 51.110502,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 143},
+  { "label": "szlaban"}
+  ]
+},
+{
+  "lon": 17.06116,
+  "lat": 51.108285,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 144},
+  { "label": "szlaban"}
+  ]
+},
+{
+  "lon": 17.054402,
+  "lat": 51.110736,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 145},
+  { "label": "szlaban"}
+  ]
+},
+{
+  "lon": 17.06502,
+  "lat": 51.11039,
+  "nodeType": "170D",
+  "kv": [
+  { "ID": 146},
+  { "label": ""}
+  ]
+},
+{
+  "lon": 17.05673,
+  "lat": 51.108968,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 147},
+  { "label": "szlaban"}
+  ]
+},
+{
+  "lon": 17.055336,
+  "lat": 51.109329,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 148},
+  { "label": "szlaban"}
+  ]
+},
+{
+  "lon": 17.061371,
+  "lat": 51.111425,
+  "nodeType": "1709",
+  "kv": [
+  { "ID": 149},
+  { "label": "xing"}
+  ]
+},
+{
+  "lon": 17.058585,
+  "lat": 51.107771,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 150},
+  { "label": "szlaban"}
+  ]
+},
+{
+  "lon": 17.061372,
+  "lat": 51.1087,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 151},
+  { "label": "słupki"}
+  ]
+},
+{
+  "lon": 17.060714,
+  "lat": 51.107818,
+  "nodeType": "1708",
+  "kv": [
+  { "ID": 152},
+  { "label": ""}
+  ]
+},
+{
+  "lon": 17.059188,
+  "lat": 51.108896,
+  "nodeType": "1708",
+  "kv": [
+  { "ID": 153},
+  { "label": ""}
+  ]
+},
+{
+  "lon": 17.057061,
+  "lat": 51.109757,
+  "nodeType": "1708",
+  "kv": [
+  { "ID": 154},
+  { "label": "ślepe podwórko"}
+  ]
+},
+{
+  "lon": 17.061385,
+  "lat": 51.108293,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 155},
+  { "label": "szlaban/wartownia"}
+  ]
+},
+{
+  "lon": 17.05972,
+  "lat": 51.10871,
+  "nodeType": "1708",
+  "kv": [
+  { "ID": 156},
+  { "label": ""}
+  ]
+},
+{
+  "lon": 17.057815,
+  "lat": 51.110438,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 157},
+  { "label": "słupki"}
+  ]
+},
+{
+  "lon": 17.05547,
+  "lat": 51.108827,
+  "nodeType": "1708",
+  "kv": [
+  { "ID": 158},
+  { "label": ""}
+  ]
+},
+{
+  "lon": 17.056748,
+  "lat": 51.108057,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 159},
+  { "label": "szlaban"}
+  ]
+},
+{
+  "lon": 17.0588,
+  "lat": 51.108173,
+  "nodeType": "1708",
+  "kv": [
+  { "ID": 160},
+  { "label": ""}
+  ]
+},
+{
+  "lon": 17.058949,
+  "lat": 51.109906,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 161},
+  { "label": "szlaban - p. podziemny"}
+  ]
+},
+{
+  "lon": 17.058167,
+  "lat": 51.107295,
+  "nodeType": "1708",
+  "kv": [
+  { "ID": 162},
+  { "label": ""}
+  ]
+},
+{
+  "lon": 17.059572,
+  "lat": 51.110078,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 163},
+  { "label": "szlaban"}
+  ]
+},
+{
+  "lon": 17.055908,
+  "lat": 51.108433,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 164},
+  { "label": "szlaban"}
+  ]
+},
+{
+  "lon": 17.058896,
+  "lat": 51.107273,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 165},
+  { "label": "szlaban"}
+  ]
+},
+{
+  "lon": 17.057449,
+  "lat": 51.110326,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 166},
+  { "label": "słupki"}
+  ]
+},
+{
+  "lon": 17.056252,
+  "lat": 51.108844,
+  "nodeType": "1710",
+  "kv": [
+  { "ID": 167},
+  { "label": "słupki"}
+  ]
+},
+{
+  "lon": 17.054634,
+  "lat": 51.109999,
+  "nodeType": "F201",
+  "kv": [
+  { "ID": 168},
+  { "label": ""}
+  ]
+},
+{
+  "lon": 17.062834,
+  "lat": 51.110391,
+  "nodeType": "F201",
+  "kv": [
+  { "ID": 169},
+  { "label": ""}
+  ]
+},
+{
+  "lon": 17.059695,
+  "lat": 51.111109,
+  "nodeType": "F201",
+  "kv": [
+  { "ID": 170},
+  { "label": ""}
+  ]
+},
+{
+  "lon": 17.065619,
+  "lat": 51.109445,
+  "nodeType": "F201",
+  "kv": [
+  { "ID": 171},
+  { "label": ""}
+  ]
+}
+]
