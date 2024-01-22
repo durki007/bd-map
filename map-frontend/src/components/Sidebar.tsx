@@ -167,25 +167,25 @@ export const Sidebar = (props: { object?: MapNode | MapWay | MapWayNode }) => {
 
     editWayMutation.mutate({
       wayId: way.id,
-      changesetId: 1,
+      changesetId: 102,
       name: way.name!,
       wayType: way.wayType!,
     });
     editNodeMutation.mutate({
       nodeId: node1.id,
-      changesetId: 1,
+      changesetId: 102,
       posX: node1.posX,
       posY: node1.posY,
     });
     editNodeMutation.mutate({
       nodeId: node2.id,
-      changesetId: 1,
+      changesetId: 102,
       posX: node2.posX,
       posY: node2.posY,
     });
     editWayNodeMutation.mutate({
       wayNodeId: currentObject?.id as number,
-      changesetId: 1,
+      changesetId: 102,
       wayId: currentObject?.wayId as number,
       node1Id: currentObject?.node1Id as number,
       node2Id: currentObject?.node2Id as number,

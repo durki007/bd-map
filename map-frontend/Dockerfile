@@ -7,6 +7,5 @@ WORKDIR /app
 
 FROM base AS runner
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN pnpm run build
 EXPOSE 3000
-CMD [ "pnpm", "start" ]
+CMD [ "pnpm", "dev" ]

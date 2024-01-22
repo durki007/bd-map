@@ -58,7 +58,7 @@ services:
       FRONTEND_PORT: $FRONTEND_PORT
       POSTGRES_PORT: $POSTGRES_PORT
       POSTGRES_HOST: host.docker.internal
-    command: pnpm start
+    command: pnpm dev
 
 volumes:
   postgres_data:
