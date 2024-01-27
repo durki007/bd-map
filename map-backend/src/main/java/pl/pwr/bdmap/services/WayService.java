@@ -114,8 +114,7 @@ public class WayService {
         wayRepository.save(way);
     }
 
-    public List<WayDTO> getWaysOnTheScreen(double maxX, double minX, double maxY, double minY) {
-        List<Way> ways = wayRepository.findWaysWithNodeOnScreen(minX, maxX, minY, maxY);
-        return ways.stream().map(mapper).toList();
+    public List<Way> getWaysOnTheScreen(double maxX, double minX, double maxY, double minY) {
+        return wayRepository.findWaysWithNodeOnScreen(minX, maxX, minY, maxY);
     }
 }
