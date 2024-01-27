@@ -2,14 +2,19 @@ package pl.pwr.bdmap.services;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.NodeRepository;
 import pl.pwr.bdmap.dto.NodeDTO;
 import pl.pwr.bdmap.dto.NodeDTOMapper;
+import pl.pwr.bdmap.dto.UMPNodeDTO;
+import pl.pwr.bdmap.exceptions.ListCreationException;
 import pl.pwr.bdmap.model.Changeset;
 import pl.pwr.bdmap.model.Node;
 import pl.pwr.bdmap.model.NodeType;
@@ -64,6 +69,32 @@ public class NodeService {
         } catch (Exception e) {
             throw new RuntimeException("Failed to save node: " + e.getMessage(), e);
         }
+    }
+
+    public List<Node> saveAll(List<UMPNodeDTO> nodeDTOs) throws ListCreationException {
+        List<Node> savedNodes = new ArrayList<>();
+        for (int i = 0; i < nodeDTOs.size(); i++) {
+            try {
+                savedNodes.add(save(nodeDTOs.get(i)));
+            } catch (Exception e) {
+                throw new ListCreationException(i);
+            }
+        }
+        return savedNodes;
+    }
+
+    public Node save(UMPNodeDTO nodeDTO) throws DataAccessException {
+        Node node = new Node();
+        node.setPosX(nodeDTO.lat());
+        node.setPosY(nodeDTO.lon());
+        if (nodeDTO.nodeType() == null) {
+            node.setNodeType(nodeTypeService.save("default"));
+        } else {
+            node.setNodeType(nodeTypeService.save(nodeDTO.nodeType()));
+        }
+        node = nodeRepository.save(node);
+        historicNodeDataService.saveInitialVersion(node);
+        return node;
     }
 
     public List<NodeDTO> save(List<NodeDTO> nodeDTOs) {
@@ -134,7 +165,7 @@ public class NodeService {
         nodeRepository.save(node);
     }
 
-    public List<NodeDTO> getNodesOnScreen (double maxX, double minX, double maxY, double minY) {
+    public List<NodeDTO> getNodesOnScreen(double maxX, double minX, double maxY, double minY) {
         List<Node> nodes = nodeRepository.findNodesInsideSquare(minX, maxX, minY, maxY);
         return nodes.stream().map(mapper).toList();
     }

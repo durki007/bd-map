@@ -3,9 +3,8 @@ package pl.pwr.bdmap.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import pl.pwr.bdmap.dto.NodeDTO;
-import pl.pwr.bdmap.dto.WayDTO;
-import pl.pwr.bdmap.dto.WayNodeDTO;
+import pl.pwr.bdmap.dto.*;
+import pl.pwr.bdmap.exceptions.ListCreationException;
 import pl.pwr.bdmap.exceptions.NotFoundException;
 import pl.pwr.bdmap.services.NodeService;
 import pl.pwr.bdmap.services.WayNodeService;
@@ -27,10 +26,13 @@ public class AdminAccessController {
 
     private final WayNodeService wayNodeService;
 
+    private final NodeDTOMapper nodeDTOMapper;
+
     public AdminAccessController(NodeService nodeService, WayService wayService, WayNodeService wayNodeService) {
         this.nodeService = nodeService;
         this.wayService = wayService;
         this.wayNodeService = wayNodeService;
+        this.nodeDTOMapper = new NodeDTOMapper();
     }
 
     @PostMapping("/admin/node")
@@ -41,6 +43,15 @@ public class AdminAccessController {
     @PostMapping("/admin/nodes")
     List<NodeDTO> newNodes(@RequestBody List<NodeDTO> newNodes) {
         return nodeService.save(newNodes);
+    }
+
+    @PostMapping("/admin/nodes/ump")
+    List<NodeDTO> newNodesUmp(@RequestBody List<UMPNodeDTO> newNodes) {
+        try {
+            return nodeService.saveAll(newNodes).stream().map(nodeDTOMapper).toList();
+        } catch (ListCreationException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Node upload failed " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/admin/node/{id}")
@@ -79,19 +90,19 @@ public class AdminAccessController {
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         } catch (InvalidAttributesException e) {
-            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         }
     }
 
     @PostMapping("/admin/wayNodes")
     List<WayNodeDTO> newWayNodes(@RequestBody List<WayNodeDTO> newWays) {
         List<WayNodeDTO> addedNodes = new ArrayList<>();
-        try{
+        try {
             addedNodes = wayNodeService.save(newWays);
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         } catch (InvalidAttributesException e) {
-            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         }
 
         return addedNodes;
