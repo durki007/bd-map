@@ -12,7 +12,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.NodeRepository;
 import pl.pwr.bdmap.dto.NodeDTO;
-import pl.pwr.bdmap.dto.NodeDTOMapper;
+import pl.pwr.bdmap.dto.mappers.NodeDTOMapper;
 import pl.pwr.bdmap.dto.UMPNodeDTO;
 import pl.pwr.bdmap.exceptions.ListCreationException;
 import pl.pwr.bdmap.model.Changeset;

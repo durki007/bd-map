@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.HistoricNodeDataRepository;
 import pl.pwr.bdmap.dto.HistoricNodeDataDTO;
-import pl.pwr.bdmap.dto.HistoricNodeDataDTOMapper;
+import pl.pwr.bdmap.dto.mappers.HistoricNodeDataDTOMapper;
 import pl.pwr.bdmap.model.HistoricNodeData;
 import pl.pwr.bdmap.model.Node;
 

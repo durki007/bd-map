@@ -1,7 +1,8 @@
-package pl.pwr.bdmap.dto;
+package pl.pwr.bdmap.dto.mappers;
 
 
 import org.springframework.stereotype.Service;
+import pl.pwr.bdmap.dto.ChangesetDTO;
 import pl.pwr.bdmap.model.Changeset;
 import java.util.function.Function;
 

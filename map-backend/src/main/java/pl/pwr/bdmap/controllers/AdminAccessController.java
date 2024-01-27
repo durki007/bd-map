@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.pwr.bdmap.dto.*;
+import pl.pwr.bdmap.dto.mappers.NodeDTOMapper;
 import pl.pwr.bdmap.exceptions.ListCreationException;
 import pl.pwr.bdmap.exceptions.NotFoundException;
 import pl.pwr.bdmap.services.NodeService;

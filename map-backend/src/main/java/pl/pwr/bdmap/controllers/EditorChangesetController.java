@@ -5,6 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.pwr.bdmap.dto.*;
+import pl.pwr.bdmap.dto.mappers.NodeDTOMapper;
+import pl.pwr.bdmap.dto.mappers.WayDTOMapper;
+import pl.pwr.bdmap.dto.mappers.WayNodeDTOMapper;
 import pl.pwr.bdmap.exceptions.ChangesetClosedException;
 import pl.pwr.bdmap.services.ChangesetService;
 

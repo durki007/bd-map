@@ -2,7 +2,7 @@ package pl.pwr.bdmap.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import pl.pwr.bdmap.dto.UserInfoDTO;
-import pl.pwr.bdmap.dto.UserInfoDTOMapper;
+import pl.pwr.bdmap.dto.mappers.UserInfoDTOMapper;
 import pl.pwr.bdmap.model.User;
 import pl.pwr.bdmap.dao.UserRepository;
 

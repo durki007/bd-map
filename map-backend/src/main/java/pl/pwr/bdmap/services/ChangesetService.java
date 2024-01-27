@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.ChangesetRepository;
 import pl.pwr.bdmap.dto.ChangesetDTO;
-import pl.pwr.bdmap.dto.ChangesetDTOMapper;
+import pl.pwr.bdmap.dto.mappers.ChangesetDTOMapper;
 import pl.pwr.bdmap.exceptions.ChangesetClosedException;
 import pl.pwr.bdmap.model.*;
 

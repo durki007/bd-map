@@ -2,6 +2,9 @@ package pl.pwr.bdmap.services;
 
 import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dto.*;
+import pl.pwr.bdmap.dto.mappers.HistoricNodeDataDTOMapper;
+import pl.pwr.bdmap.dto.mappers.HistoricWayDataDTOMapper;
+import pl.pwr.bdmap.dto.mappers.HistoricWayNodeDTOMapper;
 import pl.pwr.bdmap.exceptions.BlockedElementException;
 import pl.pwr.bdmap.exceptions.ChangesetClosedException;
 import pl.pwr.bdmap.model.*;
