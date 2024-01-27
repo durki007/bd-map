@@ -7,7 +7,7 @@ import pl.pwr.bdmap.dao.NodeRepository;
 import pl.pwr.bdmap.dao.WayNodeRepository;
 import pl.pwr.bdmap.dao.WayRepository;
 import pl.pwr.bdmap.dto.WayNodeDTO;
-import pl.pwr.bdmap.dto.WayNodeDTOMapper;
+import pl.pwr.bdmap.dto.mappers.WayNodeDTOMapper;
 import pl.pwr.bdmap.exceptions.NotFoundException;
 import pl.pwr.bdmap.model.Changeset;
 import pl.pwr.bdmap.model.Node;

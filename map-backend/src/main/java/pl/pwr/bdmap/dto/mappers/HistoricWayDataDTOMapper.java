@@ -1,6 +1,7 @@
-package pl.pwr.bdmap.dto;
+package pl.pwr.bdmap.dto.mappers;
 
 import org.springframework.stereotype.Service;
+import pl.pwr.bdmap.dto.HistoricWayDataDTO;
 import pl.pwr.bdmap.model.HistoricWayData;
 
 import java.util.function.Function;

@@ -12,7 +12,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.NodeRepository;
 import pl.pwr.bdmap.dto.NodeDTO;
-import pl.pwr.bdmap.dto.NodeDTOMapper;
+import pl.pwr.bdmap.dto.mappers.NodeDTOMapper;
 import pl.pwr.bdmap.dto.UMPNodeDTO;
 import pl.pwr.bdmap.exceptions.ListCreationException;
 import pl.pwr.bdmap.model.Changeset;
@@ -165,8 +165,7 @@ public class NodeService {
         nodeRepository.save(node);
     }
 
-    public List<NodeDTO> getNodesOnScreen(double maxX, double minX, double maxY, double minY) {
-        List<Node> nodes = nodeRepository.findNodesInsideSquare(minX, maxX, minY, maxY);
-        return nodes.stream().map(mapper).toList();
+    public List<Node> getNodesOnScreen(double maxX, double minX, double maxY, double minY) {
+        return nodeRepository.findNodesInsideSquare(minX, maxX, minY, maxY);
     }
 }

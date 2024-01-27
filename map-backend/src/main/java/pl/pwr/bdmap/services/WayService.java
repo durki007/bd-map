@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.WayRepository;
-import pl.pwr.bdmap.dao.WayTypeRepository;
 import pl.pwr.bdmap.dto.WayDTO;
-import pl.pwr.bdmap.dto.WayDTOMapper;
+import pl.pwr.bdmap.dto.mappers.WayDTOMapper;
 import pl.pwr.bdmap.model.Changeset;
 import pl.pwr.bdmap.model.Way;
 import pl.pwr.bdmap.model.WayType;
@@ -115,8 +114,7 @@ public class WayService {
         wayRepository.save(way);
     }
 
-    public List<WayDTO> getWaysOnTheScreen(double maxX, double minX, double maxY, double minY) {
-        List<Way> ways = wayRepository.findWaysWithNodeOnScreen(minX, maxX, minY, maxY);
-        return ways.stream().map(mapper).toList();
+    public List<Way> getWaysOnTheScreen(double maxX, double minX, double maxY, double minY) {
+        return wayRepository.findWaysWithNodeOnScreen(minX, maxX, minY, maxY);
     }
 }
