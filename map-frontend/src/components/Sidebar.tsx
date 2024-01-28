@@ -57,7 +57,7 @@ export const Sidebar = (props: {
   });
 
   const renderNode = (currentObject: Node) => {
-    const isDisabled = currentObject.blockedBy === 0;
+    const isDisabled = currentObject.blockedBy !== 0;
 
     return (
       <Stack bg="bg.muted" padding="4">
@@ -94,7 +94,7 @@ export const Sidebar = (props: {
   };
 
   const renderWay = (currentObject: MapWay) => {
-    const isDisabled = currentObject.blockedBy === 0;
+    const isDisabled = currentObject.blockedBy !== 0;
 
     return (
       <Stack bg="bg.muted" padding="4">
@@ -127,7 +127,7 @@ export const Sidebar = (props: {
   };
 
   const renderWayNode = (currentObject: MapWayNode) => {
-    const isDisabled = currentObject.node1.blockedBy === 0;
+    const isDisabled = currentObject.node1.blockedBy !== 0;
 
     return (
       <Stack bg="bg.muted" padding="4">
