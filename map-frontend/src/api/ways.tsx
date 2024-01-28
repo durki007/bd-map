@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { API_URL } from '../constants';
 
 export interface Way {
   id: number;
@@ -33,17 +34,17 @@ export function isWay(obj: any): obj is Way {
 }
 
 export async function getWays() {
-  const { data } = await axios.get<Way[]>('http://localhost:8080/ways');
+  const { data } = await axios.get<Way[]>(`${API_URL}/ways`);
   return data;
 }
 
 export async function addWay(ways: AddWay[]) {
-  return axios.post<Way[]>(`http://localhost:8080/admin/ways`, ways);
+  return axios.post<Way[]>(`${API_URL}/admin/ways`, ways);
 }
 
 export async function editWay(way: EditWay) {
   return axios.put(
-    `http://localhost:8080/editor/way?wayId=${way.wayId}&changesetId=${way.changesetId}`,
+    `${API_URL}/editor/way?wayId=${way.wayId}&changesetId=${way.changesetId}`,
     {
       name: way.name,
       wayType: way.wayType,
