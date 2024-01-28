@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { User } from './users';
+import { API_URL } from '../constants';
 
 export interface Changeset {
   id: number;
@@ -27,19 +28,19 @@ export interface CloseChangeset {
 
 export async function getChangesets(props: GetChangeset) {
   const { data } = await axios.get<Changeset[]>(
-    `http://localhost:8080/editor/changeset?userId=${props.userId}`,
+    `${API_URL}/editor/changeset?userId=${props.userId}`,
   );
   return data;
 }
 
 export async function createChangeset(props: CreateChangeset) {
   return axios.post<Changeset>(
-    `http://localhost:8080/editor/changeset?userId=${props.userId}`,
+    `${API_URL}/editor/changeset?userId=${props.userId}`,
   );
 }
 
 export async function closeChangeset(props: CloseChangeset) {
   return axios.delete<ClosedChangeset>(
-    `http://localhost:8080/editor/changeset/${props.id}`,
+    `${API_URL}/editor/changeset/${props.id}`,
   );
 }

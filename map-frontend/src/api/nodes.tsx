@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { API_URL } from '../constants';
 
 export interface Node {
   id: number;
@@ -40,17 +41,17 @@ export function isNode(obj: any): obj is Node {
 }
 
 export async function getNodes(): Promise<Node[]> {
-  const { data } = await axios.get('http://localhost:8080/nodes');
+  const { data } = await axios.get(`${API_URL}/nodes`);
   return data;
 }
 
 export async function addNode(nodes: AddNode[]): Promise<Node[]> {
-  return axios.post(`http://localhost:8080/admin/nodes`, nodes);
+  return axios.post(`${API_URL}/admin/nodes`, nodes);
 }
 
 export async function editNode(node: EditNode) {
   return axios.put(
-    `http://localhost:8080/editor/node?nodeId=${node.nodeId}&changesetId=${node.changesetId}`,
+    `${API_URL}/editor/node?nodeId=${node.nodeId}&changesetId=${node.changesetId}`,
     {
       posX: node.posX,
       posY: node.posY,

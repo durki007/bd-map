@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { API_URL } from '../constants';
 
 export interface User {
   id: number;
@@ -26,14 +27,14 @@ export interface DeleteUser {
 }
 
 export async function getUsers() {
-  const { data } = await axios.get<User[]>('http://localhost:8080/users');
+  const { data } = await axios.get<User[]>(`${API_URL}/users`);
   return data;
 }
 
 export async function addUser(user: AddUser) {
-  return axios.post<PrivateUser>(`http://localhost:8080/users`, user);
+  return axios.post<PrivateUser>(`${API_URL}/users`, user);
 }
 
 export async function deleteUser(user: DeleteUser) {
-  return axios.delete(`http://localhost:8080/users/${user.id}`);
+  return axios.delete(`${API_URL}/users/${user.id}`);
 }

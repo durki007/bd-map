@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Changeset } from './changeset';
 import { EditedNode, Node } from './nodes';
 import { EditedWay, Way } from './ways';
+import { API_URL } from '../constants';
 
 export interface WayNode {
   id: number;
@@ -70,17 +71,17 @@ export function extendMapWayNodeWithNodes(
 }
 
 export async function getWayNodes() {
-  const { data } = await axios.get<WayNode[]>('http://localhost:8080/wayNodes');
+  const { data } = await axios.get<WayNode[]>(`${API_URL}/wayNodes`);
   return data;
 }
 
 export async function addWayNode(ways: AddWayNode[]) {
-  return axios.post<WayNode[]>(`http://localhost:8080/admin/wayNodes`, ways);
+  return axios.post<WayNode[]>(`${API_URL}/admin/wayNodes`, ways);
 }
 
 export async function editWayNode(wayNode: EditWayNode) {
   return axios.put(
-    `http://localhost:8080/editor/wayNode?wayNodeId=${wayNode.wayNodeId}&changesetId=${wayNode.changesetId}`,
+    `${API_URL}/editor/wayNode?wayNodeId=${wayNode.wayNodeId}&changesetId=${wayNode.changesetId}`,
     {
       wayId: wayNode.wayId,
       node1Id: wayNode.node1Id,
@@ -91,11 +92,11 @@ export async function editWayNode(wayNode: EditWayNode) {
 
 export async function editAll(wayNode: WayNode) {
   const changeset = await axios.post<Changeset>(
-    `http://localhost:8080/editor/changeset?userId=1`,
+    `${API_URL}/editor/changeset?userId=1`,
   );
 
   const way = await axios.put<EditedWay>(
-    `http://localhost:8080/editor/way?wayId=${wayNode.way?.id}&changesetId=${changeset.data.id}`,
+    `${API_URL}/editor/way?wayId=${wayNode.way?.id}&changesetId=${changeset.data.id}`,
     {
       name: wayNode.way?.name,
       wayType: wayNode.way?.wayType,
@@ -103,7 +104,7 @@ export async function editAll(wayNode: WayNode) {
   );
 
   const node1 = await axios.put<EditedNode>(
-    `http://localhost:8080/editor/node?nodeId=${wayNode.node1?.id}&changesetId=${changeset.data.id}`,
+    `${API_URL}/editor/node?nodeId=${wayNode.node1?.id}&changesetId=${changeset.data.id}`,
     {
       posX: wayNode.node1?.posX,
       posY: wayNode.node1?.posY,
@@ -111,7 +112,7 @@ export async function editAll(wayNode: WayNode) {
   );
 
   const node2 = await axios.put<EditedNode>(
-    `http://localhost:8080/editor/node?nodeId=${wayNode.node2?.id}&changesetId=${changeset.data.id}`,
+    `${API_URL}/editor/node?nodeId=${wayNode.node2?.id}&changesetId=${changeset.data.id}`,
     {
       posX: wayNode.node2?.posX,
       posY: wayNode.node2?.posY,
@@ -119,7 +120,7 @@ export async function editAll(wayNode: WayNode) {
   );
 
   return await axios.put<EditedWayNode>(
-    `http://localhost:8080/editor/wayNode?wayNodeId=${wayNode.id}&changesetId=${changeset.data.id}`,
+    `${API_URL}/editor/wayNode?wayNodeId=${wayNode.id}&changesetId=${changeset.data.id}`,
     {
       wayId: wayNode.wayId,
       node1Id: wayNode.node1Id,

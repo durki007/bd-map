@@ -1,6 +1,7 @@
 import axios from 'axios';
 import type { Node } from './nodes';
 import type { Way } from './ways';
+import { API_URL } from '../constants';
 
 export interface MapWayNode {
   id: number;
@@ -35,7 +36,7 @@ export function isMapWay(obj: any): obj is MapWay {
 
 export async function getMapArea(area: GetMapArea) {
   const { data } = await axios.get<MapArea>(
-    `http://localhost:8080/map/screen?maxX=${area.maxX}&minX=${area.minX}&maxY=${area.maxY}&minY=${area.minY}`,
+    `${API_URL}/map/screen?maxX=${area.maxX}&minX=${area.minX}&maxY=${area.maxY}&minY=${area.minY}`,
   );
   return data;
 }
