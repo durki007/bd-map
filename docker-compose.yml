@@ -50,11 +50,14 @@ services:
     depends_on:
       - map-backend
       - postgres
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
     ports:
       - '${FRONTEND_PORT}:3000'
     environment:
       <<: *common-variables
       API_PORT: $API_PORT
+      API_HOST: host.docker.internal
       FRONTEND_PORT: $FRONTEND_PORT
       POSTGRES_PORT: $POSTGRES_PORT
       POSTGRES_HOST: host.docker.internal
