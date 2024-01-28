@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import pl.pwr.bdmap.dao.NodeRepository;
 import pl.pwr.bdmap.dto.NodeDTO;
@@ -16,6 +17,7 @@ import pl.pwr.bdmap.dto.mappers.NodeDTOMapper;
 import pl.pwr.bdmap.dto.UMPNodeDTO;
 import pl.pwr.bdmap.exceptions.ListCreationException;
 import pl.pwr.bdmap.model.Changeset;
+import pl.pwr.bdmap.model.Key;
 import pl.pwr.bdmap.model.Node;
 import pl.pwr.bdmap.model.NodeType;
 
@@ -28,16 +30,18 @@ public class NodeService {
     private final NodeRepository nodeRepository;
     private final HistoricNodeDataService historicNodeDataService;
     private final NodeTypeService nodeTypeService;
+    private final KeyService keyService;
     private final NodeDTOMapper mapper;
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
-    public NodeService(NodeRepository repository, @Lazy HistoricNodeDataService historicNodeDataService, NodeTypeService nodeTypeService, NodeDTOMapper mapper, EntityManager entityManager) {
+    public NodeService(NodeRepository repository, @Lazy HistoricNodeDataService historicNodeDataService, NodeTypeService nodeTypeService, KeyService keyService, NodeDTOMapper mapper, EntityManager entityManager) {
         this.nodeRepository = repository;
         this.historicNodeDataService = historicNodeDataService;
         this.nodeTypeService = nodeTypeService;
+        this.keyService = keyService;
         this.mapper = mapper;
         this.entityManager = entityManager;
     }
@@ -92,8 +96,22 @@ public class NodeService {
         } else {
             node.setNodeType(nodeTypeService.save(nodeDTO.nodeType()));
         }
+        var keys = nodeDTO.kv()
+                .stream()
+                .map(kv -> {
+                    List<Key> pairs = new ArrayList<>();
+                    for (String k : kv.keySet()) {
+                        Key key = new Key();
+                        key.setKey(k);
+                        key.setValue(kv.get(k));
+                        pairs.add(key);
+                    }
+                    return pairs.getFirst();
+                })
+                .toList();
         node = nodeRepository.save(node);
         historicNodeDataService.saveInitialVersion(node);
+        node = keyService.addKeysToNode(node, keys);
         return node;
     }
 
