@@ -3,7 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Fragment, useEffect, useState } from 'react';
 import { css } from 'styled-system/css';
-import { Flex, HStack, Stack } from 'styled-system/jsx';
+import { Flex, HStack, Stack, VStack } from 'styled-system/jsx';
 import { Changeset } from '~/api/changeset';
 import { MapWay, MapWayNode, isMapWay } from '~/api/map-area';
 import { Node, editNode, isNode } from '~/api/nodes';
@@ -57,23 +57,34 @@ export const Sidebar = (props: {
   });
 
   const renderNode = (currentObject: Node) => {
+    const isDisabled = currentObject.blockedBy === 0;
+
     return (
       <Stack bg="bg.muted" padding="4">
         <Heading textStyle={'xl'}>Node</Heading>
         <Text as="p">id: {currentObject.id}</Text>
-        <NumberInput defaultValue={currentObject.posX.toString()}>
+        <NumberInput
+          defaultValue={currentObject.posX.toString()}
+          disabled={isDisabled}
+        >
           posX
         </NumberInput>
-        <NumberInput defaultValue={currentObject.posY.toString()}>
+        <NumberInput
+          defaultValue={currentObject.posY.toString()}
+          disabled={isDisabled}
+        >
           posY
         </NumberInput>
         <Text as="p">
-          blockedBy:{' '}
-          {currentObject.blockedBy === 0 ? 'none' : currentObject.blockedBy}
+          blockedBy: {isDisabled ? 'none' : currentObject.blockedBy}
         </Text>
         <Stack gap="1.5" width="2xs">
           <FormLabel htmlFor="nodeType">nodeType</FormLabel>
-          <Input id="nodeType" defaultValue={currentObject.nodeType} />
+          <Input
+            id="nodeType"
+            defaultValue={currentObject.nodeType}
+            disabled={isDisabled}
+          />
         </Stack>
         <Text as="p">
           timestamp: {new Date(currentObject.timestamp).toLocaleString('pl-PL')}
@@ -83,21 +94,30 @@ export const Sidebar = (props: {
   };
 
   const renderWay = (currentObject: MapWay) => {
+    const isDisabled = currentObject.blockedBy === 0;
+
     return (
       <Stack bg="bg.muted" padding="4">
         <Heading textStyle={'xl'}>Way</Heading>
         <Text as="p">id: {currentObject.id}</Text>
         <Stack gap="1.5" width="2xs">
           <FormLabel htmlFor="name">name</FormLabel>
-          <Input id="name" defaultValue={currentObject.name} />
+          <Input
+            id="name"
+            defaultValue={currentObject.name}
+            disabled={isDisabled}
+          />
         </Stack>
         <Text as="p">
-          blockedBy:{' '}
-          {currentObject.blockedBy === 0 ? 'none' : currentObject.blockedBy}
+          blockedBy: {isDisabled ? 'none' : currentObject.blockedBy}
         </Text>
         <Stack gap="1.5" width="2xs">
           <FormLabel htmlFor="wayType">wayType</FormLabel>
-          <Input id="wayType" defaultValue={currentObject.wayType} />
+          <Input
+            id="wayType"
+            defaultValue={currentObject.wayType}
+            disabled={isDisabled}
+          />
         </Stack>
         <Text as="p">
           timestamp: {new Date(currentObject.timestamp).toLocaleString('pl-PL')}
@@ -107,6 +127,8 @@ export const Sidebar = (props: {
   };
 
   const renderWayNode = (currentObject: MapWayNode) => {
+    const isDisabled = currentObject.node1.blockedBy === 0;
+
     return (
       <Stack bg="bg.muted" padding="4">
         <Heading textStyle={'xl'}>WayNode</Heading>
@@ -115,6 +137,7 @@ export const Sidebar = (props: {
           defaultValue={currentObject.id.toString()}
           min={0}
           formatOptions={{ maximumFractionDigits: 0 }}
+          disabled={isDisabled}
         >
           wayId
         </NumberInput>
@@ -122,6 +145,7 @@ export const Sidebar = (props: {
           defaultValue={currentObject.node1.id.toString()}
           min={0}
           formatOptions={{ maximumFractionDigits: 0 }}
+          disabled={isDisabled}
         >
           node1Id
         </NumberInput>
@@ -129,6 +153,7 @@ export const Sidebar = (props: {
           defaultValue={currentObject.node2.id.toString()}
           min={0}
           formatOptions={{ maximumFractionDigits: 0 }}
+          disabled={isDisabled}
         >
           node2Id
         </NumberInput>
@@ -195,17 +220,17 @@ export const Sidebar = (props: {
         justifyContent: 'center',
         alignItems: 'center',
         flexDir: 'column',
+        maxHeight: 'fit-content',
       })}
     >
-      <HStack>
-        <Heading textStyle={'2xl'} marginY="2">
-          Edytor
-        </Heading>
+      <Heading textStyle={'2xl'} marginY="2">
+        Edytor
+      </Heading>
+      <VStack marginY="2">
+        <Button onClick={() => console.log('te')}>Zamknij zbiór zmian</Button>
         <Button onClick={handleSave}>Zapisz</Button>
-      </HStack>
-      <Stack maxH="90vh" gap="14">
-        {renderFields()}
-      </Stack>
+      </VStack>
+      <Stack gap="14">{renderFields()}</Stack>
     </Flex>
   );
 };

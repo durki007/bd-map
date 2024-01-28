@@ -90,6 +90,7 @@ const Mapa = (props: { mapArea: MapArea; changesets: Changeset[] }) => {
           width: '20vw',
           bg: 'bg.subtle',
           overflow: 'scroll',
+          maxH: '100vh',
         })}
       >
         {activeChangeset === undefined ? (
