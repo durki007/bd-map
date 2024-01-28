@@ -1,12 +1,14 @@
 'use client';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { css } from 'styled-system/css';
 import { Flex, HStack, Stack } from 'styled-system/jsx';
-import { MapNode, editNode, isNode } from '~/api/nodes';
-import { MapWayNode, editWayNode, isWayNode } from '~/api/waynodes';
-import { MapWay, editWay, isWay } from '~/api/ways';
+import { Changeset } from '~/api/changeset';
+import { MapWay, MapWayNode, isMapWay } from '~/api/map-area';
+import { Node, editNode, isNode } from '~/api/nodes';
+import { editWayNode } from '~/api/waynodes';
+import { Way, editWay } from '~/api/ways';
 import { Button } from './ui/button';
 import { FormLabel } from './ui/form-label';
 import { Heading } from './ui/heading';
@@ -14,7 +16,10 @@ import { Input } from './ui/input';
 import { NumberInput } from './ui/number-input';
 import { Text } from './ui/text';
 
-export const Sidebar = (props: { object?: MapNode | MapWay | MapWayNode }) => {
+export const Sidebar = (props: {
+  object?: Node | MapWay;
+  changeset: Changeset;
+}) => {
   const object = props.object;
 
   const [currentObject, setCurrentObject] = useState(object);
@@ -51,7 +56,7 @@ export const Sidebar = (props: { object?: MapNode | MapWay | MapWayNode }) => {
     },
   });
 
-  const renderNode = (currentObject: MapNode) => {
+  const renderNode = (currentObject: Node) => {
     return (
       <Stack bg="bg.muted" padding="4">
         <Heading textStyle={'xl'}>Node</Heading>
@@ -66,13 +71,13 @@ export const Sidebar = (props: { object?: MapNode | MapWay | MapWayNode }) => {
           blockedBy:{' '}
           {currentObject.blockedBy === 0 ? 'none' : currentObject.blockedBy}
         </Text>
-        <Text as="p">
-          timestamp: {new Date(currentObject.timestamp).toLocaleString('pl-PL')}
-        </Text>
         <Stack gap="1.5" width="2xs">
           <FormLabel htmlFor="nodeType">nodeType</FormLabel>
           <Input id="nodeType" defaultValue={currentObject.nodeType} />
         </Stack>
+        <Text as="p">
+          timestamp: {new Date(currentObject.timestamp).toLocaleString('pl-PL')}
+        </Text>
       </Stack>
     );
   };
@@ -90,13 +95,13 @@ export const Sidebar = (props: { object?: MapNode | MapWay | MapWayNode }) => {
           blockedBy:{' '}
           {currentObject.blockedBy === 0 ? 'none' : currentObject.blockedBy}
         </Text>
-        <Text as="p">
-          timestamp: {new Date(currentObject.timestamp).toLocaleString('pl-PL')}
-        </Text>
         <Stack gap="1.5" width="2xs">
           <FormLabel htmlFor="wayType">wayType</FormLabel>
           <Input id="wayType" defaultValue={currentObject.wayType} />
         </Stack>
+        <Text as="p">
+          timestamp: {new Date(currentObject.timestamp).toLocaleString('pl-PL')}
+        </Text>
       </Stack>
     );
   };
@@ -107,30 +112,26 @@ export const Sidebar = (props: { object?: MapNode | MapWay | MapWayNode }) => {
         <Heading textStyle={'xl'}>WayNode</Heading>
         <Text as="p">id: {currentObject.id}</Text>
         <NumberInput
-          defaultValue={currentObject.wayId.toString()}
+          defaultValue={currentObject.id.toString()}
           min={0}
           formatOptions={{ maximumFractionDigits: 0 }}
         >
           wayId
         </NumberInput>
         <NumberInput
-          defaultValue={currentObject.node1Id.toString()}
+          defaultValue={currentObject.node1.id.toString()}
           min={0}
           formatOptions={{ maximumFractionDigits: 0 }}
         >
           node1Id
         </NumberInput>
         <NumberInput
-          defaultValue={currentObject.node2Id.toString()}
+          defaultValue={currentObject.node2.id.toString()}
           min={0}
           formatOptions={{ maximumFractionDigits: 0 }}
         >
           node2Id
         </NumberInput>
-        <Text as="p">
-          blockedBy:{' '}
-          {currentObject.blockedBy === 0 ? 'none' : currentObject.blockedBy}
-        </Text>
       </Stack>
     );
   };
@@ -138,21 +139,17 @@ export const Sidebar = (props: { object?: MapNode | MapWay | MapWayNode }) => {
   const renderFields = () => {
     if (isNode(currentObject)) {
       return renderNode(currentObject);
-    } else if (isWay(currentObject)) {
-      return renderWay(currentObject);
-    } else if (isWayNode(currentObject)) {
+    } else if (isMapWay(currentObject)) {
       return (
         <>
-          {renderWayNode(currentObject)}
-          {currentObject.way !== undefined
-            ? renderWay(currentObject.way!)
-            : null}
-          {currentObject.node1 !== undefined
-            ? renderNode(currentObject.node1!)
-            : null}
-          {currentObject.node2 !== undefined
-            ? renderNode(currentObject.node2!)
-            : null}
+          {renderWay(currentObject)}
+          {currentObject.wayNodes.map((wayNode) => (
+            <Fragment key={wayNode.id}>
+              {renderWayNode(wayNode)}
+              {renderNode(wayNode.node1)}
+              {renderNode(wayNode.node2)}
+            </Fragment>
+          ))}
         </>
       );
     }
@@ -161,9 +158,9 @@ export const Sidebar = (props: { object?: MapNode | MapWay | MapWayNode }) => {
   };
 
   const handleSave = () => {
-    const way = currentObject?.way as MapWay;
-    const node1 = currentObject?.node1 as MapNode;
-    const node2 = currentObject?.node2 as MapNode;
+    const way = currentObject?.way as Way;
+    const node1 = currentObject?.node1 as Node;
+    const node2 = currentObject?.node2 as Node;
 
     editWayMutation.mutate({
       wayId: way.id,

@@ -1,9 +1,9 @@
 'use client';
 
 import { Marker, Popup } from 'react-leaflet';
-import { MapNode } from '~/api/nodes';
+import { Node } from '~/api/nodes';
 
-const ClickableMarker = (props: { node: MapNode; handleClick: any }) => {
+const ClickableMarker = (props: { node: Node; handleClick: any }) => {
   const node = props.node;
 
   return (
