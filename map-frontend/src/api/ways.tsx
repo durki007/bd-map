@@ -1,14 +1,14 @@
 import axios from 'axios';
 
-export interface MapWay {
+export interface Way {
   id: number;
   name: string;
   blockedBy: number;
-  timestamp: string;
   wayType: string;
+  timestamp: string;
 }
 
-export interface EditedMapWay {
+export interface EditedWay {
   id: number;
   name: string;
   timestamp: string;
@@ -16,32 +16,32 @@ export interface EditedMapWay {
 }
 
 // endpoint types
-export interface AddMapWay {
+export interface AddWay {
   name: string;
   wayType: string;
 }
 
-export interface EditMapWay {
+export interface EditWay {
   wayId: number;
   changesetId: number;
   name: string;
   wayType: string;
 }
 
-export function isWay(obj: any): obj is MapWay {
+export function isWay(obj: any): obj is Way {
   return obj?.wayType !== undefined;
 }
 
-export async function getWays(): Promise<MapWay[]> {
-  const { data } = await axios.get('http://localhost:8080/ways');
+export async function getWays() {
+  const { data } = await axios.get<Way[]>('http://localhost:8080/ways');
   return data;
 }
 
-export async function addWay(ways: AddMapWay[]): Promise<MapWay[]> {
-  return axios.post(`http://localhost:8080/admin/ways`, ways);
+export async function addWay(ways: AddWay[]) {
+  return axios.post<Way[]>(`http://localhost:8080/admin/ways`, ways);
 }
 
-export async function editWay(way: EditMapWay) {
+export async function editWay(way: EditWay) {
   return axios.put(
     `http://localhost:8080/editor/way?wayId=${way.wayId}&changesetId=${way.changesetId}`,
     {

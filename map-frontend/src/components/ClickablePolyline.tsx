@@ -1,26 +1,45 @@
 'use client';
 
 import { Polyline } from 'react-leaflet';
-import { MapWayNode } from '~/api/waynodes';
+import { MapWay } from '~/api/map-area';
 
-const ClickablePolyline = (props: {
-  wayNode: MapWayNode;
-  handleClick: any;
-}) => {
-  const wayNode = props.wayNode;
+const ClickablePolyline = (props: { way: MapWay; handleClick: any }) => {
+  const way = props.way;
+
+  const color =
+    way.wayType === 'autostrada'
+      ? 'red'
+      : way.wayType === 'droga ekspresowa'
+        ? 'blue'
+        : way.wayType === 'droga krajowa'
+          ? 'green'
+          : way.wayType === 'droga wojewódzka'
+            ? 'yellow'
+            : way.wayType === 'droga powiatowa'
+              ? 'orange'
+              : way.wayType === 'droga gminna'
+                ? 'purple'
+                : 'black';
 
   return (
-    <Polyline
-      eventHandlers={{
-        click: () => {
-          props.handleClick(wayNode);
-        },
-      }}
-      positions={[
-        [wayNode.node1?.posX!, wayNode.node1?.posY!],
-        [wayNode.node2?.posX!, wayNode.node2?.posY!],
-      ]}
-    />
+    <>
+      {way.wayNodes.map((wayNode) => (
+        <Polyline
+          eventHandlers={{
+            click: () => {
+              props.handleClick(way);
+            },
+          }}
+          key={wayNode.id}
+          positions={[
+            [wayNode.node1.posX, wayNode.node1.posY],
+            [wayNode.node2.posX, wayNode.node2.posY],
+          ]}
+          color={color}
+          fill={true}
+        />
+      ))}
+    </>
   );
 };
 

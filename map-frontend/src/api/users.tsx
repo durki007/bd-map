@@ -25,13 +25,13 @@ export interface DeleteUser {
   id: number;
 }
 
-export async function getUsers(): Promise<User[]> {
-  const { data } = await axios.get('http://localhost:8080/users');
+export async function getUsers() {
+  const { data } = await axios.get<User[]>('http://localhost:8080/users');
   return data;
 }
 
-export async function addUser(user: AddUser): Promise<PrivateUser> {
-  return axios.post(`http://localhost:8080/users`, user);
+export async function addUser(user: AddUser) {
+  return axios.post<PrivateUser>(`http://localhost:8080/users`, user);
 }
 
 export async function deleteUser(user: DeleteUser) {

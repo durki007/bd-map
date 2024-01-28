@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export interface MapNode {
+export interface Node {
   id: number;
   posX: number;
   posY: number;
@@ -9,7 +9,7 @@ export interface MapNode {
   nodeType: string;
 }
 
-export interface EditedMapNode {
+export interface EditedNode {
   id: number;
   posX: number;
   posY: number;
@@ -17,38 +17,38 @@ export interface EditedMapNode {
   nodeType: string;
 }
 
-export interface MapNodeType {
+export interface NodeType {
   id: number;
   name: string;
 }
 
 // endpoint types
-export interface AddMapNode {
+export interface AddNode {
   posX: number;
   posY: number;
 }
 
-export interface EditMapNode {
+export interface EditNode {
   nodeId: number;
   changesetId: number;
   posX: number;
   posY: number;
 }
 
-export function isNode(obj: any): obj is MapNode {
+export function isNode(obj: any): obj is Node {
   return obj?.nodeType !== undefined;
 }
 
-export async function getNodes(): Promise<MapNode[]> {
+export async function getNodes(): Promise<Node[]> {
   const { data } = await axios.get('http://localhost:8080/nodes');
   return data;
 }
 
-export async function addNode(nodes: AddMapNode[]): Promise<MapNode[]> {
+export async function addNode(nodes: AddNode[]): Promise<Node[]> {
   return axios.post(`http://localhost:8080/admin/nodes`, nodes);
 }
 
-export async function editNode(node: EditMapNode) {
+export async function editNode(node: EditNode) {
   return axios.put(
     `http://localhost:8080/editor/node?nodeId=${node.nodeId}&changesetId=${node.changesetId}`,
     {

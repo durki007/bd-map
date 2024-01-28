@@ -1,19 +1,20 @@
 import axios from 'axios';
-import { EditedMapWay, MapWay } from './ways';
-import { EditedMapNode, MapNode } from './nodes';
+import { Changeset } from './changeset';
+import { EditedNode, Node } from './nodes';
+import { EditedWay, Way } from './ways';
 
-export interface MapWayNode {
+export interface WayNode {
   id: number;
   wayId: number;
   node1Id: number;
   node2Id: number;
   blockedBy: number;
-  way?: MapWay;
-  node1?: MapNode;
-  node2?: MapNode;
+  way?: Way;
+  node1?: Node;
+  node2?: Node;
 }
 
-export interface EditedMapWayNode {
+export interface EditedWayNode {
   id: number;
   timestamp: string;
   wayId: number;
@@ -22,12 +23,12 @@ export interface EditedMapWayNode {
 }
 
 // endpoint types
-export interface AddMapWayNode {
+export interface AddWayNode {
   name: string;
   wayType: string;
 }
 
-export interface EditMapWayNode {
+export interface EditWayNode {
   wayNodeId: number;
   changesetId: number;
   wayId: number;
@@ -35,14 +36,14 @@ export interface EditMapWayNode {
   node2Id: number;
 }
 
-export function isWayNode(obj: any): obj is MapWayNode {
+export function isWayNode(obj: any): obj is WayNode {
   return obj?.node1Id !== undefined;
 }
 
 export function extendMapWayNodeWithWay(
-  mapWayNodes: MapWayNode[],
-  mapWays: MapWay[],
-): MapWayNode[] {
+  mapWayNodes: WayNode[],
+  mapWays: Way[],
+): WayNode[] {
   return mapWayNodes.map((wayNode) => {
     const matchingWay = mapWays.find((way) => way.id === wayNode.wayId);
     return {
@@ -53,9 +54,9 @@ export function extendMapWayNodeWithWay(
 }
 
 export function extendMapWayNodeWithNodes(
-  mapWayNodes: MapWayNode[],
-  mapNodes: MapNode[],
-): MapWayNode[] {
+  mapWayNodes: WayNode[],
+  mapNodes: Node[],
+): WayNode[] {
   return mapWayNodes.map((wayNode) => {
     const matchingNode1 = mapNodes.find((node) => node.id === wayNode.node1Id);
     const matchingNode2 = mapNodes.find((node) => node.id === wayNode.node2Id);
@@ -68,16 +69,16 @@ export function extendMapWayNodeWithNodes(
   });
 }
 
-export async function getWayNodes(): Promise<MapWayNode[]> {
-  const { data } = await axios.get('http://localhost:8080/wayNodes');
+export async function getWayNodes() {
+  const { data } = await axios.get<WayNode[]>('http://localhost:8080/wayNodes');
   return data;
 }
 
-export async function addWayNode(ways: AddMapWayNode[]): Promise<MapWayNode[]> {
-  return axios.post(`http://localhost:8080/admin/wayNodes`, ways);
+export async function addWayNode(ways: AddWayNode[]) {
+  return axios.post<WayNode[]>(`http://localhost:8080/admin/wayNodes`, ways);
 }
 
-export async function editWayNode(wayNode: EditMapWayNode) {
+export async function editWayNode(wayNode: EditWayNode) {
   return axios.put(
     `http://localhost:8080/editor/wayNode?wayNodeId=${wayNode.wayNodeId}&changesetId=${wayNode.changesetId}`,
     {
@@ -88,24 +89,12 @@ export async function editWayNode(wayNode: EditMapWayNode) {
   );
 }
 
-export interface Changeset {
-  id: number;
-  creationDate: string;
-  closeDate: string | null;
-  userInfo: {
-    id: number;
-    username: string;
-    email: string;
-    role: string;
-  };
-}
-
-export async function editAll(wayNode: MapWayNode) {
+export async function editAll(wayNode: WayNode) {
   const changeset = await axios.post<Changeset>(
     `http://localhost:8080/editor/changeset?userId=1`,
   );
 
-  const way = await axios.put<EditedMapWay>(
+  const way = await axios.put<EditedWay>(
     `http://localhost:8080/editor/way?wayId=${wayNode.way?.id}&changesetId=${changeset.data.id}`,
     {
       name: wayNode.way?.name,
@@ -113,7 +102,7 @@ export async function editAll(wayNode: MapWayNode) {
     },
   );
 
-  const node1 = await axios.put<EditedMapNode>(
+  const node1 = await axios.put<EditedNode>(
     `http://localhost:8080/editor/node?nodeId=${wayNode.node1?.id}&changesetId=${changeset.data.id}`,
     {
       posX: wayNode.node1?.posX,
@@ -121,7 +110,7 @@ export async function editAll(wayNode: MapWayNode) {
     },
   );
 
-  const node2 = await axios.put<EditedMapNode>(
+  const node2 = await axios.put<EditedNode>(
     `http://localhost:8080/editor/node?nodeId=${wayNode.node2?.id}&changesetId=${changeset.data.id}`,
     {
       posX: wayNode.node2?.posX,
@@ -129,7 +118,7 @@ export async function editAll(wayNode: MapWayNode) {
     },
   );
 
-  return await axios.put<EditedMapWayNode>(
+  return await axios.put<EditedWayNode>(
     `http://localhost:8080/editor/wayNode?wayNodeId=${wayNode.id}&changesetId=${changeset.data.id}`,
     {
       wayId: wayNode.wayId,
