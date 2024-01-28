@@ -62,7 +62,7 @@ const Mapa = (props: { mapArea: MapArea; changesets: Changeset[] }) => {
     <Flex gap="10">
       <MapContainer
         className={css({ height: '100vh', width: '100vh' })}
-        center={[1, 4]}
+        center={[51.10866, 17.05947]}
         zoom={16}
       >
         <TileLayer
