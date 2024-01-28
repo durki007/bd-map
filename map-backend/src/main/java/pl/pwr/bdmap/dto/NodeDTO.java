@@ -1,6 +1,7 @@
 package pl.pwr.bdmap.dto;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public record NodeDTO(
         int id,
@@ -8,5 +9,7 @@ public record NodeDTO(
         double posY,
         int blockedBy,
         Timestamp timestamp,
-        String nodeType
-) {}
+        String nodeType,
+        List<KeyDTO> keys
+) {
+}
