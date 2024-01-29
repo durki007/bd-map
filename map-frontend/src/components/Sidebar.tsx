@@ -66,85 +66,91 @@ export const Sidebar = (props: {
     },
   });
 
-  const renderNode = (currentObject: Node) => {
-    const isDisabled = currentObject.blockedBy !== 0;
+  const renderNode = (obj: Node) => {
+    const isDisabled = obj.blockedBy !== 0;
 
     return (
       <Stack bg="bg.muted" padding="4">
         <Heading textStyle={'xl'}>Node</Heading>
-        <Text as="p">id: {currentObject.id}</Text>
+        <Text as="p">id: {obj.id}</Text>
         <NumberInput
-          defaultValue={currentObject.posX.toString()}
+          defaultValue={obj.posX.toString()}
           disabled={isDisabled}
+          onValueChange={(details) =>
+            ((currentObject as Node).posX = details.valueAsNumber)
+          }
         >
           posX
         </NumberInput>
         <NumberInput
-          defaultValue={currentObject.posY.toString()}
+          defaultValue={obj.posY.toString()}
           disabled={isDisabled}
+          onValueChange={(details) =>
+            ((currentObject as Node).posY = details.valueAsNumber)
+          }
         >
           posY
         </NumberInput>
-        <Text as="p">
-          blockedBy: {isDisabled ? 'none' : currentObject.blockedBy}
-        </Text>
+        <Text as="p">blockedBy: {isDisabled ? 'none' : obj.blockedBy}</Text>
         <Stack gap="1.5" width="2xs">
           <FormLabel htmlFor="nodeType">nodeType</FormLabel>
           <Input
             id="nodeType"
-            defaultValue={currentObject.nodeType}
+            defaultValue={obj.nodeType}
             disabled={isDisabled}
+            onChange={(e) =>
+              ((currentObject as Node).nodeType = e.target.value)
+            }
           />
         </Stack>
         <Text as="p">
-          timestamp: {new Date(currentObject.timestamp).toLocaleString('pl-PL')}
+          timestamp: {new Date(obj.timestamp).toLocaleString('pl-PL')}
         </Text>
       </Stack>
     );
   };
 
-  const renderWay = (currentObject: MapWay) => {
-    const isDisabled = currentObject.blockedBy !== 0;
+  const renderWay = (obj: MapWay) => {
+    const isDisabled = obj.blockedBy !== 0;
 
     return (
       <Stack bg="bg.muted" padding="4">
         <Heading textStyle={'xl'}>Way</Heading>
-        <Text as="p">id: {currentObject.id}</Text>
+        <Text as="p">id: {obj.id}</Text>
         <Stack gap="1.5" width="2xs">
           <FormLabel htmlFor="name">name</FormLabel>
           <Input
             id="name"
-            defaultValue={currentObject.name}
+            defaultValue={obj.name}
             disabled={isDisabled}
+            onChange={(e) => ((currentObject as MapWay).name = e.target.value)}
           />
         </Stack>
-        <Text as="p">
-          blockedBy: {isDisabled ? 'none' : currentObject.blockedBy}
-        </Text>
+        <Text as="p">blockedBy: {isDisabled ? 'none' : obj.blockedBy}</Text>
         <Stack gap="1.5" width="2xs">
           <FormLabel htmlFor="wayType">wayType</FormLabel>
           <Input
             id="wayType"
-            defaultValue={currentObject.wayType}
+            defaultValue={obj.wayType}
             disabled={isDisabled}
           />
         </Stack>
         <Text as="p">
-          timestamp: {new Date(currentObject.timestamp).toLocaleString('pl-PL')}
+          timestamp: {new Date(obj.timestamp).toLocaleString('pl-PL')}
         </Text>
       </Stack>
     );
   };
 
-  const renderWayNode = (currentObject: MapWayNode) => {
-    const isDisabled = currentObject.node1.blockedBy !== 0;
+  const renderWayNode = (obj: MapWayNode) => {
+    const isDisabled = obj.node1.blockedBy !== 0;
 
     return (
       <Stack bg="bg.muted" padding="4">
         <Heading textStyle={'xl'}>WayNode</Heading>
-        <Text as="p">id: {currentObject.id}</Text>
+        <Text as="p">id: {obj.id}</Text>
         <NumberInput
-          defaultValue={currentObject.id.toString()}
+          defaultValue={obj.id.toString()}
           min={0}
           formatOptions={{ maximumFractionDigits: 0 }}
           disabled={isDisabled}
@@ -152,7 +158,7 @@ export const Sidebar = (props: {
           wayId
         </NumberInput>
         <NumberInput
-          defaultValue={currentObject.node1.id.toString()}
+          defaultValue={obj.node1.id.toString()}
           min={0}
           formatOptions={{ maximumFractionDigits: 0 }}
           disabled={isDisabled}
@@ -160,7 +166,7 @@ export const Sidebar = (props: {
           node1Id
         </NumberInput>
         <NumberInput
-          defaultValue={currentObject.node2.id.toString()}
+          defaultValue={obj.node2.id.toString()}
           min={0}
           formatOptions={{ maximumFractionDigits: 0 }}
           disabled={isDisabled}
@@ -170,6 +176,8 @@ export const Sidebar = (props: {
       </Stack>
     );
   };
+
+  console.log('currentObject', currentObject);
 
   const renderFields = () => {
     if (isNode(currentObject)) {
@@ -197,36 +205,53 @@ export const Sidebar = (props: {
     props.handleChangesetClick(false);
   };
 
-  const handleSave = () => {
-    const way = currentObject?.way as Way;
-    const node1 = currentObject?.node1 as Node;
-    const node2 = currentObject?.node2 as Node;
+  const saveNode = () => {
+    const node = currentObject as Node;
+
+    editNodeMutation.mutate({
+      nodeId: node.id,
+      changesetId: props.changeset.id,
+      posX: node.posX,
+      posY: node.posY,
+    });
+  };
+
+  const saveMapWay = () => {
+    const way = currentObject as MapWay;
 
     editWayMutation.mutate({
       wayId: way.id,
-      changesetId: 1,
-      name: way.name!,
-      wayType: way.wayType!,
-    });
-    editNodeMutation.mutate({
-      nodeId: node1.id,
-      changesetId: 1,
-      posX: node1.posX,
-      posY: node1.posY,
-    });
-    editNodeMutation.mutate({
-      nodeId: node2.id,
-      changesetId: 1,
-      posX: node2.posX,
-      posY: node2.posY,
+      changesetId: props.changeset.id,
+      name: way.name,
+      wayType: way.wayType,
     });
     editWayNodeMutation.mutate({
-      wayNodeId: currentObject?.id as number,
-      changesetId: 1,
-      wayId: currentObject?.wayId as number,
-      node1Id: currentObject?.node1Id as number,
-      node2Id: currentObject?.node2Id as number,
+      wayNodeId: way.wayNodes[0].id,
+      changesetId: props.changeset.id,
+      wayId: way.id,
+      node1Id: way.wayNodes[0].node1.id,
+      node2Id: way.wayNodes[0].node2.id,
     });
+    editNodeMutation.mutate({
+      nodeId: way.wayNodes[0].node1.id,
+      changesetId: props.changeset.id,
+      posX: way.wayNodes[0].node1.posX,
+      posY: way.wayNodes[0].node1.posY,
+    });
+    editNodeMutation.mutate({
+      nodeId: way.wayNodes[0].node2.id,
+      changesetId: props.changeset.id,
+      posX: way.wayNodes[0].node2.posX,
+      posY: way.wayNodes[0].node2.posY,
+    });
+  };
+
+  const handleSave = () => {
+    if (isNode(currentObject)) {
+      saveNode();
+    } else if (isMapWay(currentObject)) {
+      saveMapWay();
+    }
   };
 
   return (

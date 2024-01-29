@@ -73,7 +73,6 @@ const Mapa = (props: { mapArea: MapArea; changesets: Changeset[] }) => {
           attribution='&amp;copy <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={[51.10866, 17.05947]}></Marker>
         {mapArea.singularNodes?.map((node) => (
           <ClickableMarker
             key={node.id}
