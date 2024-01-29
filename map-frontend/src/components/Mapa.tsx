@@ -11,7 +11,6 @@ import { Container, Flex } from 'styled-system/jsx';
 import { Changeset, getChangesets } from '~/api/changeset';
 import { MapArea, MapWay, getMapArea } from '~/api/map-area';
 import { Node } from '~/api/nodes';
-import { WayNode } from '~/api/waynodes';
 import ClickableMarker from './ClickableMarker';
 import ClickablePolyline from './ClickablePolyline';
 import { Sidebar } from './Sidebar';
@@ -49,14 +48,19 @@ const Mapa = (props: { mapArea: MapArea; changesets: Changeset[] }) => {
 
   const handleChangesetClick = (active: boolean) => {
     setActiveChangeset(active);
+
+    if (!active) {
+      setCurrentChangeset(undefined);
+    }
   };
 
   const handleObjectClick = (node: any) => {
     setSelectedObject(node);
   };
 
-  console.log('--------------')
-  console.log('changeset curr', currentChangeset)
+  console.log('--------------');
+  console.log('changeset curr', currentChangeset);
+  console.log('active ch', activeChangeset);
 
   return (
     <Flex gap="10">
@@ -93,10 +97,14 @@ const Mapa = (props: { mapArea: MapArea; changesets: Changeset[] }) => {
           maxH: '100vh',
         })}
       >
-        {activeChangeset === undefined ? (
+        {activeChangeset === false ? (
           <SidebarChangeset handleClick={handleChangesetClick} />
         ) : (
-          <Sidebar object={selectedObject} changeset={currentChangeset!} />
+          <Sidebar
+            object={selectedObject}
+            changeset={currentChangeset!}
+            handleChangesetClick={handleChangesetClick}
+          />
         )}
       </Container>
     </Flex>

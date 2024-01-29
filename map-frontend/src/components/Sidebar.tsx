@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Fragment, useEffect, useState } from 'react';
 import { css } from 'styled-system/css';
 import { Flex, HStack, Stack, VStack } from 'styled-system/jsx';
-import { Changeset } from '~/api/changeset';
+import { Changeset, closeChangeset } from '~/api/changeset';
 import { MapWay, MapWayNode, isMapWay } from '~/api/map-area';
 import { Node, editNode, isNode } from '~/api/nodes';
 import { editWayNode } from '~/api/waynodes';
@@ -19,6 +19,7 @@ import { Text } from './ui/text';
 export const Sidebar = (props: {
   object?: Node | MapWay;
   changeset: Changeset;
+  handleChangesetClick: any;
 }) => {
   const object = props.object;
 
@@ -28,6 +29,15 @@ export const Sidebar = (props: {
   useEffect(() => {
     setCurrentObject(object);
   }, [object]);
+
+  const closeChangesetMutation = useMutation({
+    mutationFn: closeChangeset,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['changesets'],
+      });
+    },
+  });
 
   const editWayMutation = useMutation({
     mutationFn: editWay,
@@ -182,6 +192,11 @@ export const Sidebar = (props: {
     return null;
   };
 
+  const handleClose = async () => {
+    await closeChangesetMutation.mutate({ id: props.changeset.id });
+    props.handleChangesetClick(false);
+  };
+
   const handleSave = () => {
     const way = currentObject?.way as Way;
     const node1 = currentObject?.node1 as Node;
@@ -227,7 +242,7 @@ export const Sidebar = (props: {
         Edytor
       </Heading>
       <VStack marginY="2">
-        <Button onClick={() => console.log('te')}>Zamknij zbiór zmian</Button>
+        <Button onClick={handleClose}>Zamknij zbiór zmian</Button>
         <Button onClick={handleSave}>Zapisz</Button>
       </VStack>
       <Stack gap="14">{renderFields()}</Stack>

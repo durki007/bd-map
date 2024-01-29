@@ -40,6 +40,7 @@ export async function createChangeset(props: CreateChangeset) {
 }
 
 export async function closeChangeset(props: CloseChangeset) {
+  console.log('in close', props)
   return axios.delete<ClosedChangeset>(
     `${API_URL}/editor/changeset/${props.id}`,
   );
